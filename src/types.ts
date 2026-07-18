@@ -88,5 +88,11 @@ export const COSMIC_SCALES: CosmicScale[] = [
     name: 'Cosmological Horizon',
     range: '1,000M LY+',
     description: 'The large-scale structure of the Cosmic Web, deep space filaments, and the Observable Universe edge.'
+  },
+  {
+    id: 6,
+    name: 'Multiverse & Beyond',
+    range: 'Observable Edge+',
+    description: 'Bubble universes, higher dimensions, eternal inflation space, and parallel quantum timelines outside our observable universe.'
   }
 ];

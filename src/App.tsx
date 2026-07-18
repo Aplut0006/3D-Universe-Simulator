@@ -7,7 +7,10 @@ import {
   Cpu,
   Orbit,
   X,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  Activity,
+  Layers
 } from 'lucide-react';
 import { PRESETS_CELESTIAL_DATA } from './data/celestialData';
 import { CelestialObject, COSMIC_SCALES } from './types';
@@ -172,12 +175,152 @@ export function getRealisticImageUrl(name: string, category: string): string {
   return getCelestialImageUrl(category, name);
 }
 
+const MULTIVERSE_OBJECTS: CelestialObject[] = [
+  {
+    id: 'multiverse-bubble-1',
+    name: 'Universe-839 (Quantum Timeline)',
+    category: 'Parallel Universes',
+    distanceLy: 1e15,
+    distanceString: '1.0 × 10¹⁵ LY (Beyond Horizon)',
+    description: 'An adjacent bubble universe in the multiverse structure. In this universe, the electromagnetic force is 2% stronger, causing chemical bonds to behave differently and stars to burn with an ethereal bright violet hue. Time flows along 5-dimensional branches.',
+    specs: {
+      mass: '~1.5 × 10⁵³ kg',
+      radius: '98 Billion LY',
+      temperature: '2.7 K (CMB)',
+      age: '14.2 Billion Years'
+    },
+    advancedSpecs: {
+      classification: 'Type-II Chaotic Inflationary Bubble',
+      surfaceGravity: 'N/A (Spatially flat)',
+      escapeVelocity: 'N/A',
+      luminosity: 'Ethereal violet emission spectra',
+      composition: 'Super-dense matter, Dark energy variants, Quintessence',
+      discoveryYear: 'Hypothetical (Visualized via extra-dimensional projection)'
+    },
+    trivia: [
+      'This universe split from ours during the cosmic inflationary phase 13.8 billion years ago.',
+      'Because of stronger chemical bonds, carbon-based molecules are incredibly rigid, making materials naturally stronger than diamond.',
+      'The cosmic background radiation is highly modulated, suggesting possible quantum communication from advanced extra-dimensional civilizations.'
+    ],
+    visuals: {
+      baseColor: '#a855f7',
+      secondaryColor: '#ec4899',
+      visualShape: 'ringed-sphere'
+    },
+    scaleZone: 6
+  },
+  {
+    id: 'multiverse-bubble-2',
+    name: 'Aethelgard (Alternate Physics Universe)',
+    category: 'Parallel Universes',
+    distanceLy: 4.5e15,
+    distanceString: '4.5 × 10¹⁵ LY (Quantum Foam)',
+    description: 'A pocket universe characterized by high gravitational constants and modified thermodynamics. Stars are tightly packed in colossal hyperspace spirals, and light travels at twice its speed in our universe. Living systems here utilize liquid helium-3 super-currents.',
+    specs: {
+      mass: '~2.8 × 10⁵³ kg',
+      radius: '112 Billion LY',
+      temperature: '1.8 K',
+      age: '11.5 Billion Years'
+    },
+    advancedSpecs: {
+      classification: 'Pocket Universe / Brane-World Concept',
+      surfaceGravity: 'N/A',
+      escapeVelocity: 'N/A',
+      luminosity: 'Ultra-luminous starburst systems',
+      composition: 'Super-heavy baryons, Strange matter, Tachyon fields',
+      discoveryYear: 'Hypothetical'
+    },
+    trivia: [
+      'Due to twice the speed of light, causality has a much wider horizon, allowing massive galactic superstructures to form rapidly.',
+      'It resides on a parallel 3-brane floating in a 5-dimensional bulk space.',
+      'Liquid helium-3 super-currents allow macroscopic quantum coherence, letting lifeforms exist in states of natural superposition.'
+    ],
+    visuals: {
+      baseColor: '#06b6d4',
+      secondaryColor: '#10b981',
+      visualShape: 'sphere'
+    },
+    scaleZone: 6
+  },
+  {
+    id: 'multiverse-bubble-3',
+    name: 'Antimatter Prime',
+    category: 'Parallel Universes',
+    distanceLy: 1.2e16,
+    distanceString: '1.2 × 10¹⁶ LY',
+    description: 'A parallel timeline where the baryogenesis phase favored antimatter over regular matter. Virtually identical in layout to our observable universe, but consisting entirely of anti-atoms (positrons, antiprotons, and antineutrons). Any contact with our universe would trigger instant, total annihilation.',
+    specs: {
+      mass: '1.4 × 10⁵³ kg (Antimatter)',
+      radius: '93 Billion LY',
+      temperature: '2.725 K',
+      age: '13.8 Billion Years'
+    },
+    advancedSpecs: {
+      classification: 'CP-Inverted Mirror Universe',
+      surfaceGravity: 'N/A',
+      escapeVelocity: 'N/A',
+      luminosity: 'Normal light (photons are their own antiparticles)',
+      composition: 'Anti-Hydrogen, Anti-Helium, Anti-Carbon, Dark Matter',
+      discoveryYear: 'Calculated via quantum reflection symmetry'
+    },
+    trivia: [
+      'Stars and galaxies here shine with identical light because photons are their own antiparticles, making them indistinguishable from ours from a distance.',
+      'If regular matter from our universe crossed the dimensional threshold, it would cause a pure energy blast with 100% mass-to-energy conversion efficiency.',
+      'Scientists theorize that the boundary between our universe and Antimatter Prime is guarded by a high-energy quantum vacuum domain wall.'
+    ],
+    visuals: {
+      baseColor: '#ef4444',
+      secondaryColor: '#f97316',
+      visualShape: 'pulsar'
+    },
+    scaleZone: 6
+  },
+  {
+    id: 'multiverse-bubble-4',
+    name: 'The Obsidian Void Dimension',
+    category: 'Dimensional Rifts',
+    distanceLy: 8.9e16,
+    distanceString: '8.9 × 10¹⁶ LY',
+    description: 'An ancient, dying parallel dimension where star formation ceased trillions of years ago. It consists entirely of supermassive black holes, frozen iron stars, and cold cosmic dust drifting in absolute absolute-zero temperatures. It represents the ultimate heat-death state of cosmic evolution.',
+    specs: {
+      mass: '~9.0 × 10⁵⁴ kg',
+      radius: '450 Billion LY',
+      temperature: '0.001 K',
+      age: '98 Trillion Years'
+    },
+    advancedSpecs: {
+      classification: 'Post-Decay Degenerate Dimension',
+      surfaceGravity: 'N/A',
+      escapeVelocity: 'N/A',
+      luminosity: 'Hawking radiation emission only',
+      composition: 'Iron-56 stellar husks, Black hole event horizons, Cold leptons',
+      discoveryYear: 'Inferred via gravity wave leakage'
+    },
+    trivia: [
+      'All protons have decayed in this universe, leaving only electrons, positrons, and black holes.',
+      'Its cosmic horizon is so dark that not a single photon of visible light has been generated in a billion years.',
+      'Slight gravitational leakage from this universe acts as "dark matter" in neighboring younger timelines.'
+    ],
+    visuals: {
+      baseColor: '#1e293b',
+      secondaryColor: '#0f172a',
+      visualShape: 'black-hole'
+    },
+    scaleZone: 6
+  }
+];
+
 export default function App() {
   // Application State
-  const [objects] = useState<CelestialObject[]>(PRESETS_CELESTIAL_DATA);
+  const [objects] = useState<CelestialObject[]>(() => [...PRESETS_CELESTIAL_DATA, ...MULTIVERSE_OBJECTS]);
   const [selectedId, setSelectedId] = useState<string | null>(PRESETS_CELESTIAL_DATA[0]?.id || null); // default selected first item
   const [activeScaleZone, setActiveScaleZone] = useState<number | null>(null); // null means "All Scales"
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Interactive Simulation Visual Layer Toggles
+  const [showDarkMatter, setShowDarkMatter] = useState(true);
+  const [showDarkEnergy, setShowDarkEnergy] = useState(true);
+  const [showCMB, setShowCMB] = useState(true);
   
   // Loading & Error States
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -411,6 +554,9 @@ export default function App() {
                 scrollToSidebar();
               }}
               activeScaleZone={activeScaleZone}
+              showDarkMatter={showDarkMatter}
+              showDarkEnergy={showDarkEnergy}
+              showCMB={showCMB}
             />
 
             {/* Selected Object Target HUD for mobile & desktop overview */}
@@ -500,7 +646,7 @@ export default function App() {
         </div>
 
         {/* 4. Detailed Specimen Sidebar */}
-        {selectedObject && (
+        {selectedObject ? (
           <aside
             className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-950/85 lg:bg-white/[0.02] backdrop-blur-2xl overflow-visible lg:overflow-y-auto flex flex-col z-10 shadow-2xl shrink-0"
             id="detail-sidebar"
@@ -659,6 +805,178 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            </div>
+          </aside>
+        ) : (
+          <aside
+            className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-950/85 lg:bg-white/[0.02] backdrop-blur-2xl overflow-visible lg:overflow-y-auto flex flex-col z-10 shadow-2xl shrink-0"
+            id="detail-sidebar"
+          >
+            {/* Sidebar header */}
+            <div className="p-6 border-b border-white/10 flex flex-col gap-2" id="sidebar-header">
+              <span className="text-[8px] font-bold font-mono tracking-widest text-indigo-400 uppercase bg-indigo-950/40 border border-indigo-900/30 px-2 py-0.5 rounded w-fit">
+                Simulation Telemetry
+              </span>
+              <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2 mt-1" id="sidebar-universe-title">
+                <Orbit className="w-4 h-4 text-sky-400 animate-spin" style={{ animationDuration: '20s' }} />
+                Observable Universe
+              </h2>
+            </div>
+
+            {/* Universe Composition Stats */}
+            <div className="p-6 flex flex-col gap-6" id="universe-composition-section">
+              {/* Bento Scale Stats */}
+              <div>
+                <h4 className="text-[10px] font-bold font-mono text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                  <Activity className="w-3.5 h-3.5 text-sky-400" />
+                  Cosmological Demographics
+                </h4>
+                
+                <div className="grid grid-cols-2 gap-3" id="universe-stats-grid">
+                  <div className="bg-white/5 border border-white/10 p-3 rounded-xl frosted-glass-hover">
+                    <div className="text-[9px] font-mono text-slate-400 uppercase">Est. Galaxies</div>
+                    <div className="text-xs font-bold text-sky-300 mt-1 font-mono">
+                      200B — 2 Trillion
+                    </div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 p-3 rounded-xl frosted-glass-hover">
+                    <div className="text-[9px] font-mono text-slate-400 uppercase">Total Stars</div>
+                    <div className="text-xs font-bold text-amber-300 mt-1 font-mono">
+                      ~10²⁴ (Septillion)
+                    </div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 p-3 rounded-xl frosted-glass-hover">
+                    <div className="text-[9px] font-mono text-slate-400 uppercase">Exoplanets</div>
+                    <div className="text-xs font-bold text-slate-200 mt-1 font-mono">
+                      Trillions
+                    </div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 p-3 rounded-xl frosted-glass-hover">
+                    <div className="text-[9px] font-mono text-slate-400 uppercase">Supermassive BHs</div>
+                    <div className="text-xs font-bold text-purple-400 mt-1 font-mono">
+                      Billions
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mass-Energy Breakdown Visual bars */}
+              <div>
+                <h4 className="text-[10px] font-bold font-mono text-slate-500 uppercase tracking-widest mb-3.5 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-indigo-400" />
+                  Mass-Energy Distribution
+                </h4>
+                
+                <div className="flex flex-col gap-4 bg-white/[0.01] border border-white/10 p-4 rounded-xl" id="distribution-panel">
+                  {/* Dark Energy */}
+                  <div>
+                    <div className="flex justify-between items-center text-xs mb-1.5">
+                      <span className="text-slate-300 font-medium flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-pink-500 shadow shadow-pink-500/50" />
+                        Dark Energy
+                      </span>
+                      <span className="font-mono font-bold text-pink-400">68%</span>
+                    </div>
+                    <div className="w-full bg-slate-900/80 h-2.5 rounded-full overflow-hidden border border-white/5">
+                      <div className="bg-gradient-to-r from-pink-600 to-pink-400 h-full rounded-full shadow-lg shadow-pink-500/35" style={{ width: '68%' }} />
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-relaxed mt-1.5">
+                      The enigmatic, repulsive vacuum pressure driving the accelerated expansion of cosmological spacetime.
+                    </p>
+                  </div>
+
+                  {/* Dark Matter */}
+                  <div className="border-t border-white/5 pt-3">
+                    <div className="flex justify-between items-center text-xs mb-1.5">
+                      <span className="text-slate-300 font-medium flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow shadow-indigo-500/50" />
+                        Dark Matter
+                      </span>
+                      <span className="font-mono font-bold text-indigo-400">27%</span>
+                    </div>
+                    <div className="w-full bg-slate-900/80 h-2.5 rounded-full overflow-hidden border border-white/5">
+                      <div className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-full rounded-full shadow-lg shadow-indigo-500/35" style={{ width: '27%' }} />
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-relaxed mt-1.5">
+                      Invisible non-baryonic mass forming the giant gravitational scaffolding upon which all galaxies and the cosmic web are constructed.
+                    </p>
+                  </div>
+
+                  {/* Normal Matter */}
+                  <div className="border-t border-white/5 pt-3">
+                    <div className="flex justify-between items-center text-xs mb-1.5">
+                      <span className="text-slate-300 font-medium flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow shadow-amber-400/50" />
+                        Baryonic Matter
+                      </span>
+                      <span className="font-mono font-bold text-amber-400">5%</span>
+                    </div>
+                    <div className="w-full bg-slate-900/80 h-2.5 rounded-full overflow-hidden border border-white/5">
+                      <div className="bg-gradient-to-r from-amber-500 to-amber-300 h-full rounded-full shadow-lg shadow-amber-400/35" style={{ width: '5%' }} />
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-relaxed mt-1.5">
+                      "Normal" matter—atoms, stars, gas, and planets. Contains **Radiation & Leftover Light** (forming the Cosmic Microwave Background).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive Layer Toggles */}
+              <div>
+                <h4 className="text-[10px] font-bold font-mono text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                  Interactive Simulation Layers
+                </h4>
+                
+                <div className="flex flex-col gap-2.5 bg-white/[0.01] border border-white/10 p-3.5 rounded-xl text-xs" id="simulation-layer-toggles">
+                  {/* CMB Toggle */}
+                  <label className="flex items-center justify-between cursor-pointer group hover:bg-white/5 p-1.5 rounded-lg transition-all" id="toggle-layer-cmb">
+                    <span className="text-slate-300 group-hover:text-white transition-all font-medium">
+                      Leftover Light (CMB Shell)
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={showCMB}
+                      onChange={(e) => setShowCMB(e.target.checked)}
+                      className="accent-pink-500 w-4 h-4 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer"
+                    />
+                  </label>
+
+                  {/* Dark Matter Toggle */}
+                  <label className="flex items-center justify-between cursor-pointer group hover:bg-white/5 p-1.5 rounded-lg transition-all" id="toggle-layer-darkmatter">
+                    <span className="text-slate-300 group-hover:text-white transition-all font-medium">
+                      Dark Matter Filament Web
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={showDarkMatter}
+                      onChange={(e) => setShowDarkMatter(e.target.checked)}
+                      className="accent-indigo-500 w-4 h-4 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer"
+                    />
+                  </label>
+
+                  {/* Dark Energy Toggle */}
+                  <label className="flex items-center justify-between cursor-pointer group hover:bg-white/5 p-1.5 rounded-lg transition-all" id="toggle-layer-darkenergy">
+                    <span className="text-slate-300 group-hover:text-white transition-all font-medium">
+                      Dark Energy Expansion Waves
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={showDarkEnergy}
+                      onChange={(e) => setShowDarkEnergy(e.target.checked)}
+                      className="accent-pink-500 w-4 h-4 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Informative Help Card */}
+              <div className="bg-indigo-950/30 border border-indigo-500/20 p-4 rounded-xl flex gap-3 text-xs text-indigo-200/90 leading-relaxed font-sans" id="universe-tips-card">
+                <Info className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
+                <p>
+                  <strong>Logarithmic Space Map:</strong> Distances are scaled logarithmically to fit the extreme magnitudes from Earth to the Cosmic Microwave Background (CMB) boundary at 46.5 Billion LY. Use the search or scale zone selectors to travel across structures.
+                </p>
               </div>
             </div>
           </aside>

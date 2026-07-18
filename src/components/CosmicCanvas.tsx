@@ -20,13 +20,19 @@ interface CosmicCanvasProps {
   selectedId: string | null;
   onSelectObject: (obj: CelestialObject) => void;
   activeScaleZone: number | null; // filter by scale zone
+  showDarkMatter?: boolean;
+  showDarkEnergy?: boolean;
+  showCMB?: boolean;
 }
 
 export default function CosmicCanvas({
   objects,
   selectedId,
   onSelectObject,
-  activeScaleZone
+  activeScaleZone,
+  showDarkMatter = true,
+  showDarkEnergy = true,
+  showCMB = true
 }: CosmicCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -56,45 +62,170 @@ export default function CosmicCanvas({
   });
   const [hoveredObject, setHoveredObject] = useState<CelestialObject | null>(null);
 
-  // Background Starfield
+  // Background Starfield (Deep Space Cosmic Sphere at Infinity)
   const backgroundStars = useMemo(() => {
     const stars = [];
-    const count = 300;
+    const count = 1200;
     for (let i = 0; i < count; i++) {
-      // Scatter stars on a giant sphere at infinity
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
-      const r = 2000; // far away
+      const r = 2500; // far away
       stars.push({
         x: r * Math.sin(phi) * Math.cos(theta),
         y: r * Math.sin(phi) * Math.sin(theta),
         z: r * Math.cos(phi),
-        brightness: 0.3 + Math.random() * 0.7,
-        size: 0.5 + Math.random() * 1.5,
-        color: ['#fff', '#bae6fd', '#fed7aa', '#fbcfe8'][Math.floor(Math.random() * 4)]
+        brightness: 0.25 + Math.random() * 0.75,
+        size: 0.4 + Math.random() * 1.6,
+        color: ['#ffffff', '#bae6fd', '#fed7aa', '#fbcfe8', '#a7f3d0', '#fef08a'][Math.floor(Math.random() * 6)]
       });
     }
     return stars;
   }, []);
 
-  // Map celestial objects to deterministic 3D coordinates based on logarithmic distance
+  // 3D Volumetric starfield (stars floating throughout the universe which pan and scale dynamically)
+  const volumetricStars = useMemo(() => {
+    const stars = [];
+    const count = 600;
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      // Distribute stars inside nested shells from r = 40 to r = 700 pixels
+      const r = 40 + Math.random() * 660;
+      stars.push({
+        x: r * Math.sin(phi) * Math.cos(theta),
+        y: r * Math.sin(phi) * Math.sin(theta),
+        z: r * Math.cos(phi),
+        brightness: 0.35 + Math.random() * 0.65,
+        size: 0.5 + Math.random() * 1.8,
+        color: ['#ffffff', '#bae6fd', '#fed7aa', '#fbcfe8', '#a7f3d0', '#fef08a'][Math.floor(Math.random() * 6)]
+      });
+    }
+    return stars;
+  }, []);
+
+  // Background Multiverse bubbles floating outside the observable universe (r > 500)
+  const backgroundBubbles = useMemo(() => {
+    const bubbles = [];
+    const count = 35;
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      // Positioned outside the observable horizon (radius from 530 to 1100 pixels)
+      const r = 530 + Math.random() * 570;
+      
+      const size = 18 + Math.random() * 42; // large glowing bubble spheres
+      const colors = [
+        { base: 'rgba(168, 85, 247, 0.12)', ring: 'rgba(168, 85, 247, 0.45)' }, // Purple
+        { base: 'rgba(6, 182, 212, 0.12)', ring: 'rgba(6, 182, 212, 0.45)' },   // Cyan
+        { base: 'rgba(236, 72, 153, 0.12)', ring: 'rgba(236, 72, 153, 0.45)' },  // Pink
+        { base: 'rgba(244, 63, 94, 0.10)', ring: 'rgba(244, 63, 94, 0.40)' },   // Rose
+        { base: 'rgba(16, 185, 129, 0.10)', ring: 'rgba(16, 185, 129, 0.40)' },  // Emerald
+        { base: 'rgba(245, 158, 11, 0.10)', ring: 'rgba(245, 158, 11, 0.40)' }   // Amber
+      ];
+      const selectedColor = colors[Math.floor(Math.random() * colors.length)];
+
+      bubbles.push({
+        x: r * Math.sin(phi) * Math.cos(theta),
+        y: r * Math.sin(phi) * Math.sin(theta),
+        z: r * Math.cos(phi),
+        size,
+        baseColor: selectedColor.base,
+        ringColor: selectedColor.ring,
+        pulseSpeed: 0.3 + Math.random() * 0.7,
+        pulseOffset: Math.random() * Math.PI * 2
+      });
+    }
+    return bubbles;
+  }, []);
+
+  // Map celestial objects to deterministic 3D coordinates based on logarithmic distance within their specific Scale Zone shells
   const mappedObjects = useMemo(() => {
     return objects.map((obj, index) => {
-      // Deterministic scattering based on index seed
       const seed = index + 1;
-      const angleTheta = seed * 2.39996; // Golden angle in radians
-      const anglePhi = Math.acos(((seed * 1.61803) % 2) - 1); // Spherical distribution
+      const zone = obj.scaleZone;
+      let minLy = 1e-15;
+      let maxLy = 1;
+      let minR = 15;
+      let maxR = 80;
 
-      // Map distance logarithmically
-      // Range of distance is ~1e-17 LY to 4.65e10 LY
-      const logDist = obj.distanceLy > 0 ? Math.log10(obj.distanceLy) : -23;
+      if (zone === 1) {
+        minLy = 1e-15;
+        maxLy = 1;
+        minR = 15;
+        maxR = 80;
+      } else if (zone === 2) {
+        minLy = 1;
+        maxLy = 1000;
+        minR = 80;
+        maxR = 180;
+      } else if (zone === 3) {
+        minLy = 1000;
+        maxLy = 1e7;
+        minR = 180;
+        maxR = 290;
+      } else if (zone === 4) {
+        minLy = 1e7;
+        maxLy = 1e9;
+        minR = 290;
+        maxR = 400;
+      } else if (zone === 5) {
+        minLy = 1e9;
+        maxLy = 4.65e10;
+        minR = 400;
+        maxR = 500;
+      } else if (zone === 6) {
+        minLy = 4.65e10;
+        maxLy = 2e16;
+        minR = 520;
+        maxR = 720;
+      }
 
-      // Base radius of the concentric shells
-      // We map logDist from [-23, 11] to [80, 500] pixels
-      const minLog = -23;
-      const maxLog = 11;
-      const pct = (logDist - minLog) / (maxLog - minLog);
-      const r = 80 + pct * 420;
+      // Calculate radial distance r on log scale
+      let val = obj.distanceLy > 0 ? obj.distanceLy : minLy;
+      // Special case for Milky Way itself to center it exactly at Sagittarius A*'s radius (~26,000 LY)
+      if (obj.id === 'galaxy-milkyway') {
+        val = 26000;
+      }
+      const logVal = Math.log10(val);
+      const logMin = Math.log10(minLy);
+      const logMax = Math.log10(maxLy);
+
+      let pct = 0.5;
+      if (logMax > logMin) {
+        pct = (logVal - logMin) / (logMax - logMin);
+      }
+      pct = Math.max(0, Math.min(1, pct));
+      const r = minR + pct * (maxR - minR);
+
+      // Spherical coordinate angles
+      // Standard distribution
+      let angleTheta = seed * 2.39996; // Golden angle in radians
+      let anglePhi = Math.acos(((seed * 1.61803) % 2) - 1); // Spherical distribution
+
+      const isMilkyWayObject =
+        zone === 1 ||
+        zone === 2 ||
+        (zone === 3 && (obj.category !== 'Galaxies' || obj.id === 'galaxy-milkyway'));
+
+      if (isMilkyWayObject) {
+        // All Milky Way objects (including Solar System, nearby stars, and galactic nebulae/stars)
+        // are aligned with the flat galactic disk (near the equatorial plane phi = Math.PI / 2)
+        anglePhi = Math.PI / 2 + Math.sin(seed * 4.5) * 0.08;
+
+        if (obj.id === 'bh-sagitarius-a' || obj.id === 'galaxy-milkyway') {
+          // Center of the Milky Way is at a specific reference angle
+          angleTheta = Math.PI / 4;
+          anglePhi = Math.PI / 2;
+        } else if (zone === 3) {
+          // Other galactic objects in Zone 3 are clustered on the same side of Earth as Sagittarius A*
+          // (theta clustered around Math.PI / 4) so they lie inside the Milky Way's spiral arms
+          angleTheta = Math.PI / 4 + Math.sin(seed * 7.2) * 0.9;
+        } else {
+          // Zone 1 & 2 objects (Solar System & nearby stars) surround Earth, so we spread them
+          // 360 degrees, but they are flat within the disk since anglePhi is near Math.PI / 2
+          angleTheta = seed * 2.39996;
+        }
+      }
 
       // Map to 3D Cartesian coordinates
       const x = r * Math.sin(anglePhi) * Math.cos(angleTheta);
@@ -143,7 +274,7 @@ export default function CosmicCanvas({
         targetCameraRef.current.targetZ = selectedObj.z;
 
         // Auto zoom in based on the scale zone to get a perfect framing
-        const zoneZooms = [2.0, 1.4, 1.0, 0.7, 0.4];
+        const zoneZooms = [2.0, 1.4, 1.0, 0.7, 0.4, 0.25];
         const baseZoom = zoneZooms[selectedObj.scaleZone - 1] || 1.0;
         targetCameraRef.current.zoom = baseZoom;
 
@@ -583,11 +714,106 @@ export default function CosmicCanvas({
       });
       ctx.restore();
 
+      // 2.5 Draw 3D Volumetric Starfield (stars floating throughout the universe which pan and scale dynamically)
+      ctx.save();
+      volumetricStars.forEach((star) => {
+        // Translate relative to camera target
+        const ox = star.x - cameraRef.current.targetX;
+        const oy = star.y - cameraRef.current.targetY;
+        const oz = star.z - cameraRef.current.targetZ;
+
+        // Rotate
+        const rx1 = ox * cosY - oz * sinY;
+        const rz1 = ox * sinY + oz * cosY;
+        const ry = oy * cosP - rz1 * sinP;
+        const rz = oy * sinP + rz1 * cosP;
+
+        const sz = rz + distOffset;
+        if (sz > 10) {
+          const depthScale = focalLength / sz;
+          const sx = cx + rx1 * depthScale;
+          const sy = cy + ry * depthScale;
+
+          if (sx >= 0 && sx < width && sy >= 0 && sy < height) {
+            ctx.fillStyle = star.color;
+            // Farther stars fade slightly, closer stars shine brighter
+            const distAlpha = Math.max(0.15, Math.min(1.0, 1.25 - (sz / 1200)));
+            ctx.globalAlpha = star.brightness * distAlpha;
+            
+            ctx.beginPath();
+            ctx.arc(sx, sy, star.size * Math.max(0.4, Math.min(2.0, depthScale)), 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+      ctx.restore();
+
+      // 2.8 Draw Background Multiverse Bubbles (Floating parallel universes outside the horizon)
+      ctx.save();
+      const timeVal = Date.now() / 1000;
+      backgroundBubbles.forEach((bubble) => {
+        const ox = bubble.x - cameraRef.current.targetX;
+        const oy = bubble.y - cameraRef.current.targetY;
+        const oz = bubble.z - cameraRef.current.targetZ;
+
+        const rx1 = ox * cosY - oz * sinY;
+        const rz1 = ox * sinY + oz * cosY;
+        const ry = oy * cosP - rz1 * sinP;
+        const rz = oy * sinP + rz1 * cosP;
+
+        const sz = rz + distOffset;
+        if (sz > 10) {
+          const depthScale = focalLength / sz;
+          const sx = cx + rx1 * depthScale;
+          const sy = cy + ry * depthScale;
+
+          if (sx >= -100 && sx < width + 100 && sy >= -100 && sy < height + 100) {
+            const renderSize = bubble.size * depthScale;
+            if (renderSize > 1) {
+              const pulse = 1 + 0.08 * Math.sin(timeVal * bubble.pulseSpeed + bubble.pulseOffset);
+              const rSize = renderSize * pulse;
+
+              ctx.save();
+              const bubbleGrad = ctx.createRadialGradient(sx, sy, rSize * 0.2, sx, sy, rSize);
+              bubbleGrad.addColorStop(0, 'rgba(15, 23, 42, 0.05)');
+              bubbleGrad.addColorStop(0.7, bubble.baseColor);
+              bubbleGrad.addColorStop(1, bubble.ringColor);
+              
+              ctx.fillStyle = bubbleGrad;
+              ctx.beginPath();
+              ctx.arc(sx, sy, rSize, 0, Math.PI * 2);
+              ctx.fill();
+
+              ctx.strokeStyle = bubble.ringColor;
+              ctx.lineWidth = 0.5 * Math.max(0.5, depthScale);
+              ctx.stroke();
+
+              ctx.strokeStyle = bubble.baseColor;
+              ctx.lineWidth = 0.3 * Math.max(0.5, depthScale);
+              ctx.setLineDash([3, 3]);
+              ctx.beginPath();
+              ctx.ellipse(sx, sy, rSize * 0.8, rSize * 0.25, bubble.pulseOffset, 0, Math.PI * 2);
+              ctx.stroke();
+              ctx.setLineDash([]);
+
+              ctx.restore();
+            }
+          }
+        }
+      });
+      ctx.restore();
+
       // 3. Draw Cosmic Concentric Grid Shells (Scale Reference boundaries)
       ctx.strokeStyle = 'rgba(51, 65, 85, 0.15)'; // slate-700
       ctx.lineWidth = 1;
       const scaleRadii = [80, 180, 290, 400, 500];
-      const scaleLabels = ['Debris (<1 LY)', 'Stellar (<1k LY)', 'Galactic (<10M LY)', 'Intergalactic (<1B LY)', 'Observable Horizon (46B LY)'];
+      const scaleLabels = [
+        'Debris (<1 LY)', 
+        'Stellar (<1k LY)', 
+        'Galactic (<10M LY)', 
+        'Intergalactic (<1B LY)', 
+        'Observable Horizon (46B LY)'
+      ];
 
       scaleRadii.forEach((shellRadius, i) => {
         if (i === 4) {
@@ -681,7 +907,7 @@ export default function CosmicCanvas({
 
           ctx.restore();
 
-          // Label the Observable Universe Edge
+          // Label the Horizon Edge
           const ox = shellRadius - cameraRef.current.targetX;
           const oy = 0 - cameraRef.current.targetY;
           const oz = 0 - cameraRef.current.targetZ;
@@ -696,8 +922,8 @@ export default function CosmicCanvas({
             const sx = cx + rx1 * depthScale;
             const sy = cy + ry * depthScale;
 
-            ctx.fillStyle = 'rgba(244, 63, 94, 0.5)'; // vibrant rose pink label
-            ctx.font = 'bold 10px font-mono';
+            ctx.fillStyle = 'rgba(244, 63, 94, 0.65)'; // vibrant rose pink label
+            ctx.font = 'bold 9px "JetBrains Mono", font-mono, monospace';
             ctx.fillText(scaleLabels[i], sx + 5, sy - 5);
           }
 
@@ -758,112 +984,194 @@ export default function CosmicCanvas({
         }
       });
 
-      // 3.5. Draw Highlight for the Solar System Belt (where planets are clustered, r ~ 312)
-      ctx.save();
-      ctx.strokeStyle = 'rgba(234, 179, 8, 0.45)'; // Amber gold glowing line
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([5, 4]);
-      
-      const solarSystemRadius = 312; // Middle of planet cluster
-      ctx.beginPath();
-      let solarPointsCount = 0;
-      for (let s = 0; s <= 64; s++) {
-        const angle = (s / 64) * Math.PI * 2;
-        const ox = solarSystemRadius * Math.cos(angle) - cameraRef.current.targetX;
-        const oy = 0 - cameraRef.current.targetY;
-        const oz = solarSystemRadius * Math.sin(angle) - cameraRef.current.targetZ;
+      // 3.5. Draw CMB / Cosmic Microwave Background boundary shell
+      if (showCMB) {
+        ctx.save();
+        const ox_c = 0 - cameraRef.current.targetX;
+        const oy_c = 0 - cameraRef.current.targetY;
+        const oz_c = 0 - cameraRef.current.targetZ;
 
-        const rx1 = ox * cosY - oz * sinY;
-        const rz1 = ox * sinY + oz * cosY;
-        const ry = oy * cosP - rz1 * sinP;
-        const rz = oy * sinP + rz1 * cosP;
+        const rx_c = ox_c * cosY - oz_c * sinY;
+        const rz_c = ox_c * sinY + oz_c * cosY;
+        const ry_c = oy_c * cosP - rz_c * sinP;
+        const rz_cosmic = oy_c * sinP + rz_c * cosP;
+        const sz_c = rz_cosmic + distOffset;
 
-        const sz = rz + distOffset;
-        if (sz > 10) {
-          const depthScale = focalLength / sz;
-          const sx = cx + rx1 * depthScale;
-          const sy = cy + ry * depthScale;
+        if (sz_c > 10) {
+          const depthScale = focalLength / sz_c;
+          const cx_proj = cx + rx_c * depthScale;
+          const cy_proj = cy + ry_c * depthScale;
+          const r_proj = 1600 * depthScale;
 
-          if (s === 0) {
-            ctx.moveTo(sx, sy);
-          } else {
-            ctx.lineTo(sx, sy);
-          }
-          solarPointsCount++;
-        }
-      }
-      if (solarPointsCount > 10) {
-        ctx.stroke();
-        
-        // Draw a text label on the belt
-        const ox = solarSystemRadius - cameraRef.current.targetX;
-        const oy = 0 - cameraRef.current.targetY;
-        const oz = 0 - cameraRef.current.targetZ;
-        const rx1 = ox * cosY - oz * sinY;
-        const rz1 = ox * sinY + oz * cosY;
-        const ry = oy * cosP - rz1 * sinP;
-        const rz = oy * sinP + rz1 * cosP;
-        const sz = rz + distOffset;
+          // Draw the outer boundary ring representing the cosmological horizon
+          ctx.strokeStyle = 'rgba(239, 68, 68, 0.25)'; // Rose/orange glow
+          ctx.lineWidth = 2.5;
+          ctx.shadowColor = 'rgba(239, 68, 68, 0.4)';
+          ctx.shadowBlur = 10;
+          ctx.beginPath();
+          ctx.arc(cx_proj, cy_proj, r_proj, 0, Math.PI * 2);
+          ctx.stroke();
 
-        if (sz > 10) {
-          const depthScale = focalLength / sz;
-          const sx = cx + rx1 * depthScale;
-          const sy = cy + ry * depthScale;
+          // Fill with CMB temperature fluctuation radial gradient
+          const cmbGrad = ctx.createRadialGradient(cx_proj, cy_proj, r_proj * 0.94, cx_proj, cy_proj, r_proj);
+          cmbGrad.addColorStop(0, 'rgba(15, 23, 42, 0)'); // transparent inside
+          cmbGrad.addColorStop(0.2, 'rgba(56, 189, 248, 0.03)'); // cool blue fluctuation
+          cmbGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.05)'); // warm yellow fluctuation
+          cmbGrad.addColorStop(0.8, 'rgba(239, 68, 68, 0.08)');  // redshift fluctuation
+          cmbGrad.addColorStop(1, 'rgba(236, 72, 153, 0.16)');     // edge boundary pink
 
-          ctx.fillStyle = '#f59e0b'; // Amber yellow text
+          ctx.fillStyle = cmbGrad;
+          ctx.beginPath();
+          ctx.arc(cx_proj, cy_proj, r_proj, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Label the CMB boundary
+          ctx.fillStyle = 'rgba(244, 63, 94, 0.85)';
           ctx.font = 'bold 9px "JetBrains Mono", monospace';
-          ctx.fillText('☀️ SOLAR SYSTEM ORBITAL ZONE', sx + 6, sy - 4);
+          ctx.textAlign = 'center';
+          ctx.fillText('COSMIC MICROWAVE BACKGROUND (CMB) — EDGE OF OBSERVABLE UNIVERSE', cx_proj, cy_proj - r_proj - 8);
+          ctx.font = '8px "JetBrains Mono", monospace';
+          ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+          ctx.fillText('R = 46.5 BILLION LIGHT YEARS', cx_proj, cy_proj - r_proj + 4);
         }
+        ctx.restore();
       }
-      ctx.restore();
 
-      // 4. Draw connection filaments (Cosmic Web grid) if we are in cosmologic scale
-      ctx.save();
-      ctx.strokeStyle = 'rgba(16, 185, 129, 0.05)'; // subtle green web filaments
-      ctx.lineWidth = 1.5;
-      const filaments = mappedObjects.filter((o) => o.scaleZone >= 4);
-      for (let i = 0; i < filaments.length; i++) {
-        for (let j = i + 1; j < filaments.length; j++) {
-          const f1 = filaments[i];
-          const f2 = filaments[j];
-          // Connect nearby galactic clusters in the projection space
-          const dx = (f1.x || 0) - (f2.x || 0);
-          const dy = (f1.y || 0) - (f2.y || 0);
-          const dz = (f1.z || 0) - (f2.z || 0);
-          const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      // 3.6. Draw Dark Energy Expansion Wave Ripples
+      if (showDarkEnergy) {
+        ctx.save();
+        const timeVal = Date.now() / 1500;
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(236, 72, 153, 0.12)'; // translucent expansion wave
+        ctx.shadowColor = 'rgba(236, 72, 153, 0.25)';
+        ctx.shadowBlur = 6;
 
-          if (d < 250) {
-            // Draw 3D projected line
-            ctx.beginPath();
-            // Point 1
-            const p1x = (f1.x || 0) - cameraRef.current.targetX;
-            const p1y = (f1.y || 0) - cameraRef.current.targetY;
-            const p1z = (f1.z || 0) - cameraRef.current.targetZ;
-            const p1_rx = p1x * cosY - p1z * sinY;
-            const p1_rz = p1x * sinY + p1z * cosY;
-            const p1_ry = p1y * cosP - p1_rz * sinP;
-            const p1_sz = p1y * sinP + p1_rz * cosP + distOffset;
+        for (let ring = 0; ring < 3; ring++) {
+          const phase = (timeVal * 0.3 + ring / 3) % 1.0;
+          const radius = phase * 1600; // expand to CMB boundary
+          
+          ctx.beginPath();
+          let points = 0;
+          for (let s = 0; s <= 64; s++) {
+            const angle = (s / 64) * Math.PI * 2;
+            const ox = radius * Math.cos(angle) - cameraRef.current.targetX;
+            const oy = 0 - cameraRef.current.targetY;
+            const oz = radius * Math.sin(angle) - cameraRef.current.targetZ;
 
-            // Point 2
-            const p2x = (f2.x || 0) - cameraRef.current.targetX;
-            const p2y = (f2.y || 0) - cameraRef.current.targetY;
-            const p2z = (f2.z || 0) - cameraRef.current.targetZ;
-            const p2_rx = p2x * cosY - p2z * sinY;
-            const p2_rz = p2x * sinY + p2z * cosY;
-            const p2_ry = p2y * cosP - p2_rz * sinP;
-            const p2_sz = p2y * sinP + p2_rz * cosP + distOffset;
+            const rx1 = ox * cosY - oz * sinY;
+            const rz1 = ox * sinY + oz * cosY;
+            const ry = oy * cosP - rz1 * sinP;
+            const rz = oy * sinP + rz1 * cosP;
 
-            if (p1_sz > 10 && p2_sz > 10) {
-              const ds1 = focalLength / p1_sz;
-              const ds2 = focalLength / p2_sz;
-              ctx.moveTo(cx + p1_rx * ds1, cy + p1_ry * ds1);
-              ctx.lineTo(cx + p2_rx * ds2, cy + p2_ry * ds2);
-              ctx.stroke();
+            const sz = rz + distOffset;
+            if (sz > 10) {
+              const depthScale = focalLength / sz;
+              const sx = cx + rx1 * depthScale;
+              const sy = cy + ry * depthScale;
+
+              if (s === 0) ctx.moveTo(sx, sy);
+              else ctx.lineTo(sx, sy);
+              points++;
+            }
+          }
+          if (points > 10) {
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      // 4. Draw connection filaments (Cosmic Web / Dark Matter Scaffold Web)
+      if (showDarkMatter) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(99, 102, 241, 0.24)'; // indigo-blue glowing Dark Matter scaffold
+        ctx.lineWidth = 1.8;
+        ctx.shadowColor = 'rgba(99, 102, 241, 0.45)';
+        ctx.shadowBlur = 6;
+        const filaments = mappedObjects.filter((o) => o.scaleZone >= 4);
+        for (let i = 0; i < filaments.length; i++) {
+          for (let j = i + 1; j < filaments.length; j++) {
+            const f1 = filaments[i];
+            const f2 = filaments[j];
+            const dx = (f1.x || 0) - (f2.x || 0);
+            const dy = (f1.y || 0) - (f2.y || 0);
+            const dz = (f1.z || 0) - (f2.z || 0);
+            const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (d < 250) {
+              ctx.beginPath();
+              const p1x = (f1.x || 0) - cameraRef.current.targetX;
+              const p1y = (f1.y || 0) - cameraRef.current.targetY;
+              const p1z = (f1.z || 0) - cameraRef.current.targetZ;
+              const p1_rx = p1x * cosY - p1z * sinY;
+              const p1_rz = p1x * sinY + p1z * cosY;
+              const p1_ry = p1y * cosP - p1_rz * sinP;
+              const p1_sz = p1y * sinP + p1_rz * cosP + distOffset;
+
+              const p2x = (f2.x || 0) - cameraRef.current.targetX;
+              const p2y = (f2.y || 0) - cameraRef.current.targetY;
+              const p2z = (f2.z || 0) - cameraRef.current.targetZ;
+              const p2_rx = p2x * cosY - p2z * sinY;
+              const p2_rz = p2x * sinY + p2z * cosY;
+              const p2_ry = p2y * cosP - p2_rz * sinP;
+              const p2_sz = p2y * sinP + p2_rz * cosP + distOffset;
+
+              if (p1_sz > 10 && p2_sz > 10) {
+                const ds1 = focalLength / p1_sz;
+                const ds2 = focalLength / p2_sz;
+                ctx.moveTo(cx + p1_rx * ds1, cy + p1_ry * ds1);
+                ctx.lineTo(cx + p2_rx * ds2, cy + p2_ry * ds2);
+                ctx.stroke();
+              }
             }
           }
         }
+        ctx.restore();
+      } else {
+        // Draw standard subtle green filaments if user wants a clean view without dark matter
+        ctx.save();
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.04)'; // extremely faint green filaments
+        ctx.lineWidth = 1.0;
+        const filaments = mappedObjects.filter((o) => o.scaleZone >= 4);
+        for (let i = 0; i < filaments.length; i++) {
+          for (let j = i + 1; j < filaments.length; j++) {
+            const f1 = filaments[i];
+            const f2 = filaments[j];
+            const dx = (f1.x || 0) - (f2.x || 0);
+            const dy = (f1.y || 0) - (f2.y || 0);
+            const dz = (f1.z || 0) - (f2.z || 0);
+            const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (d < 250) {
+              ctx.beginPath();
+              const p1x = (f1.x || 0) - cameraRef.current.targetX;
+              const p1y = (f1.y || 0) - cameraRef.current.targetY;
+              const p1z = (f1.z || 0) - cameraRef.current.targetZ;
+              const p1_rx = p1x * cosY - p1z * sinY;
+              const p1_rz = p1x * sinY + p1z * cosY;
+              const p1_ry = p1y * cosP - p1_rz * sinP;
+              const p1_sz = p1y * sinP + p1_rz * cosP + distOffset;
+
+              const p2x = (f2.x || 0) - cameraRef.current.targetX;
+              const p2y = (f2.y || 0) - cameraRef.current.targetY;
+              const p2z = (f2.z || 0) - cameraRef.current.targetZ;
+              const p2_rx = p2x * cosY - p2z * sinY;
+              const p2_rz = p2x * sinY + p2z * cosY;
+              const p2_ry = p2y * cosP - p2_rz * sinP;
+              const p2_sz = p2y * sinP + p2_rz * cosP + distOffset;
+
+              if (p1_sz > 10 && p2_sz > 10) {
+                const ds1 = focalLength / p1_sz;
+                const ds2 = focalLength / p2_sz;
+                ctx.moveTo(cx + p1_rx * ds1, cy + p1_ry * ds1);
+                ctx.lineTo(cx + p2_rx * ds2, cy + p2_ry * ds2);
+                ctx.stroke();
+              }
+            }
+          }
+        }
+        ctx.restore();
       }
-      ctx.restore();
 
       // 5. Sort objects by depth (back-to-front rendering) to ensure correct layering
       const projectedObjects = mappedObjects
@@ -977,8 +1285,80 @@ export default function CosmicCanvas({
         // Visual properties
         const isSelected = selectedId === obj.id;
         const isHovered = hoveredObject?.id === obj.id;
-        const baseSize = isSelected ? 12 : isHovered ? 10 : 6;
-        const renderSize = Math.max(1.5, baseSize * depthScale);
+        let baseSize = isSelected ? 12 : isHovered ? 10 : 6;
+
+        // Define dynamic base sizes for major galaxies to ensure physical/visual scale accuracy
+        if (obj.id === 'galaxy-milkyway' || obj.id === 'galaxy' || obj.id === 'galaxy-triangulum') {
+          let scaleFactor = 1.0;
+          let maxScaleSize = 100; // Milky Way max
+          let midScaleSize = 15;
+          let minScaleSize = 1.2;
+
+          if (obj.id === 'galaxy') {
+            // Andromeda Galaxy (Messier 31) - physically larger than the Milky Way
+            maxScaleSize = 140; 
+            midScaleSize = 22;  
+            minScaleSize = 1.8;
+          } else if (obj.id === 'galaxy-triangulum') {
+            // Triangulum Galaxy (Messier 33) - smaller spiral galaxy
+            maxScaleSize = 50;
+            midScaleSize = 9;
+            minScaleSize = 0.8;
+          }
+
+          if (activeScaleZone !== null) {
+            // Specific scale zones
+            if (activeScaleZone === 1 || activeScaleZone === 2) {
+              // Solar System or Stellar Neighborhood: the galaxies are vast backgrounds
+              scaleFactor = 0.8;
+            } else if (activeScaleZone === 3) {
+              // Galactic Structure: focused on individual galaxies, keep at full max scale
+              scaleFactor = 1.0;
+            } else if (activeScaleZone === 4) {
+              // Intergalactic Clusters (Local Group): galaxies are cluster members
+              scaleFactor = 0.35; 
+            } else {
+              // Cosmological Horizon (Zone 5) or Multiverse (Zone 6): galaxies are microscopic specs compared to the universe
+              scaleFactor = 0.05; 
+            }
+          } else {
+            // "All Scales" view: scale dynamically based on current camera zoom!
+            const zoom = cameraRef.current.zoom;
+            if (zoom < 0.4) {
+              // Zoomed very far out (Cosmological Horizon / Multiverse view)
+              scaleFactor = 0.05;
+            } else if (zoom < 1.0) {
+              // Zoomed out to Intergalactic level
+              const t = (zoom - 0.4) / 0.6;
+              scaleFactor = 0.05 + t * 0.30; // 0.05 to 0.35
+            } else if (zoom < 2.5) {
+              // Zoomed into Galactic level
+              const t = (zoom - 1.0) / 1.5;
+              scaleFactor = 0.35 + t * 0.65; // 0.35 to 1.0
+            } else {
+              // Zoomed close
+              scaleFactor = 1.0;
+            }
+          }
+
+          // Interpolate the base size based on the scaleFactor
+          // When scaleFactor is 0.05, base size is minScaleSize (1.2, 1.8, or 0.8)
+          // When scaleFactor is 0.35, base size is midScaleSize (15, 22, or 9)
+          // When scaleFactor is 1.0, base size is maxScaleSize (100, 140, or 50)
+          let calculatedBase = minScaleSize;
+          if (scaleFactor <= 0.35) {
+            const t = (scaleFactor - 0.05) / 0.30;
+            calculatedBase = minScaleSize + t * (midScaleSize - minScaleSize);
+          } else {
+            const t = (scaleFactor - 0.35) / 0.65;
+            calculatedBase = midScaleSize + t * (maxScaleSize - midScaleSize);
+          }
+
+          baseSize = isSelected ? (calculatedBase + 10) : isHovered ? (calculatedBase + 5) : calculatedBase;
+          if (baseSize < 0.8) baseSize = 0.8;
+        }
+
+        const renderSize = Math.max((isSelected || isHovered) ? 3.0 : 0.6, baseSize * depthScale);
 
         // Calculate opacity based on distance to center look-at-target to focus attention
         const opacity = Math.min(1, Math.max(0.2, depthScale * 1.5));
@@ -1020,6 +1400,59 @@ export default function CosmicCanvas({
         const baseCol = obj.visuals?.baseColor || '#fff';
         const secCol = obj.visuals?.secondaryColor || '#888';
         const shape = obj.visuals?.visualShape || 'sphere';
+
+        if (obj.scaleZone === 6) {
+          const time = Date.now() / 1000;
+          // Pulse effect based on object ID hash to look organic and asynchronous
+          const hashVal = obj.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+          const pulse = 1 + 0.12 * Math.sin(time * 1.5 + hashVal);
+          const rad = renderSize * pulse * 1.8;
+
+          ctx.save();
+          
+          // 1. Outer hyperspace halo/glow
+          const glowGrad = ctx.createRadialGradient(sx, sy, rad * 0.3, sx, sy, rad * 2.5);
+          glowGrad.addColorStop(0, `${baseCol}44`); // 25% opacity
+          glowGrad.addColorStop(0.5, `${secCol}15`); // 8% opacity
+          glowGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = glowGrad;
+          ctx.beginPath();
+          ctx.arc(sx, sy, rad * 2.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          // 2. Translucent soap-bubble glassmorphic body with radial lighting
+          const bodyGrad = ctx.createRadialGradient(sx - rad * 0.3, sy - rad * 0.3, rad * 0.1, sx, sy, rad);
+          bodyGrad.addColorStop(0, '#ffffffcc');
+          bodyGrad.addColorStop(0.4, `${baseCol}bb`);
+          bodyGrad.addColorStop(0.8, `${secCol}aa`);
+          bodyGrad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+          ctx.fillStyle = bodyGrad;
+          ctx.beginPath();
+          ctx.arc(sx, sy, rad, 0, Math.PI * 2);
+          ctx.fill();
+
+          // 3. Shimmering extra-dimensional rings inside (simulating timeline orbits)
+          ctx.strokeStyle = `${baseCol}66`;
+          ctx.lineWidth = 0.8;
+          ctx.setLineDash([2, 2]);
+          ctx.beginPath();
+          ctx.ellipse(sx, sy, rad * 0.85, rad * 0.25, time * 0.25 + hashVal, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(sx, sy, rad * 0.25, rad * 0.85, -time * 0.35 + hashVal, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // 4. Specular highlight for 3D glassy realism
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.beginPath();
+          ctx.arc(sx - rad * 0.35, sy - rad * 0.35, rad * 0.14, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+          ctx.restore(); // restores parent canvas state
+          return; // Skip normal switch(shape) block
+        }
 
         switch (shape) {
           case 'black-hole': {
@@ -1122,57 +1555,60 @@ export default function CosmicCanvas({
             ctx.arc(sx, sy, renderSize * 0.85, 0, Math.PI * 2);
             ctx.fill();
 
-            // Draw spiral arms with star particles and dusty nebulae
-            ctx.save();
-            ctx.translate(sx, sy);
-            ctx.rotate(rotationAngle);
+            // Only draw spiral arms if they are large enough to be resolved (renderSize >= 3.5)
+            if (renderSize >= 3.5) {
+              // Draw spiral arms with star particles and dusty nebulae
+              ctx.save();
+              ctx.translate(sx, sy);
+              ctx.rotate(rotationAngle);
 
-            const armsCount = 2;
-            const particlesPerArm = 28;
-            
-            for (let arm = 0; arm < armsCount; arm++) {
-              const armOffset = (arm * Math.PI * 2) / armsCount;
+              const armsCount = 2;
+              const particlesPerArm = 28;
               
-              // Draw diffuse gas arm background
-              ctx.beginPath();
-              for (let i = 0; i < particlesPerArm; i++) {
-                const t = i / particlesPerArm; // 0 to 1
-                const angle = t * Math.PI * 2.3 + armOffset; // winding angle
-                const r = renderSize * 3.6 * Math.pow(t, 1.15); // arm length radius
+              for (let arm = 0; arm < armsCount; arm++) {
+                const armOffset = (arm * Math.PI * 2) / armsCount;
                 
-                const px = r * Math.cos(angle);
-                const py = r * Math.sin(angle) * 0.48; // flat 3D perspective
-                
-                const gasSize = renderSize * (0.95 - t * 0.45);
-                const gasGrad = ctx.createRadialGradient(px, py, 0, px, py, gasSize);
-                gasGrad.addColorStop(0, i % 2 === 0 ? baseCol : secCol);
-                gasGrad.addColorStop(0.5, 'rgba(79, 70, 229, 0.1)'); // deep space blue blend
-                gasGrad.addColorStop(1, 'transparent');
-                
-                ctx.fillStyle = gasGrad;
-                ctx.globalAlpha = opacity * 0.42 * (1 - t * 0.5);
+                // Draw diffuse gas arm background
                 ctx.beginPath();
-                ctx.arc(px, py, gasSize, 0, Math.PI * 2);
-                ctx.fill();
-              }
+                for (let i = 0; i < particlesPerArm; i++) {
+                  const t = i / particlesPerArm; // 0 to 1
+                  const angle = t * Math.PI * 2.3 + armOffset; // winding angle
+                  const r = renderSize * 3.6 * Math.pow(t, 1.15); // arm length radius
+                  
+                  const px = r * Math.cos(angle);
+                  const py = r * Math.sin(angle) * 0.48; // flat 3D perspective
+                  
+                  const gasSize = renderSize * (0.95 - t * 0.45);
+                  const gasGrad = ctx.createRadialGradient(px, py, 0, px, py, gasSize);
+                  gasGrad.addColorStop(0, i % 2 === 0 ? baseCol : secCol);
+                  gasGrad.addColorStop(0.5, 'rgba(79, 70, 229, 0.1)'); // deep space blue blend
+                  gasGrad.addColorStop(1, 'transparent');
+                  
+                  ctx.fillStyle = gasGrad;
+                  ctx.globalAlpha = opacity * 0.42 * (1 - t * 0.5);
+                  ctx.beginPath();
+                  ctx.arc(px, py, gasSize, 0, Math.PI * 2);
+                  ctx.fill();
+                }
 
-              // Draw individual star clusters along the arm
-              ctx.fillStyle = '#ffffff';
-              for (let i = 0; i < particlesPerArm * 2.5; i++) {
-                const t = i / (particlesPerArm * 2.5);
-                const angle = t * Math.PI * 2.3 + armOffset + (Math.sin(i * 1.5) * 0.16); // scattered
-                const r = renderSize * 3.5 * Math.pow(t, 1.15) + (Math.cos(i) * renderSize * 0.12);
-                
-                const px = r * Math.cos(angle);
-                const py = r * Math.sin(angle) * 0.48;
-                
-                ctx.globalAlpha = opacity * (0.85 - t * 0.4);
-                ctx.beginPath();
-                ctx.arc(px, py, Math.max(0.6, renderSize * 0.12 * (1 - t * 0.55)), 0, Math.PI * 2);
-                ctx.fill();
+                // Draw individual star clusters along the arm
+                ctx.fillStyle = '#ffffff';
+                for (let i = 0; i < particlesPerArm * 2.5; i++) {
+                  const t = i / (particlesPerArm * 2.5);
+                  const angle = t * Math.PI * 2.3 + armOffset + (Math.sin(i * 1.5) * 0.16); // scattered
+                  const r = renderSize * 3.5 * Math.pow(t, 1.15) + (Math.cos(i) * renderSize * 0.12);
+                  
+                  const px = r * Math.cos(angle);
+                  const py = r * Math.sin(angle) * 0.48;
+                  
+                  ctx.globalAlpha = opacity * (0.85 - t * 0.4);
+                  ctx.beginPath();
+                  ctx.arc(px, py, Math.max(0.6, renderSize * 0.12 * (1 - t * 0.55)), 0, Math.PI * 2);
+                  ctx.fill();
+                }
               }
+              ctx.restore();
             }
-            ctx.restore();
             break;
           }
 
@@ -2934,7 +3370,7 @@ export default function CosmicCanvas({
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [mappedObjects, dimensions, selectedId, hoveredObject, activeScaleZone, backgroundStars]);
+  }, [mappedObjects, dimensions, selectedId, hoveredObject, activeScaleZone, backgroundStars, volumetricStars, backgroundBubbles]);
 
   // Zoom In / Out click triggers
   const handleZoomIn = () => {
