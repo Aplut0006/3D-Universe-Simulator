@@ -279,7 +279,7 @@ export default function App() {
         </div>
 
         {/* Central Exploration Stage */}
-        <div className={`flex-1 flex flex-col relative bg-transparent ${activeMobileView === 'simulation' ? 'flex' : 'hidden lg:flex'}`} id="center-stage-container">
+        <div className={`flex-1 min-w-0 flex flex-col relative bg-transparent ${activeMobileView === 'simulation' ? 'flex' : 'hidden lg:flex'}`} id="center-stage-container">
           {/* Scale Magnitude Filter tabs */}
           <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-4 py-2 flex flex-wrap gap-1.5 items-center shrink-0" id="scale-magnitude-tabs">
             <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mr-1.5">Filters:</span>
@@ -414,7 +414,7 @@ export default function App() {
           </div>
 
           {/* Quick preset navigator tray (Bottom shelf) */}
-          <div className="border-t border-white/5 bg-white/[0.01] backdrop-blur-md p-4 flex flex-col gap-2" id="bottom-presets-shelf">
+          <div className="border-t border-white/5 bg-white/[0.01] backdrop-blur-md p-4 flex flex-col gap-2 w-full overflow-hidden shrink-0" id="bottom-presets-shelf">
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                 <Database className="w-3.5 h-3.5 text-slate-400" />
@@ -424,7 +424,7 @@ export default function App() {
             </div>
 
             {/* Grid of presets */}
-            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent select-none" id="presets-scroller">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent select-none w-full" id="presets-scroller">
               {objects.slice(0, 26).map((obj) => (
                 <button
                   key={obj.id}
