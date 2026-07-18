@@ -2347,5 +2347,1263 @@ export const PRESETS_CELESTIAL_DATA: CelestialObject[] = [
       visualShape: 'sphere'
     },
     scaleZone: 5
-  }
+  },
+{
+  "id": "dwarf-sedna",
+  "name": "Sedna",
+  "category": "Dwarf Planets",
+  "distanceLy": 0.0135,
+  "distanceString": "86 AU at perihelion (0.0135 LY)",
+  "description": "A large, reddish minor planet in the outer reaches of the Solar System, currently about three times as far from the Sun as Neptune. It has one of the largest orbital periods in our Solar System, estimated at roughly 11,400 years.",
+  "specs": {
+    "mass": "1.0 × 10²¹ kg",
+    "radius": "497 km",
+    "temperature": "12 K",
+    "age": "4.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Trans-Neptunian Object / Detached Object",
+    "surfaceGravity": "0.05 m/s²",
+    "escapeVelocity": "210 m/s",
+    "luminosity": "Reflected albedo ~0.32",
+    "composition": "Water ice, methane ice, tholins, rock",
+    "discoveryYear": "2003 (Mike Brown, Chad Trujillo, David Rabinowitz)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Sedna's surface is one of the reddest in our Solar System, likely due to tholins formed by cosmic ray irradiation of simple organics.",
+    "Its highly eccentric orbit takes it to an aphelion of nearly 937 AU, deep into the inner Oort cloud.",
+    "It was named after the Inuit goddess of the sea, who is believed to live in the freezing depths of the Arctic Ocean."
+  ],
+  "visuals": {
+    "baseColor": "#ea580c",
+    "secondaryColor": "#7c2d12",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "exo-wasp76b",
+  "name": "WASP-76b",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 640,
+  "distanceString": "640 light years",
+  "description": "A tidally locked ultra-hot gas giant exoplanet orbiting very close to its host star. Its dayside temperature exceeds 2,600 K, vaporizing metals which are then carried by howling winds to the cooler nightside, where they condense and rain down as liquid iron.",
+  "specs": {
+    "mass": "0.92 Jupiter masses",
+    "radius": "131,000 km (1.83 × Jupiter)",
+    "temperature": "2,670 K (dayside)",
+    "age": "2.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Ultra-hot Jupiter",
+    "surfaceGravity": "6.7 m/s²",
+    "escapeVelocity": "34,000 m/s",
+    "luminosity": "Orbits F-type star WASP-76",
+    "composition": "Superheated Hydrogen, Helium, vaporized metals (Iron, Sodium)",
+    "discoveryYear": "2013"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "WASP-76b is so close to its parent star that a \"year\" lasts only 1.8 Earth days.",
+    "The molecular bonds of water are broken apart on its extreme dayside, only to recombine on its cooler nightside.",
+    "The transition zone between day and night features howling winds blowing at thousands of kilometers per hour."
+  ],
+  "visuals": {
+    "baseColor": "#7c2d12",
+    "secondaryColor": "#ea580c",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "exo-toi849b",
+  "name": "TOI-849b",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 730,
+  "distanceString": "730 light years",
+  "description": "The exposed, naked rocky core of a stripped gas giant. TOI-849b is an extremely rare planet orbiting deep within the Neptune Desert; it lost its massive gas envelope due to tidal disruption or intense stellar irradiation.",
+  "specs": {
+    "mass": "39.1 Earth masses",
+    "radius": "21,900 km (3.4 × Earth)",
+    "temperature": "1,800 K",
+    "age": "6.0 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Chthonian Planet / Stripped Gas Giant Core",
+    "surfaceGravity": "32.1 m/s²",
+    "escapeVelocity": "28,000 m/s",
+    "luminosity": "Orbits Sun-like G-type star TOI-849",
+    "composition": "Iron, nickel, silicates, negligible atmosphere",
+    "discoveryYear": "2020 (TESS)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "TOI-849b is the first chthonian planet discovered, proving that gas giants can lose their entire atmospheres.",
+    "Its density is similar to Earth's, meaning it is incredibly rich in heavy metals like iron.",
+    "It orbits its star once every 18 hours, placing it extremely close to its star's scorching radiation."
+  ],
+  "visuals": {
+    "baseColor": "#57534e",
+    "secondaryColor": "#dc2626",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "exo-draugr",
+  "name": "PSR B1257+12 b (Draugr)",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 2300,
+  "distanceString": "2,300 light years",
+  "description": "One of the first exoplanets ever discovered, orbiting the dead pulsar PSR B1257+12. Draugr is an extremely low-mass rocky world bathed in the intense, high-energy electromagnetic radiation of its pulsar host.",
+  "specs": {
+    "mass": "0.02 Earth masses",
+    "radius": "1,200 km",
+    "temperature": "300 K (radiative heating)",
+    "age": "3.0 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Pulsar Planet (Rocky)",
+    "surfaceGravity": "1.3 m/s²",
+    "escapeVelocity": "2,000 m/s",
+    "luminosity": "Orbits millisecond pulsar PSR B1257+12",
+    "composition": "Highly irradiated silicates and metals",
+    "discoveryYear": "1992 (Aleksander Wolszczan)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Draugr is about twice as massive as the Moon, making it the least massive exoplanet known.",
+    "Its entire system of planets likely formed from the debris disk left behind by the supernova that created the pulsar.",
+    "Its name, Draugr, refers to an undead creature from Norse mythology, fitting for a planet orbiting a dead star."
+  ],
+  "visuals": {
+    "baseColor": "#475569",
+    "secondaryColor": "#c084fc",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "exo-kelt9b",
+  "name": "Kelt-9b",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 670,
+  "distanceString": "670 light years",
+  "description": "The hottest exoplanet known, Kelt-9b is a gas giant with a dayside temperature hotter than the surfaces of most stars. Its atmosphere is so scorching that molecules like water and carbon dioxide are ripped apart into their constituent atoms.",
+  "specs": {
+    "mass": "2.88 Jupiter masses",
+    "radius": "135,000 km (1.89 × Jupiter)",
+    "temperature": "4,600 K (dayside)",
+    "age": "300 million years"
+  },
+  "advancedSpecs": {
+    "classification": "Ultra-hot Jupiter",
+    "surfaceGravity": "19.8 m/s²",
+    "escapeVelocity": "51,000 m/s",
+    "luminosity": "Orbits high-temperature A-type star KELT-9",
+    "composition": "Atomic Hydrogen, Helium, ionized metals",
+    "discoveryYear": "2016"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "With a dayside temperature of 4,600 Kelvin, Kelt-9b is hotter than most Red Dwarf stars.",
+    "Its atmosphere is constantly being blown away by intense ultraviolet radiation from its hot host star, forming a glowing tail.",
+    "Hydrogen molecules are completely dissociated on its dayside and can only reassociate on its nightside."
+  ],
+  "visuals": {
+    "baseColor": "#bae6fd",
+    "secondaryColor": "#fb923c",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "exo-proxima-b",
+  "name": "Proxima Centauri b",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 4.24,
+  "distanceString": "4.24 light years",
+  "description": "The closest rocky exoplanet to our solar system, orbiting within the habitable zone of the red dwarf Proxima Centauri. Because it is likely tidally locked, it may feature a permanent day-side ocean or glacier-rimmed \"eyeball\" surface.",
+  "specs": {
+    "mass": "1.07 Earth masses",
+    "radius": "6,600 km (~1.03 × Earth)",
+    "temperature": "234 K (-39°C average)",
+    "age": "4.85 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Habitable Zone Rocky Exoplanet",
+    "surfaceGravity": "10.1 m/s²",
+    "escapeVelocity": "11,500 m/s",
+    "luminosity": "Orbits red dwarf Proxima Centauri",
+    "composition": "Rocky silicate mantle, iron-nickel core, potential atmosphere",
+    "discoveryYear": "2016 (ESO)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Proxima Centauri b is the prime candidate for future interstellar flyby missions like Breakthrough Starshot.",
+    "It faces regular stellar flares from its active red dwarf host, which could strip its atmosphere over time.",
+    "Its orbit lasts just 11.2 Earth days, meaning its calendar year is shorter than two Earth weeks."
+  ],
+  "visuals": {
+    "baseColor": "#b45309",
+    "secondaryColor": "#16a34a",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "exo-trappist1e",
+  "name": "TRAPPIST-1e",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 40,
+  "distanceString": "40 light years",
+  "description": "An Earth-sized rocky exoplanet orbiting within the ultra-compact TRAPPIST-1 system of seven planets. Among them, planet \"e\" is considered one of the most habitable exoplanets ever found, with an optimal balance of temperature and rocky composition.",
+  "specs": {
+    "mass": "0.69 Earth masses",
+    "radius": "5,800 km (0.91 × Earth)",
+    "temperature": "251 K (-22°C average)",
+    "age": "7.6 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "M-Dwarf Habitable Zone Rocky Planet",
+    "surfaceGravity": "8.1 m/s²",
+    "escapeVelocity": "9,700 m/s",
+    "luminosity": "Orbits ultra-cool M-dwarf TRAPPIST-1",
+    "composition": "Iron-rich core, rocky silicate crust, potential water oceans",
+    "discoveryYear": "2017 (NASA/Spitzer)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "TRAPPIST-1e is located in a system where all seven planets could fit inside the orbit of Mercury.",
+    "From its surface, neighboring planets would appear as large, detailed disks in the sky, much larger than our Moon.",
+    "It has a very high density, suggesting a large iron core similar to Earth's but even more compact."
+  ],
+  "visuals": {
+    "baseColor": "#0284c7",
+    "secondaryColor": "#cbd5e1",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "exo-hoth",
+  "name": "OGLE-2005-BLG-390Lb",
+  "category": "Exoplanets (Beyond the 8 Planets)",
+  "distanceLy": 21500,
+  "distanceString": "21,500 light years",
+  "description": "A freezing super-Earth orbiting a red dwarf star near the center of the Milky Way, nicknamed \"Hoth\" due to its extreme cold. Discovered via gravitational microlensing, it is a key proof of the abundance of cold rocky planets in our galaxy.",
+  "specs": {
+    "mass": "5.5 Earth masses",
+    "radius": "10,000 km (1.6 × Earth)",
+    "temperature": "50 K (-220°C)",
+    "age": "9.0 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Cold Super-Earth / Ice Planet",
+    "surfaceGravity": "21.0 m/s²",
+    "escapeVelocity": "21,000 m/s",
+    "luminosity": "Orbits distant M-dwarf star",
+    "composition": "Thick ice mantle, rocky core, frozen atmosphere",
+    "discoveryYear": "2005 (RoboNet/PLANET)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "OGLE-2005-BLG-390Lb was the most Earth-like exoplanet known at the time of its discovery in terms of solid composition.",
+    "Its nickname \"Hoth\" is a reference to the ice planet in the Star Wars universe.",
+    "Due to its huge distance, it was detected using gravitational microlensing, which uses the gravity of a foreground star to magnify light from a background star."
+  ],
+  "visuals": {
+    "baseColor": "#bae6fd",
+    "secondaryColor": "#ffffff",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "moon-mimas",
+  "name": "Mimas",
+  "category": "Major Moons (Solar System)",
+  "distanceLy": 1.4e-7,
+  "distanceString": "186,000 km from Saturn (1.4 × 10⁻⁷ LY)",
+  "description": "An icy moon of Saturn famous for its uncanny resemblance to the Death Star from Star Wars, a shape caused by the massive, impact-formed Herschel Crater. Its internal heat is surprisingly low, despite its proximity to Saturn.",
+  "specs": {
+    "mass": "3.75 × 10¹⁹ kg",
+    "radius": "198 km",
+    "temperature": "64 K to 80 K",
+    "age": "4.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Icy Planetary Satellite",
+    "surfaceGravity": "0.064 m/s²",
+    "escapeVelocity": "159 m/s",
+    "luminosity": "Albedo ~0.96 (Highly reflective)",
+    "composition": "Water ice (99%), minor silicates",
+    "discoveryYear": "1789 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Herschel Crater is 130 km wide—nearly one-third of the entire moon's diameter. If a similar scale crater occurred on Earth, it would be as wide as Africa.",
+    "Mimas is the smallest known astronomical body that is rounded in shape due to self-gravitation.",
+    "Thermal maps of Mimas reveal a temperature distribution shaped like a Pac-Man, likely due to differences in surface ice texture."
+  ],
+  "visuals": {
+    "baseColor": "#94a3b8",
+    "secondaryColor": "#64748b",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "moon-iapetus",
+  "name": "Iapetus",
+  "category": "Major Moons (Solar System)",
+  "distanceLy": 3.7e-7,
+  "distanceString": "3.56 million km from Saturn (3.7 × 10⁻⁷ LY)",
+  "description": "A highly unusual, walnut-shaped moon of Saturn with a dual-contrast surface—one hemisphere is coal-black while the other is snow-white. It also features a massive, mysterious mountain ridge running perfectly along its equator.",
+  "specs": {
+    "mass": "1.8 × 10²¹ kg",
+    "radius": "735 km",
+    "temperature": "110 K to 130 K",
+    "age": "4.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Dual-Contrast Icy Moon",
+    "surfaceGravity": "0.223 m/s²",
+    "escapeVelocity": "573 m/s",
+    "luminosity": "Albedo ranges from 0.04 (dark) to 0.60 (bright)",
+    "composition": "Water ice (80%), rocky silicates, tholins",
+    "discoveryYear": "1671 (Cassini)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The dark hemisphere, Cassini Regio, is coated in a dark organic dust originating from Saturn's outer retrograde moon Phoebe.",
+    "Its equatorial ridge is up to 20 km high, making some of Iapetus's mountains taller than Mount Everest.",
+    "Because it is so far from Saturn, it is the only large moon of Saturn from which Saturn's rings would be clearly visible."
+  ],
+  "visuals": {
+    "baseColor": "#1e293b",
+    "secondaryColor": "#ffffff",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "moon-miranda",
+  "name": "Miranda",
+  "category": "Major Moons (Solar System)",
+  "distanceLy": 1.4e-7,
+  "distanceString": "129,000 km from Uranus (1.4 × 10⁻⁷ LY)",
+  "description": "A moon of Uranus with the most chaotic, fractured, and scrambled canyon terrain in the Solar System. It features giant canyon scars, patchwork cliffs, and Verona Rupes, which is the tallest sheer cliff known in the Solar System.",
+  "specs": {
+    "mass": "6.59 × 10¹⁷ kg",
+    "radius": "235 km",
+    "temperature": "60 K",
+    "age": "4.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Chaotic Icy Moon",
+    "surfaceGravity": "0.079 m/s²",
+    "escapeVelocity": "193 m/s",
+    "luminosity": "Albedo ~0.32",
+    "composition": "Water ice, methane ice, rocky silicates",
+    "discoveryYear": "1948 (Gerard Kuiper)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Verona Rupes is a cliff roughly 20 km deep. Due to Miranda's low gravity, it would take a falling astronaut a full 12 minutes to reach the bottom.",
+    "The chaotic surface suggests Miranda was once shattered into pieces by a major impact, only to reform haphazardly under gravity.",
+    "It is named after Miranda, the daughter of the magician Prospero in Shakespeare's play The Tempest."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#475569",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "moon-hyperion",
+  "name": "Hyperion",
+  "category": "Major Moons (Solar System)",
+  "distanceLy": 1.6e-7,
+  "distanceString": "1.48 million km from Saturn (1.6 × 10⁻⁷ LY)",
+  "description": "An irregular, low-density moon of Saturn with a sponge-like appearance. Hyperion is highly porous, has a chaotic tumble instead of a steady rotation, and accumulates static electricity from Saturn's magnetosphere.",
+  "specs": {
+    "mass": "5.6 × 10¹⁸ kg",
+    "radius": "135 km (mean)",
+    "temperature": "75 K",
+    "age": "4.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Spongy Irregular Moon",
+    "surfaceGravity": "0.017 m/s²",
+    "escapeVelocity": "74 m/s",
+    "luminosity": "Albedo ~0.3",
+    "composition": "Porous water ice, solid impurities",
+    "discoveryYear": "1848 (William Cranch Bond)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Hyperion is so porous (about 40% empty space) that it has been described as a giant cosmic sponge.",
+    "It is one of the only moons in the Solar System to have a chaotic rotation, meaning its pole orientation cannot be predicted.",
+    "When the Cassini spacecraft flew by, it recorded a static electricity discharge of 200 volts from the moon's surface."
+  ],
+  "visuals": {
+    "baseColor": "#e2e8f0",
+    "secondaryColor": "#854d0e",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "star-antares",
+  "name": "Antares",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 550,
+  "distanceString": "550 light years",
+  "description": "A cool, massive red supergiant star marking the \"heart\" of the Scorpius constellation. Antares is so vast that if placed in the center of our solar system, its outer envelope would extend past the orbit of Mars.",
+  "specs": {
+    "mass": "12.4 Solar masses",
+    "radius": "470 million km (680 × Solar)",
+    "temperature": "3,400 K",
+    "age": "11 million years"
+  },
+  "advancedSpecs": {
+    "classification": "M1.5Iab Red Supergiant",
+    "surfaceGravity": "0.002 m/s²",
+    "escapeVelocity": "120,000 m/s",
+    "luminosity": "75,000 L☉ (Bolometric)",
+    "composition": "Helium-fusing core, massive convective hydrogen shell",
+    "discoveryYear": "Prehistoric (Known to ancient astronomers as the Rival of Mars)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Its name Antares comes from Ancient Greek, meaning \"rival to Ares (Mars)\" due to its brilliant reddish hue.",
+    "Antares is surrounded by a vast dust nebula that is illuminated by the star's brilliant light.",
+    "It is nearing the end of its life and is expected to explode as a supernova within the next few hundred thousand years."
+  ],
+  "visuals": {
+    "baseColor": "#ea580c",
+    "secondaryColor": "#7c2d12",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "star-vycanismayoris",
+  "name": "VY Canis Majoris",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 3900,
+  "distanceString": "3,900 light years",
+  "description": "One of the most massive and extreme red hypergiants known in our galaxy. VY Canis Majoris is an unstable, highly evolved star surrounded by a complex nebula of ejected material, actively shedding its mass in violent outbursts.",
+  "specs": {
+    "mass": "17 Solar masses",
+    "radius": "988 million km (1,420 × Solar)",
+    "temperature": "3,500 K",
+    "age": "8 million years"
+  },
+  "advancedSpecs": {
+    "classification": "M5e Red Hypergiant Star",
+    "surfaceGravity": "0.00003 m/s²",
+    "escapeVelocity": "50,000 m/s",
+    "luminosity": "178,000 L☉",
+    "composition": "Convective stellar core, silicate dust shroud",
+    "discoveryYear": "1801 (Jerôme Lalande)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "A passenger plane flying at 900 km/h would take over 1,100 years to fly around the circumference of VY Canis Majoris once.",
+    "It is surrounded by a dense asymmetric nebula of dust grains and gas ejected during its massive stellar pulsations.",
+    "It has lost nearly half of its birth mass through extreme stellar winds and eruptive events."
+  ],
+  "visuals": {
+    "baseColor": "#dc2626",
+    "secondaryColor": "#991b1b",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "star-uyscuti",
+  "name": "UY Scuti",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 9500,
+  "distanceString": "9,500 light years",
+  "description": "A gargantuan, pulsating variable red hypergiant in the constellation Scutum. For many years, UY Scuti was considered the largest known star by radius, measuring approximately 1,700 times the size of our Sun.",
+  "specs": {
+    "mass": "8 to 10 Solar masses",
+    "radius": "1.2 billion km (~1,700 × Solar)",
+    "temperature": "3,360 K",
+    "age": "10 million years"
+  },
+  "advancedSpecs": {
+    "classification": "M4eIA-ab Red Hypergiant",
+    "surfaceGravity": "0.0001 m/s²",
+    "escapeVelocity": "60,000 m/s",
+    "luminosity": "340,000 L☉",
+    "composition": "Helium/Carbon core, extremely diffuse hydrogen envelope",
+    "discoveryYear": "1860 (Bonn Observatory)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "At its peak size, UY Scuti can fit nearly 5 billion Suns inside its volume.",
+    "Despite its immense volume, its mass is estimated to be only about 10 times that of the Sun, making its density extremely low.",
+    "It is located in the zone of the Milky Way heavily obscured by interstellar dust, making precise distance measurements difficult."
+  ],
+  "visuals": {
+    "baseColor": "#ef4444",
+    "secondaryColor": "#450a0a",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "star-r136a1",
+  "name": "R136a1",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 163000,
+  "distanceString": "163,000 light years",
+  "description": "The most massive and luminous star known in the observable universe, located in the R136 starburst cluster inside the Large Magellanic Cloud. This hypergiant star shines with the energy of over 6 million suns.",
+  "specs": {
+    "mass": "265 Solar masses",
+    "radius": "21 million km (30 × Solar)",
+    "temperature": "46,000 K (ultra-hot)",
+    "age": "1.5 million years"
+  },
+  "advancedSpecs": {
+    "classification": "WN5h Wolf-Rayet Star",
+    "surfaceGravity": "100 m/s²",
+    "escapeVelocity": "3,000,000 m/s",
+    "luminosity": "6,200,000 L☉",
+    "composition": "Ionized Helium, Nitrogen, and Carbon, extreme stellar winds",
+    "discoveryYear": "1980 (ESO)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "R136a1 has a temperature of 46,000 Kelvin, nearly eight times hotter than the surface of our Sun.",
+    "It is losing an incredible 3.2 × 10²⁰ kg of mass every second through intense stellar winds—equivalent to losing one Earth mass every 20 days.",
+    "A single star like R136a1 produces more energy in a few seconds than our Sun does in an entire year."
+  ],
+  "visuals": {
+    "baseColor": "#38bdf8",
+    "secondaryColor": "#e0f2fe",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "star-pistol",
+  "name": "Pistol Star",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 25000,
+  "distanceString": "25,000 light years",
+  "description": "A high-luminosity blue hypergiant star located near the center of the Milky Way, named for the pistol-shaped nebula it has cast off. It is one of the most energetic stars in our galaxy, releasing massive winds of plasma.",
+  "specs": {
+    "mass": "27.5 Solar masses",
+    "radius": "210 million km (300 × Solar)",
+    "temperature": "11,800 K",
+    "age": "4 million years"
+  },
+  "advancedSpecs": {
+    "classification": "Luminous Blue Variable (LBV)",
+    "surfaceGravity": "0.1 m/s²",
+    "escapeVelocity": "800,000 m/s",
+    "luminosity": "1,600,000 L☉",
+    "composition": "Hydrogen, Helium, heavy metals (highly metal-rich)",
+    "discoveryYear": "1990 (Hubble Space Telescope)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Pistol Star is located so close to the dusty Galactic Center that it is completely invisible in optical light, requiring infrared telescopes to see.",
+    "The Pistol Nebula surrounding it was created by giant eruptive outbursts that ejected nearly 10 solar masses of gas.",
+    "It is expected to end its short life in a hypernova explosion within the next million years."
+  ],
+  "visuals": {
+    "baseColor": "#0ea5e9",
+    "secondaryColor": "#bae6fd",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "star-etacarinae",
+  "name": "Eta Carinae",
+  "category": "Stars (Stellar Scale)",
+  "distanceLy": 7500,
+  "distanceString": "7,500 light years",
+  "description": "A volatile, binary hypergiant star system surrounded by the double-lobed Homunculus Nebula. Famous for the \"Great Eruption\" in 1843, when it briefly became the second-brightest star in the sky, it is an extremely unstable system nearing a core-collapse.",
+  "specs": {
+    "mass": "100 + 30 Solar masses (binary)",
+    "radius": "170 million km / 14 million km",
+    "temperature": "9,400 K / 37,200 K",
+    "age": "3 million years"
+  },
+  "advancedSpecs": {
+    "classification": "Luminous Blue Variable (LBV) Binary System",
+    "surfaceGravity": "0.1 m/s²",
+    "escapeVelocity": "700,000 m/s",
+    "luminosity": "5,000,000 L☉ (Combined)",
+    "composition": "Hydrogen, Helium, CNO-cycle fusion products",
+    "discoveryYear": "Ancient (Eruption studied in 1843)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "During its Great Eruption in 1843, it ejected an entire twin-lobed nebula of dust and gas, known as the Homunculus Nebula, which is expanding at 1,000 km/s.",
+    "The two stars in the system orbit each other every 5.5 years in a highly eccentric orbit, colliding their stellar winds in massive shocks.",
+    "It is a prime candidate for a future nearby supernova or hypernova that will release brilliant gamma rays."
+  ],
+  "visuals": {
+    "baseColor": "#f97316",
+    "secondaryColor": "#fb7185",
+    "visualShape": "star-system"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "neutron-vela",
+  "name": "Vela Pulsar",
+  "category": "Neutron Stars & Pulsars",
+  "distanceLy": 960,
+  "distanceString": "960 light years",
+  "description": "A super-dense neutron star spinning roughly 11 times per second. It is the powerhouse core of the Vela Supernova Remnant and is famous for emitting intense, rhythmic pulses of radio waves, optical light, X-rays, and gamma rays.",
+  "specs": {
+    "mass": "1.4 Solar masses",
+    "radius": "11 km",
+    "temperature": "1,200,000 K",
+    "age": "11,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Young Rotation-Powered Pulsar",
+    "surfaceGravity": "1.9 × 10¹² m/s²",
+    "escapeVelocity": "140,000,000 m/s",
+    "luminosity": "3,000 L☉ (Rotational power)",
+    "composition": "Superfluid neutrons, iron crystal lattice crust, extreme magnetic fields",
+    "discoveryYear": "1968 (University of Sydney)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Vela Pulsar is located at the heart of the beautiful, filamentary Vela Supernova Remnant, a gas cloud spanning 100 light years.",
+    "It was the first pulsar to be optically photographed, proving that neutron stars can emit visible light.",
+    "It regularly undergoes sudden spin-ups called \"glitches\" as its internal superfluid structure reorganizes."
+  ],
+  "visuals": {
+    "baseColor": "#38bdf8",
+    "secondaryColor": "#818cf8",
+    "visualShape": "pulsar"
+  },
+  "scaleZone": 2
+},
+{
+  "id": "neutron-sgr1806",
+  "name": "SGR 1806-20",
+  "category": "Neutron Stars & Pulsars",
+  "distanceLy": 50000,
+  "distanceString": "50,000 light years",
+  "description": "An ultra-magnetic neutron star, or magnetar, located on the far side of our galaxy. It holds the record for releasing the most powerful soft gamma repeater burst ever recorded, which briefly ionized Earth's upper atmosphere from 50,000 light years away.",
+  "specs": {
+    "mass": "1.4 Solar masses",
+    "radius": "10 km",
+    "temperature": "10,000,000 K (flaring)",
+    "age": "10,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Soft Gamma Repeater Magnetar",
+    "surfaceGravity": "2.0 × 10¹² m/s²",
+    "escapeVelocity": "150,000,000 m/s",
+    "luminosity": "Variable (flares reach 10¹⁰ L☉)",
+    "composition": "Neutron degenerate core, ultra-strong magnetic crust",
+    "discoveryYear": "1979"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Its magnetic field is 10¹⁵ gauss—about 1,000 trillion times stronger than Earth's, capable of dissolving chemical bonds from 1,000 km away.",
+    "On December 27, 2004, a giant starquake on SGR 1806-20 released more energy in 0.2 seconds than our Sun does in 150,000 years.",
+    "The gamma ray flare from this starquake was so intense that it saturated scientific satellites and partially ionized Earth's ionosphere, despite crossing half the galaxy."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#c084fc",
+    "visualShape": "pulsar"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "neutron-psrb1919",
+  "name": "PSR B1919+21",
+  "category": "Neutron Stars & Pulsars",
+  "distanceLy": 2280,
+  "distanceString": "2,280 light years",
+  "description": "The historic first pulsar ever discovered, originally designated LGM-1 (\"Little Green Men\") due to the highly regular, artificial-looking pulses of its radio signals. It orbits inside the constellation Vulpecula.",
+  "specs": {
+    "mass": "1.4 Solar masses",
+    "radius": "11 km",
+    "temperature": "800,000 K",
+    "age": "16 million years"
+  },
+  "advancedSpecs": {
+    "classification": "Radio Pulsar",
+    "surfaceGravity": "1.9 × 10¹² m/s²",
+    "escapeVelocity": "140,000,000 m/s",
+    "luminosity": "Rotational radio emission",
+    "composition": "Degenerate neutrons",
+    "discoveryYear": "1967 (Jocelyn Bell Burnell and Antony Hewish)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Jocelyn Bell Burnell discovered the pulsar as a series of regular \"scruff\" markings on paper telescope charts, repeating every 1.33 seconds.",
+    "The discovery was awarded the Nobel Prize in Physics in 1974, though Bell Burnell was famously excluded from the award.",
+    "Its precise radio wave pulse pattern was famously used as the cover art for Joy Division's iconic 1979 album Unknown Pleasures."
+  ],
+  "visuals": {
+    "baseColor": "#f1f5f9",
+    "secondaryColor": "#475569",
+    "visualShape": "pulsar"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "bh-sagitarius-a",
+  "name": "Sagittarius A*",
+  "category": "Supermassive Black Holes & Quasars",
+  "distanceLy": 26000,
+  "distanceString": "26,000 light years",
+  "description": "The supermassive black hole fueling the Milky Way galaxy, located at our galactic center. With a mass of 4 million suns, it anchors our galaxy's spiral structure and is surrounded by a cluster of high-velocity stars orbiting in its immense gravity.",
+  "specs": {
+    "mass": "4.15 million Solar masses",
+    "radius": "12 million km (Event Horizon)",
+    "temperature": "Billions of K (Accretion region)",
+    "age": "13.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Supermassive Black Hole (Sgr A*)",
+    "surfaceGravity": "Relativistic potential well",
+    "escapeVelocity": "299,792,458 m/s",
+    "luminosity": "Quiet state (~100 L☉)",
+    "composition": "Singularity, relativistic magnetic plasma, orbiting S-stars",
+    "discoveryYear": "1974 (Bruce Balick and Robert Brown)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "In 2022, the Event Horizon Telescope published the first direct image of the shadow of Sagittarius A*, revealing its glowing hot orange gas ring.",
+    "Stars close to Sgr A*, called S-stars, travel at speeds exceeding 5% the speed of light to avoid falling in.",
+    "It is currently in an extremely quiet phase, swallowing very little matter compared to active quasars in other galaxies."
+  ],
+  "visuals": {
+    "baseColor": "#09090b",
+    "secondaryColor": "#ea580c",
+    "visualShape": "black-hole"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "bh-m87",
+  "name": "M87*",
+  "category": "Supermassive Black Holes & Quasars",
+  "distanceLy": 53500000,
+  "distanceString": "53.5 million light years",
+  "description": "The core supermassive black hole of the giant elliptical galaxy Messier 87. Weighing a staggering 6.5 billion solar masses, it ejects a relativistic jet of plasma stretching 5,000 light years into space, and was the first black hole ever directly imaged.",
+  "specs": {
+    "mass": "6.5 billion Solar masses",
+    "radius": "20 billion km (Event Horizon)",
+    "temperature": "Trillions of K (plasma jet)",
+    "age": "13.0 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Supermassive Black Hole with Relativistic Jet",
+    "surfaceGravity": "Relativistic boundary forces",
+    "escapeVelocity": "299,792,458 m/s",
+    "luminosity": "Active galactic nucleus jet output",
+    "composition": "Ultra-massive singularity, relativistic magnetic field, jet plasma",
+    "discoveryYear": "1918 (Jet observed by Heber Curtis)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "M87* was the historic first black hole ever imaged by the Event Horizon Telescope in 2019, showing its famous bright asymmetry.",
+    "The event horizon of M87* is larger than the entire orbit of Pluto, easily wide enough to swallow our whole solar system.",
+    "Its central plasma jet is launched by magnetic forces and travels at 99% the speed of light, piercing completely through the galaxy."
+  ],
+  "visuals": {
+    "baseColor": "#09090b",
+    "secondaryColor": "#dc2626",
+    "visualShape": "black-hole"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "nebula-tarantula",
+  "name": "Tarantula Nebula (30 Doradus)",
+  "category": "Nebulae",
+  "distanceLy": 160000,
+  "distanceString": "160,000 light years",
+  "description": "A hyper-active starburst region located in the Large Magellanic Cloud. It is the largest and most intense star-forming region in the Local Group, so bright that if it were as close to us as the Orion Nebula, it would cast visible shadows on Earth.",
+  "specs": {
+    "mass": "Roughly 1.5 million Solar masses",
+    "radius": "300 light years (radius)",
+    "temperature": "10 K to 15,000 K",
+    "age": "8 million years"
+  },
+  "advancedSpecs": {
+    "classification": "H II Giant Starburst Emission Nebula",
+    "surfaceGravity": "Extremely diffuse",
+    "escapeVelocity": "N/A",
+    "luminosity": "Ultra-bright UV scattering of massive R136 stars",
+    "composition": "Ionized Hydrogen, cosmic dust, heavy nebular gas",
+    "discoveryYear": "1751 (Nicolas-Louis de Lacaille)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "If the Tarantula Nebula were placed at the distance of the Orion Nebula (~1,300 LY), it would occupy half the night sky and shine brightly enough to read by at night.",
+    "The center of the Tarantula Nebula houses R136, the super-dense star cluster containing R136a1, the most massive star known.",
+    "It is named \"Tarantula\" because its dusty, gas filaments resemble the long, spindly legs of a spider."
+  ],
+  "visuals": {
+    "baseColor": "#ec4899",
+    "secondaryColor": "#3b82f6",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "nebula-lagoon",
+  "name": "Lagoon Nebula (M8)",
+  "category": "Nebulae",
+  "distanceLy": 4100,
+  "distanceString": "4,100 light years",
+  "description": "A beautiful, deep interstellar dust lane cross-cut by a bright open cluster in the constellation Sagittarius. This massive star nursery is visible to the naked eye as a faint patch of glowing cloud.",
+  "specs": {
+    "mass": "Over 2,000 Solar masses",
+    "radius": "55 × 25 light years",
+    "temperature": "10,000 K (ionized gas)",
+    "age": "2 million years"
+  },
+  "advancedSpecs": {
+    "classification": "H II Emission Nebula with Open Cluster NGC 6530",
+    "surfaceGravity": "Extremely weak",
+    "escapeVelocity": "N/A",
+    "luminosity": "Scattered UV emission of young hot stars",
+    "composition": "Hydrogen gas, carbon molecules, cosmic dust",
+    "discoveryYear": "1680 (Giovanni Battista Hodierna)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Lagoon Nebula contains the Hourglass Nebula at its core, a region of intense star formation powered by hot Herschel 36.",
+    "Its name \"Lagoon\" is derived from the dark, lagoon-like dust lane dividing the glowing nebular gas in optical photographs.",
+    "It is one of only two star-forming nebulae clearly visible to the naked eye from mid-northern latitudes."
+  ],
+  "visuals": {
+    "baseColor": "#14b8a6",
+    "secondaryColor": "#d946ef",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "nebula-trifid",
+  "name": "Trifid Nebula (M20)",
+  "category": "Nebulae",
+  "distanceLy": 5200,
+  "distanceString": "5,200 light years",
+  "description": "An extraordinary triple-lobed combination of an emission nebula (glowing pink), a reflection nebula (glowing blue), and a dark dust nebula that splits the main gas cloud into three distinct lobes.",
+  "specs": {
+    "mass": "Roughly 1,500 Solar masses",
+    "radius": "15 light years (radius)",
+    "temperature": "10,000 K (emission) / 100 K (reflection)",
+    "age": "300,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Combined H II Emission, Reflection, and Dark Nebula",
+    "surfaceGravity": "Extremely weak",
+    "escapeVelocity": "N/A",
+    "luminosity": "Scattered stellar light and gas fluorescence",
+    "composition": "Ionized and neutral Hydrogen, dust silicates",
+    "discoveryYear": "1764 (Charles Messier)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Trifid Nebula is one of the youngest star nurseries known, with active protostars dating back less than 100,000 years.",
+    "The dark dust lanes dividing the lobes are cataloged as Barnard 85, a cold, opaque cloud blocking all background light.",
+    "Its beautiful contrast of pink and blue was famously chosen as the backdrop for numerous sci-fi posters and book covers."
+  ],
+  "visuals": {
+    "baseColor": "#ec4899",
+    "secondaryColor": "#0ea5e9",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "nebula-dumbbell",
+  "name": "Dumbbell Nebula (M27)",
+  "category": "Nebulae",
+  "distanceLy": 1360,
+  "distanceString": "1,360 light years",
+  "description": "The historic first planetary nebula ever cataloged by Charles Messier. It is a shell of ionized gas expelled by a dying, central white dwarf star, forming a dual-lobed shape resembling a dumbbell or apple core.",
+  "specs": {
+    "mass": "0.06 Solar masses",
+    "radius": "1.44 light years",
+    "temperature": "10,000 K (shell gas) / 85,000 K (white dwarf)",
+    "age": "10,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Planetary Nebula (expelled shell)",
+    "surfaceGravity": "Extremely weak expansion front",
+    "escapeVelocity": "N/A",
+    "luminosity": "Fluorescing oxygen and hydrogen emissions",
+    "composition": "Ionized Oxygen, Hydrogen, Helium, central carbon-oxygen white dwarf",
+    "discoveryYear": "1764 (Charles Messier)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Planetary nebulae have nothing to do with planets; the name was coined by early astronomers because they resembled green-blue gas planets through low-power telescopes.",
+    "Its central star is a hot white dwarf with a temperature of 85,000 Kelvin, actively glowing in ultraviolet light.",
+    "The gas shell is expanding into space at a speed of 31 kilometers per second, meaning it will dissolve completely in another few tens of thousands of years."
+  ],
+  "visuals": {
+    "baseColor": "#10b981",
+    "secondaryColor": "#ef4444",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "nebula-veil",
+  "name": "Veil Nebula (NGC 6960)",
+  "category": "Nebulae",
+  "distanceLy": 2400,
+  "distanceString": "2,400 light years",
+  "description": "The delicate, braided strands of a massive ancient supernova remnant in Cygnus. Formed by the explosion of a star 20 times the mass of the Sun, its expanding gas front is colliding with interstellar material, heating it to a beautiful glow.",
+  "specs": {
+    "mass": "Varies (expanding shock front)",
+    "radius": "50 light years (total diameter)",
+    "temperature": "Millions of K (collision front)",
+    "age": "10,000 to 20,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Supernova Remnant (Oxygen/Hydrogen filaments)",
+    "surfaceGravity": "N/A",
+    "escapeVelocity": "N/A",
+    "luminosity": "Shockwave heated gas collision emission",
+    "composition": "Ionized Oxygen, Hydrogen, Helium, interstellar gas dust",
+    "discoveryYear": "1784 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Veil Nebula is so large that it is divided into multiple famous sub-structures, including the \"Witch's Broom\" and \"Fleming's Triangular Wisp.\"",
+    "The original supernova explosion would have been bright enough to see in the daytime, outshining Venus in the ancient sky.",
+    "The expanding shockwave of gas is traveling at over 1.5 million kilometers per hour, continuing to heat interstellar dust."
+  ],
+  "visuals": {
+    "baseColor": "#0ea5e9",
+    "secondaryColor": "#ef4444",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "nebula-catseye",
+  "name": "Cat's Eye Nebula (NGC 6543)",
+  "category": "Nebulae",
+  "distanceLy": 3300,
+  "distanceString": "3,300 light years",
+  "description": "One of the most structurally complex planetary nebulae known, featuring concentric rings, high-speed gas jets, and a beautiful central star. High-resolution Hubble images reveal an intricate, shell-like pattern resembling a cat's eye.",
+  "specs": {
+    "mass": "0.1 Solar masses (shell)",
+    "radius": "0.2 light years (inner core)",
+    "temperature": "8,000 K (shell) / 80,000 K (central star)",
+    "age": "1,000 years"
+  },
+  "advancedSpecs": {
+    "classification": "Complex Concentric Planetary Nebula",
+    "surfaceGravity": "N/A",
+    "escapeVelocity": "N/A",
+    "luminosity": "Bipolar jet and stellar shell UV emission",
+    "composition": "Ionized gas shells, nitrogen-helium central star",
+    "discoveryYear": "1786 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The concentric rings surrounding the Cat's Eye are spaced like tree rings, indicating the central star ejected its mass in rhythmic pulses every 1,500 years.",
+    "It was the first planetary nebula to be studied with a spectroscope, proving that nebulae are made of hot glowing gas.",
+    "Its central star is currently losing mass rapidly, expelling a hot stellar wind at 1,900 kilometers per second."
+  ],
+  "visuals": {
+    "baseColor": "#14b8a6",
+    "secondaryColor": "#ec4899",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "galaxy-cigar",
+  "name": "Cigar Galaxy (M82)",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 12000000,
+  "distanceString": "12 million light years",
+  "description": "A high-rate starburst galaxy famous for venting hot material perpendicular to its disk. M82 has been triggered into an intense burst of star formation by a close gravitational encounter with its larger neighbor, M81.",
+  "specs": {
+    "mass": "5.0 × 10¹⁰ Solar masses",
+    "radius": "18,500 light years",
+    "temperature": "Varies",
+    "age": "12 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "I0 Irregular Starburst Galaxy",
+    "surfaceGravity": "Galactic rotation speed ~140 km/s",
+    "escapeVelocity": "Estimated 300 - 400 km/s",
+    "luminosity": "Combined output ~1.5 × 10¹⁰ L☉",
+    "composition": "High gas density, active starburst regions, central supermassive black hole",
+    "discoveryYear": "1774 (Johann Elert Bode)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "M82 is forming stars 10 times faster than our Milky Way galaxy, earning it the title of a \"starburst\" galaxy.",
+    "Its central regions are venting massive plumes of hot hydrogen gas extending 20,000 light years above and below its disk, driven by frequent supernovae.",
+    "It was home to SN 2014J, one of the closest Type Ia supernovae observed in modern times."
+  ],
+  "visuals": {
+    "baseColor": "#ef4444",
+    "secondaryColor": "#818cf8",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-centaurus-a",
+  "name": "Centaurus A (NGC 5128)",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 13000000,
+  "distanceString": "13 million light years",
+  "description": "An active giant elliptical galaxy warped by a colliding spiral disk. Centaurus A is famous for its prominent, thick dark dust lane cutting across its bright center, and its powerful radio jets launching from a central black hole.",
+  "specs": {
+    "mass": "1.0 × 10¹² Solar masses",
+    "radius": "30,000 light years",
+    "temperature": "Varies",
+    "age": "12.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "S0/Ep Active Elliptical Galaxy",
+    "surfaceGravity": "Vast elliptical potential well",
+    "escapeVelocity": "Estimated ~600 km/s",
+    "luminosity": "Combined radio/optical/X-ray output",
+    "composition": "Elderly yellow stellar population, colliding young gas disk, 55-million-solar-mass black hole",
+    "discoveryYear": "1826 (James Dunlop)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Centaurus A is the fifth-brightest galaxy in the sky, making it a favorite target for amateur astronomers.",
+    "The dark dust lane across its middle is the leftover wreckage of a spiral galaxy that was swallowed by Centaurus A about 500 million years ago.",
+    "It is one of the closest radio galaxies to Earth, launching massive jets of plasma that are longer than the galaxy itself."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#ea580c",
+    "visualShape": "galaxy-elliptical"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-hoags",
+  "name": "Hoag's Object",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 600000000,
+  "distanceString": "600 million light years",
+  "description": "A rare, perfect ring galaxy consisting of a detached outer ring of bright blue stars surrounding an older, yellow central nucleus. The origin of Hoag's Object remains one of the great mysteries of galactic evolution.",
+  "specs": {
+    "mass": "7.0 × 10¹¹ Solar masses",
+    "radius": "60,000 light years",
+    "temperature": "Varies",
+    "age": "11 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Ring Galaxy (Hoag-type)",
+    "surfaceGravity": "Unusual ring-bound orbit speeds",
+    "escapeVelocity": "Estimated 500 km/s",
+    "luminosity": "Combined ring and core emission",
+    "composition": "Blue young stars (ring), older yellow stars (core), empty gap of space",
+    "discoveryYear": "1950 (Arthur Hoag)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "For many years, Hoag's Object was mistaken for a planetary nebula or a gravitational lens due to its bizarre shape.",
+    "Inside the gap between the core and the blue ring, another even more distant ring galaxy can be seen, which is a mind-boggling cosmic coincidence.",
+    "Standard galactic collision theories fail to explain its symmetry, as there is no leftover \"bullet\" galaxy in its vicinity."
+  ],
+  "visuals": {
+    "baseColor": "#3b82f6",
+    "secondaryColor": "#fbbf24",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-gnz11",
+  "name": "GN-z11",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 32000000000,
+  "distanceString": "32 billion light years (Comoving)",
+  "description": "An ultra-distant baby galaxy dating back to the earliest cosmic eras, observed just 400 million years after the Big Bang. Because of the expansion of space-time, its light has been highly redshifted into the infrared spectrum.",
+  "specs": {
+    "mass": "1.0 × 10⁹ Solar masses (1% of Milky Way)",
+    "radius": "1,500 light years (extremely compact)",
+    "temperature": "Young, hot starburst environment",
+    "age": "400 million years (from Big Bang)"
+  },
+  "advancedSpecs": {
+    "classification": "High-Redshift Compact Baby Galaxy (z=10.6)",
+    "surfaceGravity": "High density compact potential",
+    "escapeVelocity": "Estimated ~100 km/s",
+    "luminosity": "Dense blue starburst output",
+    "composition": "First-generation metal-poor stars, dense primordial hydrogen gas",
+    "discoveryYear": "2015 (Hubble Space Telescope)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "GN-z11 was the most distant galaxy ever discovered until the James Webb Space Telescope detected even older ones in 2022.",
+    "The light we see from GN-z11 left the galaxy 13.4 billion years ago, when the Universe was only 3% of its current age.",
+    "Despite its tiny size (just 1% of the Milky Way's mass), it was forming stars 20 times faster than our galaxy does today."
+  ],
+  "visuals": {
+    "baseColor": "#ef4444",
+    "secondaryColor": "#7f1d1d",
+    "visualShape": "galaxy-elliptical"
+  },
+  "scaleZone": 5
+},
+{
+  "id": "cluster-local-group",
+  "name": "The Local Group",
+  "category": "Galaxy Groups & Clusters",
+  "distanceLy": 5000000,
+  "distanceString": "5 million light years (Diameter)",
+  "description": "The gravity-bound collection of roughly 80 immediate home galaxies that includes the Milky Way, Andromeda, Triangulum, and dozens of smaller dwarf satellites like the Magellanic Clouds.",
+  "specs": {
+    "mass": "2.0 × 10¹² Solar masses",
+    "radius": "5 million light years (diameter)",
+    "temperature": "Varies",
+    "age": "13 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Local Galaxy Group",
+    "surfaceGravity": "Group-wide gravitational center",
+    "escapeVelocity": "N/A (Bound system)",
+    "luminosity": "Total combined stellar luminosity",
+    "composition": "Milky Way, Andromeda Galaxy, Triangulum Galaxy, 50+ dwarf satellite galaxies",
+    "discoveryYear": "Defined by Edwin Hubble in 1936"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The center of mass of the Local Group is located somewhere between the Milky Way and the Andromeda Galaxy.",
+    "Andromeda and the Milky Way dominate the Local Group, together accounting for over 90% of its total mass.",
+    "The Local Group is currently falling toward the much larger Virgo Cluster at a speed of 400 kilometers per second."
+  ],
+  "visuals": {
+    "baseColor": "#c084fc",
+    "secondaryColor": "#f472b6",
+    "visualShape": "star-cluster"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "cluster-coma",
+  "name": "Coma Cluster",
+  "category": "Galaxy Groups & Clusters",
+  "distanceLy": 321000000,
+  "distanceString": "321 million light years",
+  "description": "A densely packed, spherical cluster containing thousands of massive elliptical galaxies in the constellation Coma Berenices. It is a famous target for studying dark matter and cosmic structures.",
+  "specs": {
+    "mass": "2.0 × 10¹⁵ Solar masses",
+    "radius": "10 million light years",
+    "temperature": "100,000,000 K (intracluster plasma)",
+    "age": "12.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Rich Spherical Galaxy Cluster (Abell 1656)",
+    "surfaceGravity": "Deep gravitational potential well",
+    "escapeVelocity": "Estimated ~2,000 km/s",
+    "luminosity": "Total Combined Cluster Output ~2.0 × 10¹² L☉",
+    "composition": "1,000+ massive elliptical galaxies, hot gas plasma, massive dark matter halo",
+    "discoveryYear": "1785 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Astronomer Fritz Zwicky used the Coma Cluster in 1933 to first hypothesize the existence of \"dark matter\" after calculating its galaxies were moving too fast to stay bound.",
+    "The central supergiant elliptical galaxy, NGC 4889, houses one of the largest black holes ever measured, weighing 21 billion solar masses.",
+    "Its intercluster gas is heated by gravitational compression to 100 million Kelvin, glowing brightly in X-ray light."
+  ],
+  "visuals": {
+    "baseColor": "#a78bfa",
+    "secondaryColor": "#f472b6",
+    "visualShape": "star-cluster"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "filament-huge-lqg",
+  "name": "Huge-LQG (Large Quasar Group)",
+  "category": "Galaxy Filaments (The Cosmic Web)",
+  "distanceLy": 4000000000,
+  "distanceString": "4.0 billion light years",
+  "description": "A gargantuan cosmic structure composed of 73 active quasars, spanning over 4 billion light-years. It is so colossal that its existence challenges the cosmological principle, which states the Universe is homogeneous on large scales.",
+  "specs": {
+    "mass": "6.1 × 10¹⁸ Solar masses",
+    "radius": "4.0 billion light years (length)",
+    "temperature": "Quasar accretion gas reaches trillions of K",
+    "age": "13.0 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Large Quasar Group (LQG) Filament",
+    "surfaceGravity": "Extremely weak global potential well",
+    "escapeVelocity": "N/A",
+    "luminosity": "Combined emission of 73 hyper-luminous quasars",
+    "composition": "73 active quasars, superclusters, dark matter filaments",
+    "discoveryYear": "2013"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "At 4 billion light-years long, Huge-LQG represents about 9% of the radius of the entire observable universe.",
+    "It challenges Einstein's Cosmological Principle, which suggests that no structure larger than 1.2 billion light-years should exist in a uniform universe.",
+    "The quasars in the group are powered by supermassive black holes that are actively devouring giant accretion disks of plasma."
+  ],
+  "visuals": {
+    "baseColor": "#67e8f9",
+    "secondaryColor": "#06b6d4",
+    "visualShape": "filament"
+  },
+  "scaleZone": 5
+},
+{
+  "id": "filament-hercules-wall",
+  "name": "Hercules-Corona Borealis Great Wall",
+  "category": "Galaxy Filaments (The Cosmic Web)",
+  "distanceLy": 10000000000,
+  "distanceString": "10.0 billion light years",
+  "description": "The largest known structural filament in the observable universe, spanning an astonishing 10 billion light-years. Mapped using gamma-ray bursts, it is a colossal wall of galaxies and dark matter that represents the ultimate scale of the cosmic web.",
+  "specs": {
+    "mass": "Roughly 2.0 × 10¹⁹ Solar masses",
+    "radius": "10 billion light years (length)",
+    "temperature": "Warm-Hot Intergalactic Medium",
+    "age": "13.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Colossal Cosmic Filament / Great Wall of Galaxies",
+    "surfaceGravity": "Negligible global potential",
+    "escapeVelocity": "N/A",
+    "luminosity": "Combined emission of millions of galaxy systems",
+    "composition": "Gamma-ray burst clusters, galaxy superclusters, immense dark matter sheet",
+    "discoveryYear": "2013 (István Horváth, Jon Hakkila, and Zsolt Bagoly)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Hercules-Corona Borealis Great Wall is so immense that it spans over 10% of the entire observable universe.",
+    "It was discovered by analyzing the clustering of gamma-ray bursts, which are the most energetic explosions in the universe and act as beacons for distant galaxies.",
+    "It takes light 10 billion years—nearly 75% of the age of the Universe—to travel from one end of this wall to the other."
+  ],
+  "visuals": {
+    "baseColor": "#34d399",
+    "secondaryColor": "#047857",
+    "visualShape": "filament"
+  },
+  "scaleZone": 5
+}
 ];
