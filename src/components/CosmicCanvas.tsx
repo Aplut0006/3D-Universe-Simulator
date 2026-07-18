@@ -1,5 +1,18 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { CelestialObject, COSMIC_SCALES } from '../types';
+import { 
+  Orbit, 
+  Move, 
+  ZoomIn, 
+  ZoomOut, 
+  Play, 
+  Pause, 
+  ChevronUp, 
+  ChevronDown, 
+  ChevronLeft, 
+  ChevronRight, 
+  RefreshCw 
+} from 'lucide-react';
 
 interface CosmicCanvasProps {
   objects: CelestialObject[];
@@ -146,12 +159,34 @@ export default function CosmicCanvas({
   }, [selectedId, mappedObjects]);
 
   // Handle Drag & Orbit Controls
+  const [interactionMode, setInteractionModeState] = useState<'orbit' | 'pan'>('orbit');
+  const interactionModeRef = useRef<'orbit' | 'pan'>('orbit');
+  const setInteractionMode = (val: 'orbit' | 'pan') => {
+    setInteractionModeState(val);
+    interactionModeRef.current = val;
+  };
+
+  const [isAutoOrbit, setIsAutoOrbitState] = useState(true);
+  const isAutoOrbitRef = useRef(true);
+  const setIsAutoOrbit = (val: boolean) => {
+    setIsAutoOrbitState(val);
+    isAutoOrbitRef.current = val;
+  };
+
   const isDragging = useRef(false);
   const isPanning = useRef(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
 
+  // Touch references for mobile device touch support and pinch zoom
+  const lastTouchPos = useRef({ x: 0, y: 0 });
+  const initialTouchDist = useRef<number | null>(null);
+  const initialTouchZoom = useRef<number>(1.0);
+  const touchStartPos = useRef({ x: 0, y: 0 });
+  const touchStartTime = useRef<number>(0);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
+    setIsAutoOrbit(false); // Stop auto orbiting upon manual interaction
     isDragging.current = true;
     isPanning.current = e.button === 2 || e.shiftKey; // right click or shift key for pan
     lastMousePos.current = { x: e.clientX, y: e.clientY };
@@ -168,7 +203,7 @@ export default function CosmicCanvas({
       const deltaX = e.clientX - lastMousePos.current.x;
       const deltaY = e.clientY - lastMousePos.current.y;
 
-      if (isPanning.current) {
+      if (isPanning.current || interactionModeRef.current === 'pan') {
         // Pan: Move the camera focus target along the screen plane
         const factor = 1.5 / cameraRef.current.zoom;
         const cosY = Math.cos(cameraRef.current.yaw);
@@ -260,6 +295,148 @@ export default function CosmicCanvas({
     }
   };
 
+  // Touch handlers for mobile devices (single touch orbit/pan, two-finger pinch to zoom)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsAutoOrbit(false); // Stop auto orbiting upon manual touch interaction
+    if (e.touches.length === 1) {
+      isDragging.current = true;
+      const touch = e.touches[0];
+      lastTouchPos.current = { x: touch.clientX, y: touch.clientY };
+      touchStartPos.current = { x: touch.clientX, y: touch.clientY };
+      touchStartTime.current = Date.now();
+    } else if (e.touches.length === 2) {
+      isDragging.current = false;
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      initialTouchDist.current = Math.sqrt(dx * dx + dy * dy);
+      initialTouchZoom.current = targetCameraRef.current.zoom;
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (e.touches.length === 1 && isDragging.current) {
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - lastTouchPos.current.x;
+      const deltaY = touch.clientY - lastTouchPos.current.y;
+
+      if (interactionModeRef.current === 'pan' || isPanning.current) {
+        // Pan Mode touch movement
+        const factor = 1.8 / cameraRef.current.zoom;
+        const cosY = Math.cos(cameraRef.current.yaw);
+        const sinY = Math.sin(cameraRef.current.yaw);
+        const cosP = Math.cos(cameraRef.current.pitch);
+        const sinP = Math.sin(cameraRef.current.pitch);
+
+        const dx = (cosY * deltaX + sinY * sinP * deltaY) * factor;
+        const dy = (cosP * deltaY) * factor;
+        const dz = (sinY * deltaX - cosY * sinP * deltaY) * factor;
+
+        targetCameraRef.current.targetX -= dx;
+        targetCameraRef.current.targetY += dy;
+        targetCameraRef.current.targetZ -= dz;
+      } else {
+        // Orbit Mode touch rotation
+        targetCameraRef.current.yaw += deltaX * 0.009;
+        targetCameraRef.current.pitch = Math.max(
+          -Math.PI / 2.1,
+          Math.min(Math.PI / 2.1, targetCameraRef.current.pitch + deltaY * 0.009)
+        );
+      }
+      lastTouchPos.current = { x: touch.clientX, y: touch.clientY };
+    } else if (e.touches.length === 2 && initialTouchDist.current !== null) {
+      // Pinch to Zoom
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      const currentDist = Math.sqrt(dx * dx + dy * dy);
+
+      if (initialTouchDist.current > 5) {
+        const ratio = currentDist / initialTouchDist.current;
+        targetCameraRef.current.zoom = Math.max(
+          0.1,
+          Math.min(10.0, initialTouchZoom.current * ratio)
+        );
+      }
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (isDragging.current) {
+      isDragging.current = false;
+      initialTouchDist.current = null;
+
+      const duration = Date.now() - touchStartTime.current;
+      const endX = lastTouchPos.current.x;
+      const endY = lastTouchPos.current.y;
+      const startX = touchStartPos.current.x;
+      const startY = touchStartPos.current.y;
+      const distance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+
+      if (duration < 300 && distance < 15) {
+        // Tap selection on mobile devices
+        if (!canvasRef.current) return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const touchX = startX - rect.left;
+        const touchY = startY - rect.top;
+
+        const width = dimensions.width;
+        const height = dimensions.height;
+        const cx = width / 2;
+        const cy = height / 2;
+        const focalLength = 400;
+        const distOffset = 600 / cameraRef.current.zoom;
+
+        const cosP = Math.cos(cameraRef.current.pitch);
+        const sinP = Math.sin(cameraRef.current.pitch);
+        const cosY = Math.cos(cameraRef.current.yaw);
+        const sinY = Math.sin(cameraRef.current.yaw);
+
+        let closestObj: CelestialObject | null = null;
+        let minDistance = 35; // slightly wider tap radius for mobile touch accuracy
+
+        mappedObjects.forEach((obj) => {
+          if (activeScaleZone && obj.scaleZone !== activeScaleZone) return;
+
+          const ox = (obj.x || 0) - cameraRef.current.targetX;
+          const oy = (obj.y || 0) - cameraRef.current.targetY;
+          const oz = (obj.z || 0) - cameraRef.current.targetZ;
+
+          const rx1 = ox * cosY - oz * sinY;
+          const rz1 = ox * sinY + oz * cosY;
+          const ry = oy * cosP - rz1 * sinP;
+          const rz = oy * sinP + rz1 * cosP;
+
+          const sz = rz + distOffset;
+          if (sz > 10) {
+            const depthScale = focalLength / sz;
+            const sx = cx + rx1 * depthScale;
+            const sy = cy + ry * depthScale;
+
+            const dx = touchX - sx;
+            const dy = touchY - sy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestObj = obj;
+            }
+          }
+        });
+
+        if (closestObj) {
+          onSelectObject(closestObj);
+        }
+      }
+    }
+  };
+
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     // Smooth exponential zoom
@@ -277,6 +454,11 @@ export default function CosmicCanvas({
     let animationId: number;
 
     const render = () => {
+      // If auto-orbiting is active, slowly spin the target camera yaw
+      if (isAutoOrbitRef.current) {
+        targetCameraRef.current.yaw += 0.0015;
+      }
+
       // 1. Lerp camera values smoothly to targets for cinematic motion
       const lerpSpeed = 0.08;
       cameraRef.current.pitch += (targetCameraRef.current.pitch - cameraRef.current.pitch) * lerpSpeed;
@@ -1256,6 +1438,48 @@ export default function CosmicCanvas({
     };
   }, [mappedObjects, dimensions, selectedId, hoveredObject, activeScaleZone, backgroundStars]);
 
+  // Zoom In / Out click triggers
+  const handleZoomIn = () => {
+    setIsAutoOrbit(false);
+    targetCameraRef.current.zoom = Math.min(10.0, targetCameraRef.current.zoom * 1.3);
+  };
+
+  const handleZoomOut = () => {
+    setIsAutoOrbit(false);
+    targetCameraRef.current.zoom = Math.max(0.1, targetCameraRef.current.zoom / 1.3);
+  };
+
+  // Compact navigation buttons (D-pad / Compass simulation)
+  const handleNav = (dir: 'up' | 'down' | 'left' | 'right') => {
+    setIsAutoOrbit(false);
+    const step = 0.2;
+    if (interactionModeRef.current === 'pan') {
+      const factor = 40 / cameraRef.current.zoom;
+      const cosY = Math.cos(cameraRef.current.yaw);
+      const sinY = Math.sin(cameraRef.current.yaw);
+      if (dir === 'left') {
+        targetCameraRef.current.targetX -= cosY * factor;
+        targetCameraRef.current.targetZ -= sinY * factor;
+      } else if (dir === 'right') {
+        targetCameraRef.current.targetX += cosY * factor;
+        targetCameraRef.current.targetZ += sinY * factor;
+      } else if (dir === 'up') {
+        targetCameraRef.current.targetY -= factor;
+      } else if (dir === 'down') {
+        targetCameraRef.current.targetY += factor;
+      }
+    } else {
+      if (dir === 'left') targetCameraRef.current.yaw -= step;
+      if (dir === 'right') targetCameraRef.current.yaw += step;
+      if (dir === 'up') {
+        targetCameraRef.current.pitch = Math.max(-Math.PI / 2.2, targetCameraRef.current.pitch - step * 0.5);
+      }
+      if (dir === 'down') {
+        targetCameraRef.current.pitch = Math.min(Math.PI / 2.2, targetCameraRef.current.pitch + step * 0.5);
+      }
+    }
+  };
+
   // Center button / Reset view helper
   const handleReset = () => {
     targetCameraRef.current = {
@@ -1266,10 +1490,11 @@ export default function CosmicCanvas({
       targetY: 0,
       targetZ: 0
     };
+    setIsAutoOrbit(true);
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-full select-none" id="cosmic-canvas-container">
+    <div ref={containerRef} className="relative w-full h-full select-none text-slate-100" id="cosmic-canvas-container">
       <canvas
         ref={canvasRef}
         width={dimensions.width}
@@ -1278,42 +1503,172 @@ export default function CosmicCanvas({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onContextMenu={(e) => e.preventDefault()}
-        className="block w-full h-full cursor-grab active:cursor-grabbing"
+        className="block w-full h-full cursor-grab active:cursor-grabbing touch-none"
         id="universe-3d-canvas"
       />
 
-      {/* Embedded controls overlay */}
-      <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none" id="canvas-overlay-controls">
-        <div className="bg-white/5 border border-white/10 backdrop-blur-md px-3 py-2 rounded-lg pointer-events-auto shadow-xl shadow-black/30 glow-sky">
-          <p className="text-xs text-slate-300 font-medium mb-1">Navigation HUD</p>
-          <div className="flex flex-col gap-1 text-[10px] text-slate-400 font-mono">
-            <div>• <span className="text-slate-200 font-medium">Left-Click & Drag</span>: Orbit Camera</div>
-            <div>• <span className="text-slate-200 font-medium">Shift + Drag</span>: Pan Focus Point</div>
-            <div>• <span className="text-slate-200 font-medium">Scroll Wheel</span>: Zoom In/Out</div>
-            <div>• <span className="text-slate-200 font-medium">Hover Node</span>: Inspect Body</div>
+      {/* Embedded Navigation Telemetry HUD */}
+      <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none max-w-[200px] xs:max-w-xs" id="canvas-overlay-controls">
+        <div className="bg-slate-900/85 border border-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-xl pointer-events-auto shadow-2xl shadow-black/50">
+          <p className="text-xs text-slate-200 font-semibold mb-1.5 flex items-center gap-1.5">
+            <Orbit className="w-3.5 h-3.5 text-indigo-400" />
+            Galactic Telemetry
+          </p>
+          <div className="flex flex-col gap-1 text-[9px] text-slate-400 font-mono">
+            <div>• <span className="text-slate-200 font-medium">Touch/Drag Screen</span>: Orbit View</div>
+            <div className="hidden xs:block">• <span className="text-slate-200 font-medium">Pinch screen</span>: Pinch to Zoom</div>
+            <div className="hidden xs:block">• <span className="text-slate-200 font-medium">Change Mode</span>: Pan Space Map</div>
+            <div>• <span className="text-slate-200 font-medium">Tap Node</span>: fly to specimen</div>
           </div>
         </div>
 
         <button
           onClick={handleReset}
-          className="bg-white/5 hover:bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 pointer-events-auto text-[10px] text-slate-200 font-mono shadow-md text-left transition-all flex items-center justify-between cursor-pointer"
+          className="bg-slate-900/85 hover:bg-slate-800 border border-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-xl pointer-events-auto text-[10px] text-slate-200 font-mono shadow-xl shadow-black/30 text-left transition-all flex items-center justify-between cursor-pointer group active:scale-95"
           id="btn-recenter-view"
         >
-          Recenter Galactic View
-          <span className="ml-2 font-bold font-sans">⌗</span>
+          <span className="flex items-center gap-1.5">
+            <RefreshCw className="w-3.5 h-3.5 text-sky-400 group-hover:rotate-180 transition-all duration-300" />
+            Recenter Coordinates
+          </span>
+          <span className="ml-2 font-bold font-sans text-slate-500 group-hover:text-sky-400">⌗</span>
         </button>
+      </div>
+
+      {/* Interactive Controls Overlay Bar */}
+      <div 
+        className="absolute top-4 right-4 flex flex-col sm:flex-row md:flex-col gap-2.5 pointer-events-none items-end" 
+        id="instrument-control-panel"
+      >
+        {/* Active Tool Mode Selector */}
+        <div className="bg-slate-900/85 border border-white/10 backdrop-blur-md p-1.5 rounded-xl pointer-events-auto shadow-2xl flex gap-1" id="tool-mode-selector">
+          <button
+            onClick={() => setInteractionMode('orbit')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide transition-all cursor-pointer ${
+              interactionMode === 'orbit'
+                ? 'bg-indigo-500/35 text-white border border-indigo-400/30 font-semibold shadow-inner'
+                : 'text-slate-400 border border-transparent hover:text-white'
+            }`}
+            title="Orbit Mode (Drag to rotate camera)"
+            id="btn-mode-orbit"
+          >
+            <Orbit className="w-3.5 h-3.5" />
+            <span className="text-[10px] hidden xs:inline">Orbit</span>
+          </button>
+          <button
+            onClick={() => setInteractionMode('pan')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide transition-all cursor-pointer ${
+              interactionMode === 'pan'
+                ? 'bg-indigo-500/35 text-white border border-indigo-400/30 font-semibold shadow-inner'
+                : 'text-slate-400 border border-transparent hover:text-white'
+            }`}
+            title="Pan Mode (Drag to slide focus)"
+            id="btn-mode-pan"
+          >
+            <Move className="w-3.5 h-3.5" />
+            <span className="text-[10px] hidden xs:inline">Pan</span>
+          </button>
+        </div>
+
+        {/* Action Controls Cluster */}
+        <div className="flex gap-2 items-center pointer-events-auto bg-slate-900/85 border border-white/10 backdrop-blur-md p-1.5 rounded-xl shadow-2xl" id="canvas-action-controls">
+          {/* Zoom Actions */}
+          <button
+            onClick={handleZoomIn}
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white transition-all cursor-pointer border border-white/5"
+            title="Zoom In"
+            id="btn-zoom-in"
+          >
+            <ZoomIn className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white transition-all cursor-pointer border border-white/5"
+            title="Zoom Out"
+            id="btn-zoom-out"
+          >
+            <ZoomOut className="w-4 h-4" />
+          </button>
+
+          <div className="w-[1px] h-6 bg-white/10" />
+
+          {/* Cinematic Auto Orbit Action */}
+          <button
+            onClick={() => setIsAutoOrbit(!isAutoOrbit)}
+            className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all cursor-pointer border ${
+              isAutoOrbit
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 shadow-md shadow-emerald-500/5'
+                : 'bg-white/5 text-slate-400 border-white/5 hover:bg-white/10'
+            }`}
+            title={isAutoOrbit ? "Pause Cinematic Rotation" : "Start Cinematic Rotation"}
+            id="btn-auto-orbit"
+          >
+            {isAutoOrbit ? <Pause className="w-3.5 h-3.5 animate-pulse" /> : <Play className="w-3.5 h-3.5" />}
+          </button>
+        </div>
+
+        {/* Directional D-Pad Navigation Console */}
+        <div className="hidden md:flex flex-col items-center bg-slate-900/85 border border-white/10 backdrop-blur-md p-2.5 rounded-2xl pointer-events-auto shadow-2xl w-28 animate-fade-in" id="nav-dpad-console">
+          <p className="text-[9px] font-mono font-semibold tracking-wider text-slate-500 mb-1.5 uppercase select-none">Tactical D-Pad</p>
+          <div className="grid grid-cols-3 grid-rows-3 gap-1.5 items-center justify-center w-20 h-20" id="dpad-grid">
+            <div />
+            <button
+              onClick={() => handleNav('up')}
+              className="w-6 h-6 rounded-lg bg-white/5 hover:bg-indigo-500/30 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/5 cursor-pointer active:scale-90"
+              title="Move Up"
+              id="dpad-up"
+            >
+              <ChevronUp className="w-3.5 h-3.5" />
+            </button>
+            <div />
+
+            <button
+              onClick={() => handleNav('left')}
+              className="w-6 h-6 rounded-lg bg-white/5 hover:bg-indigo-500/30 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/5 cursor-pointer active:scale-90"
+              title="Move Left"
+              id="dpad-left"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+            <div className="w-6 h-6 rounded-full border border-dashed border-white/15 flex items-center justify-center text-[8px] text-slate-500 font-mono select-none">
+              {interactionMode === 'orbit' ? '🔄' : '🖐️'}
+            </div>
+            <button
+              onClick={() => handleNav('right')}
+              className="w-6 h-6 rounded-lg bg-white/5 hover:bg-indigo-500/30 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/5 cursor-pointer active:scale-90"
+              title="Move Right"
+              id="dpad-right"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+
+            <div />
+            <button
+              onClick={() => handleNav('down')}
+              className="w-6 h-6 rounded-lg bg-white/5 hover:bg-indigo-500/30 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/5 cursor-pointer active:scale-90"
+              title="Move Down"
+              id="dpad-down"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+            <div />
+          </div>
+        </div>
       </div>
 
       {hoveredObject && (
         <div
-          className="absolute bottom-4 right-4 bg-white/5 backdrop-blur-xl px-4 py-2.5 rounded-xl border border-white/15 shadow-2xl pointer-events-none max-w-xs animate-fade-in glow-sky"
+          className="absolute bottom-4 right-4 bg-slate-950/85 backdrop-blur-xl px-4 py-2.5 rounded-xl border border-white/15 shadow-2xl pointer-events-none max-w-xs animate-fade-in glow-sky"
           id="hover-tooltip-card"
         >
           <div className="text-[10px] text-sky-400 font-bold tracking-wider uppercase font-mono">{hoveredObject.category}</div>
           <div className="text-sm font-semibold text-white mt-0.5">{hoveredObject.name}</div>
           <div className="text-xs text-slate-400 font-mono mt-1">Distance: {hoveredObject.distanceString}</div>
-          <div className="text-[10px] text-slate-500 mt-2 italic">Click to fly inside and inspect</div>
+          <div className="text-[10px] text-slate-500 mt-2 italic">Click / Tap to fly inside and inspect</div>
         </div>
       )}
     </div>
