@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* Custom Google fonts for space-age elegance */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+@theme {
+  --font-sans: "Outfit", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+body {
+  background: radial-gradient(circle at 50% 50%, #1a153b 0%, #020617 80%) !important;
+  font-family: var(--font-sans);
+}
+
+/* Cosmic Radial Gradient */
+.cosmic-radial-bg {
+  background: radial-gradient(circle at 50% 50%, #151130 0%, #020617 100%) !important;
+}
+
+/* Elegant CSS Star field overlay */
+.star-field-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 45px 75px, #93c5fd, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 150px 60px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 140px, #fbcfe8, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 230px 180px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Frosted Glass Panels */
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.frosted-glass-header {
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Interactivity & Hover states for Glass Panel components */
+.frosted-glass-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.frosted-glass-hover:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.frosted-glass-active {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Custom glow attributes */
+.glow-indigo {
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.12);
+}
+.glow-sky {
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.1);
+}
+
+/* Theme tags */
+.cosmic-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(96, 165, 250, 0.25) !important;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
