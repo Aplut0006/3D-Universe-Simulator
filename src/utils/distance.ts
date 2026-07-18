@@ -12,12 +12,12 @@ export function formatKm(distanceLy: number): string {
     return `${meters.toFixed(3)} meters`;
   } else if (km < 1) {
     return `${(km * 1000).toFixed(1)} meters`;
-  } else if (km < 1000000) {
+  } else if (km <= 999000) {
     return `${km.toLocaleString(undefined, { maximumFractionDigits: 1 })} km`;
-  } else if (km < 1e9) {
+  } else if (km < 1000000000) {
     return `${(km / 1e6).toFixed(2)} Million km`;
-  } else if (km < 1e12) {
-    return `${(km / 1e9).toFixed(2)} Billion km`;
+  } else if (km < 1e15) {
+    return `${(km / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} Billion km`;
   } else {
     // Standard scientific format but with nice super-scripts
     const expStr = km.toExponential(3); // e.g. "9.461e+12"
@@ -35,3 +35,37 @@ export function formatKm(distanceLy: number): string {
     return `${base} × 10${powerSup} km`;
   }
 }
+
+/**
+ * Converts distance in light years to a beautiful human-readable representation in Light Years.
+ */
+export function formatLy(ly: number): string {
+  if (ly === 0) return '0 LY (Earth)';
+  if (ly >= 1e9) {
+    return `${(ly / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} Billion LY`;
+  }
+  if (ly >= 1e6) {
+    return `${(ly / 1e6).toLocaleString(undefined, { maximumFractionDigits: 2 })} Million LY`;
+  }
+  if (ly >= 1) {
+    return `${ly.toLocaleString(undefined, { maximumFractionDigits: 2 })} LY`;
+  }
+  
+  // For small fractional light years (Planets/Moons/Spacecraft)
+  if (ly < 1e-4) {
+    const expStr = ly.toExponential(2);
+    const parts = expStr.split('e-');
+    if (parts.length === 2) {
+      const base = parts[0];
+      const power = parts[1];
+      const superscripts: Record<string, string> = {
+        '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+        '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
+      };
+      const powerSup = power.split('').map(char => superscripts[char] || char).join('');
+      return `${base} × 10⁻${powerSup} LY`;
+    }
+  }
+  return `${ly.toFixed(5)} LY`;
+}
+

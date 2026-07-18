@@ -302,7 +302,7 @@ export default function CosmicCanvas({
     const dragDistance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
 
     // If it was a quick click with minimal drag, calculate selection coordinate precisely
-    if (duration < 350 && dragDistance < 15) {
+    if (duration < 350 && dragDistance < 25) {
       if (!canvasRef.current) return;
       const rect = canvasRef.current.getBoundingClientRect();
       const clickX = startX - rect.left;
@@ -321,7 +321,7 @@ export default function CosmicCanvas({
       const sinY = Math.sin(cameraRef.current.yaw);
 
       let closestObj: CelestialObject | null = null;
-      let minDistance = 25; // selection click boundary
+      let minDistance = 40; // selection click boundary (increased for easier selection)
 
       mappedObjects.forEach((obj) => {
         if (activeScaleZone && obj.scaleZone !== activeScaleZone) return;
@@ -357,7 +357,7 @@ export default function CosmicCanvas({
       }
     } else {
       // Fallback fallback click logic
-      if (hoveredObject && dragDistance < 8) {
+      if (hoveredObject && dragDistance < 20) {
         onSelectObject(hoveredObject);
       }
     }
@@ -447,7 +447,7 @@ export default function CosmicCanvas({
       const startY = touchStartPos.current.y;
       const distance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
 
-      if (duration < 300 && distance < 15) {
+      if (duration < 300 && distance < 25) {
         // Tap selection on mobile devices
         if (!canvasRef.current) return;
         const rect = canvasRef.current.getBoundingClientRect();
@@ -467,7 +467,7 @@ export default function CosmicCanvas({
         const sinY = Math.sin(cameraRef.current.yaw);
 
         let closestObj: CelestialObject | null = null;
-        let minDistance = 35; // slightly wider tap radius for mobile touch accuracy
+        let minDistance = 50; // slightly wider tap radius for mobile touch accuracy (increased for ease of use)
 
         mappedObjects.forEach((obj) => {
           if (activeScaleZone && obj.scaleZone !== activeScaleZone) return;
@@ -758,6 +758,65 @@ export default function CosmicCanvas({
         }
       });
 
+      // 3.5. Draw Highlight for the Solar System Belt (where planets are clustered, r ~ 312)
+      ctx.save();
+      ctx.strokeStyle = 'rgba(234, 179, 8, 0.45)'; // Amber gold glowing line
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 4]);
+      
+      const solarSystemRadius = 312; // Middle of planet cluster
+      ctx.beginPath();
+      let solarPointsCount = 0;
+      for (let s = 0; s <= 64; s++) {
+        const angle = (s / 64) * Math.PI * 2;
+        const ox = solarSystemRadius * Math.cos(angle) - cameraRef.current.targetX;
+        const oy = 0 - cameraRef.current.targetY;
+        const oz = solarSystemRadius * Math.sin(angle) - cameraRef.current.targetZ;
+
+        const rx1 = ox * cosY - oz * sinY;
+        const rz1 = ox * sinY + oz * cosY;
+        const ry = oy * cosP - rz1 * sinP;
+        const rz = oy * sinP + rz1 * cosP;
+
+        const sz = rz + distOffset;
+        if (sz > 10) {
+          const depthScale = focalLength / sz;
+          const sx = cx + rx1 * depthScale;
+          const sy = cy + ry * depthScale;
+
+          if (s === 0) {
+            ctx.moveTo(sx, sy);
+          } else {
+            ctx.lineTo(sx, sy);
+          }
+          solarPointsCount++;
+        }
+      }
+      if (solarPointsCount > 10) {
+        ctx.stroke();
+        
+        // Draw a text label on the belt
+        const ox = solarSystemRadius - cameraRef.current.targetX;
+        const oy = 0 - cameraRef.current.targetY;
+        const oz = 0 - cameraRef.current.targetZ;
+        const rx1 = ox * cosY - oz * sinY;
+        const rz1 = ox * sinY + oz * cosY;
+        const ry = oy * cosP - rz1 * sinP;
+        const rz = oy * sinP + rz1 * cosP;
+        const sz = rz + distOffset;
+
+        if (sz > 10) {
+          const depthScale = focalLength / sz;
+          const sx = cx + rx1 * depthScale;
+          const sy = cy + ry * depthScale;
+
+          ctx.fillStyle = '#f59e0b'; // Amber yellow text
+          ctx.font = 'bold 9px "JetBrains Mono", monospace';
+          ctx.fillText('☀️ SOLAR SYSTEM ORBITAL ZONE', sx + 6, sy - 4);
+        }
+      }
+      ctx.restore();
+
       // 4. Draw connection filaments (Cosmic Web grid) if we are in cosmologic scale
       ctx.save();
       ctx.strokeStyle = 'rgba(16, 185, 129, 0.05)'; // subtle green web filaments
@@ -926,6 +985,17 @@ export default function CosmicCanvas({
 
         ctx.save();
         ctx.globalAlpha = opacity;
+
+        // Subtle gold glow/halo for all Solar System objects to highlight them clearly
+        if (obj.scaleZone === 1 && !isSelected && !isHovered) {
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.22)'; // Amber/gold subtle ring
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.arc(sx, sy, renderSize + 5, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
 
         // Hover & Selection Orbiting Highlights
         if (isSelected || isHovered) {
@@ -3107,7 +3177,7 @@ export default function CosmicCanvas({
         >
           <div className="text-[10px] text-sky-400 font-bold tracking-wider uppercase font-mono">{hoveredObject.category}</div>
           <div className="text-sm font-semibold text-white mt-0.5">{hoveredObject.name}</div>
-          <div className="text-xs text-slate-400 font-mono mt-1">Distance: {hoveredObject.distanceString}</div>
+          <div className="text-xs text-slate-400 font-mono mt-1">Distance: {formatKm(hoveredObject.distanceLy)}</div>
           <div className="text-[10px] text-slate-500 mt-2 italic">Click / Tap to fly inside and inspect</div>
         </div>
       )}

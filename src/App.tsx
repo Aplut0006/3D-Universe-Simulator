@@ -87,10 +87,95 @@ export function getCelestialImageUrl(category: string, name?: string): string {
   return 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80';
 }
 
+export function getRealisticImageUrl(name: string, category: string): string {
+  const normName = name.toLowerCase();
+  
+  if (normName.includes('mercury')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg';
+  }
+  if (normName.includes('venus')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg';
+  }
+  if (normName.includes('earth')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/c/cb/The_Blue_Marble_%28remastered_image%29.jpg';
+  }
+  if (normName.includes('moon') || normName.includes('luna')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg';
+  }
+  if (normName.includes('mars')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg';
+  }
+  if (normName.includes('jupiter')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Jupiter_and_its_shrunken_Great_Red_Spot.jpg';
+  }
+  if (normName.includes('saturn')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg';
+  }
+  if (normName.includes('uranus')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg';
+  }
+  if (normName.includes('neptune')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_-_Voyager_2_2019_color_processed.jpg';
+  }
+  if (normName.includes('pluto')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_Light_and_Dark.jpg';
+  }
+  if (normName.includes('sun') || normName.includes('sol')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg';
+  }
+  if (normName.includes('europa')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/5/54/Europa-moon.jpg';
+  }
+  if (normName.includes('titan')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Titan_in_true_color_cropped.jpg';
+  }
+  if (normName.includes('ganymede')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Ganymede_g1_true.jpg';
+  }
+  if (normName.includes('enceladus')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/d/de/Enceladus_PIA17202_color.jpg';
+  }
+  if (normName.includes('io')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Io_highest_resolution_true_color.jpg';
+  }
+  if (normName.includes('triton')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/0/06/Triton_moon_mosaic_Voyager_2_large.jpg';
+  }
+  if (normName.includes('ceres')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/7/76/Ceres_-_RC3_-_Desert_Dust_color_%28cropped%29.jpg';
+  }
+  if (normName.includes('eris')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Eris_and_dysnomia_artistic_impression_2.jpg';
+  }
+  if (normName.includes('halley')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Halley%27s_Comet_1986.jpg';
+  }
+  if (normName.includes('andromeda')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/c/c2/M31_09-01-2011_%28cropped%29.jpg';
+  }
+  if (normName.includes('orion nebula')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg';
+  }
+  if (normName.includes('pleiades')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/4/4e/M45_map.jpg';
+  }
+  if (normName.includes('crab pulsar') || normName.includes('crab nebula')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg';
+  }
+  if (normName.includes('betelgeuse')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/5/57/Artist%27s_impression_of_Betelgeuse.jpg';
+  }
+  if (normName.includes('sirius')) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Sirius_A_and_B_Hubble_photo.jpg';
+  }
+  
+  return getCelestialImageUrl(category, name);
+}
+
 export default function App() {
   // Application State
   const [objects] = useState<CelestialObject[]>(PRESETS_CELESTIAL_DATA);
-  const [selectedId, setSelectedId] = useState<string | null>('cosmic-dust'); // default selected first item
+  const [selectedId, setSelectedId] = useState<string | null>(PRESETS_CELESTIAL_DATA[0]?.id || null); // default selected first item
   const [activeScaleZone, setActiveScaleZone] = useState<number | null>(null); // null means "All Scales"
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -331,7 +416,7 @@ export default function App() {
             {/* Selected Object Target HUD for mobile & desktop overview */}
             {selectedObject && (
               <div 
-                className="hidden sm:flex absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-950/90 border border-indigo-500/30 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl shadow-indigo-500/20 max-w-sm flex-col gap-2.5 animate-fade-in z-20 pointer-events-auto"
+                className="flex absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-950/90 border border-indigo-500/30 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl shadow-indigo-500/20 sm:max-w-sm flex-col gap-2.5 animate-fade-in z-20 pointer-events-auto"
                 id="selected-target-hud"
               >
                 <div className="flex justify-between items-start">
@@ -358,8 +443,8 @@ export default function App() {
                 </div>
                 
                 <div className="flex justify-between items-center text-[10px] font-mono border-t border-white/5 pt-2">
-                  <span className="text-slate-400">Log-Scale Distance:</span>
-                  <span className="text-sky-300 font-semibold">{selectedObject.distanceString}</span>
+                  <span className="text-slate-400">Distance from Earth:</span>
+                  <span className="text-sky-300 font-semibold">{formatKm(selectedObject.distanceLy)}</span>
                 </div>
               </div>
             )}
@@ -464,13 +549,9 @@ export default function App() {
                   Distance from Earth
                 </h4>
                 <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-2.5" id="distance-slot">
-                  <div className="text-sm font-semibold text-sky-300 font-mono">{selectedObject.distanceString}</div>
-                  <div className="text-xs font-bold text-emerald-400 font-mono mt-1.5 flex items-center gap-1.5" id="distance-km-sub">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    {formatKm(selectedObject.distanceLy)}
-                  </div>
+                  <div className="text-sm font-semibold text-sky-300 font-mono">{formatKm(selectedObject.distanceLy)}</div>
                   <div className="text-[9px] text-slate-500 font-mono mt-1">
-                    ({selectedObject.distanceLy.toExponential(3)} Light Years)
+                    ({selectedObject.distanceLy.toLocaleString(undefined, { maximumFractionDigits: 5 })} Light Years)
                   </div>
                 </div>
               </div>

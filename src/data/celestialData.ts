@@ -2,40 +2,6 @@ import { CelestialObject } from '../types';
 
 export const PRESETS_CELESTIAL_DATA: CelestialObject[] = [
   {
-    id: 'cosmic-dust',
-    name: 'Interstellar Silicate Grain',
-    category: 'Cosmic Dust Grains',
-    distanceLy: 1.58e-17, // ~150 meters from Earth in interstellar medium
-    distanceString: '150 meters (1.58 × 10⁻¹⁷ LY)',
-    description: 'Microscopic specks of silicates, amorphous carbon, iron, and water-ice mantle drifting between the stars. These grains absorb ultraviolet and visible stellar radiation, re-emitting it in the far-infrared, and serve as crucial catalytic sites for the formation of complex organic molecules in interstellar space.',
-    specs: {
-      mass: '~1.0 × 10⁻¹⁴ kg',
-      radius: '0.2 micrometers',
-      temperature: '10 K - 20 K',
-      age: 'Variable (constantly recycled)'
-    },
-    advancedSpecs: {
-      classification: 'Carbonaceous-Silicate Interstellar Dust',
-      surfaceGravity: 'Negligible (~1.0 × 10⁻⁹ m/s²)',
-      escapeVelocity: '< 0.01 mm/s',
-      luminosity: 'Re-emission in Far-Infrared spectrum',
-      composition: 'Amorphous Carbon, Olivine-like Silicates, H₂O/CO Ice Mantle',
-      discoveryYear: 'Hypothesized 1930 (R.J. Trumpler), Confirmed via spectroscopy'
-    },
-    imageUrl: 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800&auto=format&fit=crop&q=80',
-    trivia: [
-      'Cosmic dust plays a vital role in star formation by absorbing heating radiation and allowing gas clouds to collapse under their own gravity.',
-      'Without interstellar dust grains, the dense molecular clouds would never get cold enough to form hydrogen molecules (H₂).',
-      'Samples of cosmic dust have been captured and returned to Earth by NASA\'s Stardust mission from comet Wild 2.'
-    ],
-    visuals: {
-      baseColor: '#a1a1aa',
-      secondaryColor: '#38bdf8',
-      visualShape: 'dust-grain'
-    },
-    scaleZone: 1
-  },
-  {
     id: 'meteoroid',
     name: 'Chelyabinsk Meteoroid',
     category: 'Meteoroids',
@@ -751,11 +717,11 @@ export const PRESETS_CELESTIAL_DATA: CelestialObject[] = [
   },
   {
     id: 'star-cluster',
-    name: 'The Pleiades (Messier 45)',
+    name: 'The Pleiades (M45 / The Seven Sisters)',
     category: 'Star Clusters (Open and Globular Clusters)',
     distanceLy: 444,
     distanceString: '444 light years',
-    description: 'An open star cluster containing middle-aged, hot B-type stars located in the constellation Taurus. Born from the same giant molecular cloud of gas and dust, these stars are bound together by mutual gravity. The cluster is dominated by glowing blue reflection nebulae formed by cosmic dust scattering the light of the young stars.',
+    description: 'A bright, close galactic open star cluster wrapped in blue reflection dust.',
     specs: {
       mass: '800 Solar masses',
       radius: '8 light years (core)',
@@ -3605,5 +3571,442 @@ export const PRESETS_CELESTIAL_DATA: CelestialObject[] = [
     "visualShape": "filament"
   },
   "scaleZone": 5
+},
+{
+  "id": "comet-halebopp",
+  "name": "Comet Hale-Bopp (C/1995 O1)",
+  "category": "Comets",
+  "distanceLy": 0.0029,
+  "distanceString": "185 AU (0.0029 LY) at aphelion",
+  "description": "One of the most widely observed and brightest comets in modern history, remaining visible to the naked eye for a record-breaking 18 consecutive months in the late 1990s.",
+  "specs": {
+    "mass": "2.0 × 10¹⁵ kg",
+    "radius": "30 km (nucleus)",
+    "temperature": "30 K to 300 K",
+    "age": "4.6 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Long-period Comet (C/1995 O1)",
+    "surfaceGravity": "0.005 m/s²",
+    "escapeVelocity": "5.0 m/s",
+    "luminosity": "Bright dust scatter & gas fluorescence",
+    "composition": "Water ice, carbon monoxide, silicate dust, complex organic compounds",
+    "discoveryYear": "1995 (Alan Hale and Thomas Bopp)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Hale-Bopp was 30 to 40 times larger than Comet Halley, making its nucleus one of the largest cometary nuclei ever measured.",
+    "It was visible to the naked eye for 18 months, twice as long as the previous record-holder, the Great Comet of 1811.",
+    "Observations revealed three distinct tails: a dust tail, an ion (gas) tail, and a faint sodium tail never seen before."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#60a5fa",
+    "visualShape": "ringed-sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "comet-shoemakerlevy9",
+  "name": "Comet Shoemaker-Levy 9",
+  "category": "Comets",
+  "distanceLy": 0.00008,
+  "distanceString": "5.2 AU (0.00008 LY) from Earth",
+  "description": "A famous comet that was torn apart by Jupiter's tidal forces and spectacularly collided with the giant planet in July 1994, providing the first direct observation of an extraterrestrial collision in the Solar System.",
+  "specs": {
+    "mass": "Variable (shattered into 21 fragments)",
+    "radius": "2 km (pre-fragmentation)",
+    "temperature": "100 K",
+    "age": "4.6 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Periodic Comet (captured by Jupiter)",
+    "surfaceGravity": "N/A (disintegrated)",
+    "escapeVelocity": "N/A",
+    "composition": "Water ice, silicate rock, dust",
+    "discoveryYear": "1993 (Carolyn and Eugene Shoemaker, David Levy)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The comet was ripped into 21 fragments (dubbed the \"string of pearls\") by Jupiter's extreme tidal forces during a close pass in 1992.",
+    "The largest fragment, Fragment G, struck Jupiter with an energy equivalent to 6 million megatons of TNT—600 times the world's entire nuclear arsenal.",
+    "The dark impact scars left in Jupiter's atmosphere were larger than Earth and remained visible for several months."
+  ],
+  "visuals": {
+    "baseColor": "#94a3b8",
+    "secondaryColor": "#ef4444",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "asteroid-oumuamua",
+  "name": "'Oumuamua (1I/2017 U1)",
+  "category": "Asteroids",
+  "distanceLy": 0.0006,
+  "distanceString": "40 AU (0.0006 LY)",
+  "description": "The first confirmed interstellar object ever detected passing through our Solar System, possessing an highly elongated, cigar-like shape and a mysterious non-gravitational acceleration.",
+  "specs": {
+    "mass": "1.0 × 10⁸ kg",
+    "radius": "115 m (mean)",
+    "temperature": "100 K to 300 K",
+    "age": "Unknown (billions of years)"
+  },
+  "advancedSpecs": {
+    "classification": "Interstellar Object (1I)",
+    "surfaceGravity": "Extremely weak",
+    "escapeVelocity": "Extremely weak",
+    "composition": "Organic-rich rock and metals, possible hidden ice core",
+    "discoveryYear": "2017 (Robert Weryk via Pan-STARRS)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The name 'Oumuamua is Hawaiian for \"scout\" or \"messenger from afar arriving first,\" reflecting its deep-space origin.",
+    "It has an extreme aspect ratio, estimated to be up to 10 times longer than it is wide, completely unlike any known asteroid in our Solar System.",
+    "As it sped away from the Sun, it accelerated slightly, which scientists suggest was due to the outgassing of volatile hydrogen or water ice."
+  ],
+  "visuals": {
+    "baseColor": "#78716c",
+    "secondaryColor": "#44403c",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "comet-borisov",
+  "name": "Borisov (2I/Borisov)",
+  "category": "Comets",
+  "distanceLy": 0.0008,
+  "distanceString": "50 AU (0.0008 LY)",
+  "description": "The second confirmed interstellar object and first interstellar comet ever detected. Unlike 'Oumuamua, Borisov presented a classic, highly active cometary tail, confirming that comets exist in other star systems.",
+  "specs": {
+    "mass": "1.0 × 10¹¹ kg",
+    "radius": "0.5 km",
+    "temperature": "80 K to 250 K",
+    "age": "Unknown (billions of years)"
+  },
+  "advancedSpecs": {
+    "classification": "Interstellar Comet (2I)",
+    "surfaceGravity": "Extremely weak",
+    "escapeVelocity": "Extremely weak",
+    "composition": "Water ice, carbon monoxide (hyper-abundant), dust",
+    "discoveryYear": "2019 (Gennadiy Borisov)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Borisov was discovered by Gennadiy Borisov using a custom-built 0.65-meter telescope in his personal observatory in Crimea.",
+    "Analyses showed that Borisov contained three times more carbon monoxide gas than solar system comets, suggesting it formed in a very cold carbon-rich environment.",
+    "As it passed through our Solar System, it behaved exactly like a pristine Solar System comet, proving water and cometary chemistry are universal."
+  ],
+  "visuals": {
+    "baseColor": "#93c5fd",
+    "secondaryColor": "#3b82f6",
+    "visualShape": "ringed-sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "asteroid-chiron",
+  "name": "Chiron (2060 Chiron)",
+  "category": "Asteroids",
+  "distanceLy": 0.00021,
+  "distanceString": "13.3 AU (0.00021 LY) average",
+  "description": "The first discovered \"Centaur\"—a hybrid object behaving like both an asteroid and a comet, orbiting between Saturn and Neptune.",
+  "specs": {
+    "mass": "4.0 × 10¹⁸ kg",
+    "radius": "100 km (mean)",
+    "temperature": "60 K to 130 K",
+    "age": "4.6 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Centaur (95P/Chiron)",
+    "surfaceGravity": "0.027 m/s²",
+    "escapeVelocity": "74 m/s",
+    "composition": "Water ice, nitrogen ice, rock, organic tholins",
+    "discoveryYear": "1977 (Charles Kowal)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Chiron is named after the wise Centaur in Greek mythology, reflecting its dual nature of being half-asteroid, half-comet.",
+    "In 1989, as Chiron moved closer to the Sun, it developed a glowing coma, a behavior typical of comets but unseen in asteroids of this size.",
+    "Stellar occultations indicate that Chiron may possess a double ring system similar to Chariklo, though this is still actively studied."
+  ],
+  "visuals": {
+    "baseColor": "#78716c",
+    "secondaryColor": "#38bdf8",
+    "visualShape": "ringed-sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "asteroid-vesta",
+  "name": "Vesta (4 Vesta)",
+  "category": "Asteroids",
+  "distanceLy": 0.000037,
+  "distanceString": "2.36 AU (0.000037 LY)",
+  "description": "The second-most massive object in the asteroid belt, Vesta is a leftover rocky protoplanet with a differentiated interior and a heavily cratered, basaltic crust.",
+  "specs": {
+    "mass": "2.59 × 10²⁰ kg",
+    "radius": "262.7 km",
+    "temperature": "85 K to 270 K",
+    "age": "4.56 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "V-type Asteroid / Protoplanet",
+    "surfaceGravity": "0.25 m/s²",
+    "escapeVelocity": "360 m/s",
+    "composition": "Basaltic rock crust, ultramafic mantle, iron-nickel core",
+    "discoveryYear": "1807 (Heinrich Wilhelm Olbers)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Vesta is so bright that it is the only asteroid in the Main Belt that can occasionally be seen from Earth with the naked eye.",
+    "It contains a giant south pole impact basin called Rheasilvia, with a central peak that is 22 km high—almost three times the height of Mount Everest.",
+    "NASA's Dawn spacecraft orbited Vesta for over a year in 2011-2012, mapping its entire surface in incredible detail."
+  ],
+  "visuals": {
+    "baseColor": "#94a3b8",
+    "secondaryColor": "#475569",
+    "visualShape": "sphere"
+  },
+  "scaleZone": 1
+},
+{
+  "id": "cluster-omegacentauri",
+  "name": "Omega Centauri (NGC 5139)",
+  "category": "Star Clusters (Open and Globular Clusters)",
+  "distanceLy": 15800,
+  "distanceString": "15,800 light years",
+  "description": "The largest, most massive globular star cluster orbiting the Milky Way, packing millions of ancient stars into a spectacular spherical swarm.",
+  "specs": {
+    "mass": "4.0 × 10⁶ Solar masses",
+    "radius": "150 light years",
+    "temperature": "4,500 K",
+    "age": "11.5 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Globular Cluster (Class VIII)",
+    "surfaceGravity": "Highly dense localized gravity",
+    "escapeVelocity": "44,000 m/s",
+    "luminosity": "1,000,000 L☉",
+    "composition": "Population II metal-poor stars, multiple stellar populations",
+    "discoveryYear": "Ancient (Ptolemy 150 AD, cataloged by Edmond Halley 1677)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Omega Centauri is so massive that scientists believe it is the leftover core of a dwarf galaxy that was cannibalized by the Milky Way billions of years ago.",
+    "It contains roughly 10 million stars packed together so tightly that stars in its core are separated by only a tenth of a light year.",
+    "Unlike standard globular clusters, its stars are of different ages and chemical compositions, indicating multiple star-forming epochs."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#a78bfa",
+    "visualShape": "star-cluster"
+  },
+  "scaleZone": 3
+},
+{
+  "id": "galaxy-cartwheel",
+  "name": "Cartwheel Galaxy",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 500000000,
+  "distanceString": "500 million light years",
+  "description": "A stunning ring galaxy created by a high-speed collision between two large galaxies, which triggered an expanding cosmic ripple of intense starburst star formation.",
+  "specs": {
+    "mass": "3.85 × 10¹⁰ Solar masses",
+    "radius": "75,000 light years",
+    "temperature": "Varies",
+    "age": "13 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Ring Galaxy (Cartwheel-type)",
+    "surfaceGravity": "Galactic potential well",
+    "escapeVelocity": "350,000 m/s",
+    "luminosity": "15,000,000,000 L☉",
+    "composition": "Expanding blue starburst ring, yellow inner nucleus, dust spokes",
+    "discoveryYear": "1941 (Fritz Zwicky)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The Cartwheel Galaxy's unique shape was caused by a smaller galaxy shooting directly through its center, creating an expansion wave like a rock dropped in water.",
+    "The bright blue outer ring is wider than the entire Milky Way, and contains billions of massive newborn stars.",
+    "Between the inner core and the outer star ring are faint, spoke-like structures containing gas, giving it the appearance of a carriage wheel."
+  ],
+  "visuals": {
+    "baseColor": "#60a5fa",
+    "secondaryColor": "#f43f5e",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "cluster-stephansquintet",
+  "name": "Stephan's Quintet",
+  "category": "Galaxy Groups & Clusters",
+  "distanceLy": 290000000,
+  "distanceString": "290 million light years",
+  "description": "A compact group of five galaxies locked in a violent, destructive gravitational dance that is actively stripping stars and gas into space.",
+  "specs": {
+    "mass": "1.2 × 10¹² Solar masses",
+    "radius": "300,000 light years (total extent)",
+    "temperature": "Millions of Kelvin (shocked gas)",
+    "age": "13 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "HCG 92 Compact Galaxy Group",
+    "surfaceGravity": "Localized complex tidal fields",
+    "escapeVelocity": "N/A",
+    "luminosity": "Variable cluster output",
+    "composition": "NGC 7317, NGC 7318A, NGC 7318B, NGC 7319, and NGC 7320",
+    "discoveryYear": "1877 (Édouard Stephan)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Stephan's Quintet was the first compact galaxy group ever discovered, showing the early stages of multiple galactic mergers.",
+    "A massive shockwave, larger than the Milky Way, is ripping through the group as one galaxy falls through the core at 2 million miles per hour.",
+    "The fifth member, NGC 7320, is actually a foreground galaxy 7 times closer than the rest, only aligned with the other four by chance."
+  ],
+  "visuals": {
+    "baseColor": "#f472b6",
+    "secondaryColor": "#38bdf8",
+    "visualShape": "star-cluster"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-mice",
+  "name": "The Mice Galaxies (NGC 4676)",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 290000000,
+  "distanceString": "290 million light years",
+  "description": "Two colliding spiral galaxies pulling extremely long, thin tails of stars and gas away from each other due to intense gravitational tidal forces.",
+  "specs": {
+    "mass": "2.0 × 10¹¹ Solar masses",
+    "radius": "100,000 light years",
+    "temperature": "Varies",
+    "age": "12 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Colliding Spiral Galaxies",
+    "surfaceGravity": "Highly distorted gravitational field",
+    "escapeVelocity": "250,000 m/s",
+    "luminosity": "Combined galactic output",
+    "composition": "Shattered spiral arms, tidal stellar streams, starburst regions",
+    "discoveryYear": "1785 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "They are nicknamed \"The Mice\" because of the long, thin tidal tails of stars pulled out by gravity, resembling a pair of scurrying mice.",
+    "These galaxies are currently in the process of merging, and will eventually coalesce into a single, giant elliptical galaxy.",
+    "This collision represents a preview of our own Milky Way's future merger with the neighboring Andromeda Galaxy."
+  ],
+  "visuals": {
+    "baseColor": "#60a5fa",
+    "secondaryColor": "#fb923c",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-blackeye",
+  "name": "Black Eye Galaxy (M64)",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 17000000,
+  "distanceString": "17 million light years",
+  "description": "A beautiful spiral galaxy with a massive, dark band of light-absorbing dust hiding a highly unstable counter-rotating outer core.",
+  "specs": {
+    "mass": "8.5 × 10¹⁰ Solar masses",
+    "radius": "40,000 light years",
+    "temperature": "Varies",
+    "age": "13 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Spiral Galaxy (SA(rs)ab)",
+    "surfaceGravity": "Standard galactic rotation",
+    "escapeVelocity": "300,000 m/s",
+    "luminosity": "Combined stellar output",
+    "composition": "Dust lane, counter-rotating outer gas disk, old inner stars",
+    "discoveryYear": "1779 (Edward Pigott)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Its prominent dark dust lane absorbs the light of stars behind it, creating a bruised, dark \"black eye\" appearance in photos.",
+    "In a bizarre twist, the gas in its outer disk rotates in the exact opposite direction to the stars and gas in its inner region.",
+    "This counter-rotation is believed to be the stellar wreckage of a gas-rich companion galaxy that was swallowed about a billion years ago."
+  ],
+  "visuals": {
+    "baseColor": "#cbd5e1",
+    "secondaryColor": "#1e293b",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "galaxy-antennae",
+  "name": "Antennae Galaxies (NGC 4038/4039)",
+  "category": "Galaxies (Spiral, Elliptical, Irregular)",
+  "distanceLy": 45000000,
+  "distanceString": "45 million light years",
+  "description": "A pair of intensely interacting spiral galaxies experiencing a hyper-active explosion of star formation, ejecting two enormous arches of stars.",
+  "specs": {
+    "mass": "1.5 × 10¹¹ Solar masses",
+    "radius": "50,000 light years",
+    "temperature": "Varies",
+    "age": "12 billion years"
+  },
+  "advancedSpecs": {
+    "classification": "Colliding Barred Spiral Galaxies",
+    "surfaceGravity": "Violently disrupted mutual potential",
+    "escapeVelocity": "300,000 m/s",
+    "luminosity": "Hyper-luminous starburst emission",
+    "composition": "Interlocked galactic nuclei, compressed dust clouds, tidal stellar tails",
+    "discoveryYear": "1785 (William Herschel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "The galaxies are named the \"Antennae\" because of two long, sweeping arches of stars pulled out by tidal forces that look like insect antennae.",
+    "Their collision has compressed cold hydrogen clouds, triggering a massive \"starburst\" forming millions of new super star clusters.",
+    "As they collide, the gas clouds collide and ignite new stars, but the actual stars are so far apart they do not collide with each other."
+  ],
+  "visuals": {
+    "baseColor": "#f43f5e",
+    "secondaryColor": "#fb923c",
+    "visualShape": "galaxy-spiral"
+  },
+  "scaleZone": 4
+},
+{
+  "id": "nebula-hannysvoorwerp",
+  "name": "Hanny's Voorwerp",
+  "category": "Nebulae",
+  "distanceLy": 650000000,
+  "distanceString": "650 million light years",
+  "description": "A glowing, ghost-like cosmic green cloud of gas illuminated by the light-echo of a nearby, now-dormant supermassive black hole quasar.",
+  "specs": {
+    "mass": "Billions of Solar masses (gas stream)",
+    "radius": "16,000 light years",
+    "temperature": "15,000 K",
+    "age": "Varying"
+  },
+  "advancedSpecs": {
+    "classification": "Quasar Light Echo (Ionization Nebula)",
+    "surfaceGravity": "N/A",
+    "escapeVelocity": "N/A",
+    "luminosity": "Bright green oxygen-III transition fluorescence",
+    "composition": "Highly ionized hydrogen, oxygen, nitrogen, intergalactic dust",
+    "discoveryYear": "2007 (Hanny van Arkel)"
+  },
+  "imageUrl": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80",
+  "trivia": [
+    "Hanny's Voorwerp means \"Hanny's Object\" in Dutch, discovered by an amateur schoolteacher in the Galaxy Zoo project.",
+    "The vibrant green glow is caused by highly ionized oxygen atoms emitting light, energized by a blast of UV light from a nearby quasar.",
+    "The central quasar in the adjacent galaxy IC 2497 has since shut down, but the light is still travelling through and illuminating the cloud."
+  ],
+  "visuals": {
+    "baseColor": "#22c55e",
+    "secondaryColor": "#10b981",
+    "visualShape": "nebula-cloud"
+  },
+  "scaleZone": 4
 }
 ];

@@ -61,7 +61,7 @@ export interface CosmicScale {
 export const COSMIC_SCALES: CosmicScale[] = [
   {
     id: 1,
-    name: 'Planetary & Debris Scale',
+    name: 'Solar System & Planets',
     range: '< 1 LY',
     description: 'Debris, moons, rocky planets, and gas giants within our solar system and nearby interstellar space.'
   },
