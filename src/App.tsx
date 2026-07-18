@@ -92,6 +92,7 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>('cosmic-dust'); // default selected first item
   const [activeScaleZone, setActiveScaleZone] = useState<number | null>(null); // null means "All Scales"
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeMobileView, setActiveMobileView] = useState<'simulation' | 'details'>('simulation');
   
   // Loading & Error States
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -111,6 +112,7 @@ export default function App() {
     setActiveScaleZone(null); // Clear filter to ensure matched node is visible
     setSearchQuery('');
     setIsDropdownOpen(false);
+    setActiveMobileView('simulation');
   };
 
   // Currently selected object profile helper
@@ -135,6 +137,7 @@ export default function App() {
       setSelectedId(match.id);
       setActiveScaleZone(null); // Clear filter to ensure the matched node is visible
       setSearchQuery('');
+      setActiveMobileView('simulation');
     } else {
       setErrorMsg(`No celestial object matching "${searchQuery}" was found in our pre-calibrated database.`);
     }
@@ -145,21 +148,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen cosmic-radial-bg text-slate-100 flex flex-col font-sans relative overflow-hidden" id="app-root-container">
+    <div className="h-[100dvh] w-screen cosmic-radial-bg text-slate-100 flex flex-col font-sans relative overflow-hidden" id="app-root-container">
       {/* Background Star Field Overlay */}
       <div className="star-field-overlay" />
 
       {/* 1. Header Navigation Bar */}
-      <header className="frosted-glass-header px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 z-20" id="app-header">
+      <header className="frosted-glass-header px-4 py-3 md:px-6 md:py-3.5 flex flex-col md:flex-row justify-between items-center gap-3 z-20" id="app-header">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-sky-400 via-indigo-500 to-rose-400 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 animate-pulse" id="header-logo">
-            <Orbit className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-tr from-sky-400 via-indigo-500 to-rose-400 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 animate-pulse" id="header-logo">
+            <Orbit className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400" id="header-title">
+            <h1 className="text-sm md:text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400" id="header-title">
               3D UNIVERSE SIMULATOR
             </h1>
-            <p className="text-[10px] font-mono text-slate-400 tracking-wider">LOGARITHMIC SCALE COSMOS EXPLORER</p>
+            <p className="text-[9px] md:text-[10px] font-mono text-slate-400 tracking-wider">LOGARITHMIC SCALE COSMOS EXPLORER</p>
           </div>
         </div>
 
@@ -168,7 +171,7 @@ export default function App() {
           <div className="relative flex-1">
             <input
               type="text"
-              placeholder="Search e.g. Saturn, Orion Nebula, Quasar 3C 273..."
+              placeholder="Search e.g. Saturn, Orion Nebula..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -242,14 +245,47 @@ export default function App() {
 
       {/* 2. Main Space Layout */}
       <main className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10" id="app-main-layout">
+        {/* Mobile View Segmented Tabs Control */}
+        <div className="lg:hidden flex border-b border-white/10 bg-slate-950/40 p-2 gap-1.5 shrink-0 z-20" id="mobile-view-tabs">
+          <button
+            type="button"
+            onClick={() => setActiveMobileView('simulation')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all ${
+              activeMobileView === 'simulation'
+                ? 'bg-indigo-600/60 text-white border border-indigo-400/30 font-bold shadow-md shadow-indigo-600/10'
+                : 'text-slate-400 border border-transparent hover:text-slate-200 hover:bg-white/5'
+            }`}
+            id="tab-mobile-simulation"
+          >
+            <Orbit className="w-4 h-4 text-sky-400" />
+            3D Simulation Space
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveMobileView('details')}
+            disabled={!selectedObject}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all ${
+              !selectedObject ? 'opacity-30 cursor-not-allowed' : ''
+            } ${
+              activeMobileView === 'details'
+                ? 'bg-indigo-600/60 text-white border border-indigo-400/30 font-bold shadow-md shadow-indigo-600/10'
+                : 'text-slate-400 border border-transparent hover:text-slate-200 hover:bg-white/5'
+            }`}
+            id="tab-mobile-details"
+          >
+            <Info className="w-4 h-4 text-amber-400" />
+            Scientific Profile {selectedObject ? `(${selectedObject.name})` : ''}
+          </button>
+        </div>
+
         {/* Central Exploration Stage */}
-        <div className="flex-1 flex flex-col relative bg-transparent" id="center-stage-container">
+        <div className={`flex-1 flex flex-col relative bg-transparent ${activeMobileView === 'simulation' ? 'flex' : 'hidden lg:flex'}`} id="center-stage-container">
           {/* Scale Magnitude Filter tabs */}
-          <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-4 py-2.5 flex flex-wrap gap-2 items-center" id="scale-magnitude-tabs">
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mr-2">Filters:</span>
+          <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-4 py-2 flex flex-wrap gap-1.5 items-center shrink-0" id="scale-magnitude-tabs">
+            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mr-1.5">Filters:</span>
             <button
               onClick={() => setActiveScaleZone(null)}
-              className={`text-xs px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
                 activeScaleZone === null
                   ? 'bg-white/15 text-white border-white/30 font-medium shadow-sm'
                   : 'bg-transparent text-slate-400 border-transparent hover:text-slate-100 hover:bg-white/5'
@@ -262,7 +298,7 @@ export default function App() {
               <button
                 key={scale.id}
                 onClick={() => setActiveScaleZone(scale.id)}
-                className={`text-xs px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
                   activeScaleZone === scale.id
                     ? 'bg-indigo-500/25 text-sky-300 border-indigo-400/40 font-medium shadow-sm shadow-indigo-500/10'
                     : 'bg-transparent text-slate-400 border-transparent hover:text-slate-100 hover:bg-white/5'
@@ -276,10 +312,10 @@ export default function App() {
 
           {/* Active Scale Description Banner */}
           {activeScaleZone && (
-            <div className="bg-indigo-500/10 border-b border-indigo-500/20 px-6 py-2 flex items-center justify-between" id="active-scale-info-banner">
+            <div className="bg-indigo-500/10 border-b border-indigo-500/20 px-4 py-1.5 flex items-center justify-between shrink-0" id="active-scale-info-banner">
               <div className="flex items-center gap-2">
                 <Info className="w-3.5 h-3.5 text-indigo-400" />
-                <p className="text-[11px] text-slate-300">
+                <p className="text-[10px] text-slate-300 truncate max-w-[240px] xs:max-w-none">
                   <span className="font-semibold text-indigo-300 font-mono">
                     {COSMIC_SCALES[activeScaleZone - 1].range}
                   </span>
@@ -289,7 +325,7 @@ export default function App() {
               </div>
               <button
                 onClick={() => setActiveScaleZone(null)}
-                className="text-[10px] text-indigo-400 hover:text-indigo-300 font-mono underline uppercase cursor-pointer"
+                className="text-[9px] text-indigo-400 hover:text-indigo-300 font-mono underline uppercase cursor-pointer"
                 id="btn-clear-scale"
               >
                 Show All
@@ -298,13 +334,65 @@ export default function App() {
           )}
 
           {/* 3D Simulation Canvas Container */}
-          <div className="flex-1 min-h-[350px] relative" id="canvas-wrapper">
+          <div className="flex-1 min-h-[220px] md:min-h-[350px] relative" id="canvas-wrapper">
             <CosmicCanvas
               objects={objects}
               selectedId={selectedId}
               onSelectObject={(obj) => setSelectedId(obj.id)}
               activeScaleZone={activeScaleZone}
             />
+
+            {/* Selected Object Target HUD for mobile & desktop overview */}
+            {selectedObject && (
+              <div 
+                className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-950/90 border border-indigo-500/30 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl shadow-indigo-500/20 max-w-sm flex flex-col gap-2.5 animate-fade-in z-20 pointer-events-auto"
+                id="selected-target-hud"
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[8px] font-mono font-bold tracking-widest text-indigo-400 uppercase bg-indigo-950/60 border border-indigo-800/40 px-2 py-0.5 rounded">
+                      Focused Target
+                    </span>
+                    <h3 className="text-sm font-bold text-white mt-1.5 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping" />
+                      {selectedObject.name}
+                    </h3>
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setSelectedId(null);
+                      setActiveMobileView('simulation');
+                    }}
+                    className="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
+                    title="Deselect Target"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                
+                <div className="flex justify-between items-center text-[10px] font-mono border-t border-white/5 pt-2">
+                  <span className="text-slate-400">Log-Scale Distance:</span>
+                  <span className="text-sky-300 font-semibold">{selectedObject.distanceString}</span>
+                </div>
+
+                <div className="flex gap-2 mt-0.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveMobileView('details');
+                      const sidebar = document.getElementById('detail-sidebar');
+                      if (sidebar) sidebar.scrollTop = 0;
+                    }}
+                    className="flex-1 bg-indigo-600/80 hover:bg-indigo-500 text-white font-medium text-[10px] py-2 px-3 rounded-xl shadow-lg shadow-indigo-600/10 transition-all cursor-pointer text-center active:scale-95 flex items-center justify-center gap-1.5 border border-indigo-400/20"
+                    id="hud-view-specs-btn"
+                  >
+                    <Info className="w-3.5 h-3.5" />
+                    Open Scientific Profile
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Error notifications bubble */}
             {errorMsg && (
@@ -359,26 +447,43 @@ export default function App() {
         {/* 4. Detailed Specimen Sidebar */}
         {selectedObject && (
           <aside
-            className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-white/[0.02] backdrop-blur-2xl overflow-y-auto flex flex-col z-10 shadow-2xl"
+            className={`w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-950/85 lg:bg-white/[0.02] backdrop-blur-2xl overflow-y-auto flex flex-col z-10 shadow-2xl ${
+              activeMobileView === 'details' ? 'flex' : 'hidden lg:flex'
+            }`}
             id="detail-sidebar"
           >
             {/* Sidebar header */}
-            <div className="p-6 border-b border-white/10 flex items-start justify-between gap-4" id="sidebar-header">
-              <div>
-                <div className="cosmic-tag mb-2" id="sidebar-category-tag">
-                  {selectedObject.category}
-                </div>
-                <h2 className="text-xl font-bold text-white tracking-tight mt-1" id="sidebar-object-name">
-                  {selectedObject.name}
-                </h2>
-              </div>
+            <div className="p-6 border-b border-white/10 flex flex-col gap-2" id="sidebar-header">
               <button
-                onClick={() => setSelectedId(null)}
-                className="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
-                id="btn-close-sidebar"
+                type="button"
+                onClick={() => setActiveMobileView('simulation')}
+                className="lg:hidden flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold mb-1 cursor-pointer w-fit"
+                id="btn-sidebar-back-to-map"
               >
-                <X className="w-5 h-5" />
+                <Orbit className="w-3.5 h-3.5 text-sky-400" />
+                ← Back to 3D Space Map
               </button>
+              
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="cosmic-tag mb-2" id="sidebar-category-tag">
+                    {selectedObject.category}
+                  </div>
+                  <h2 className="text-xl font-bold text-white tracking-tight mt-1" id="sidebar-object-name">
+                    {selectedObject.name}
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedId(null);
+                    setActiveMobileView('simulation');
+                  }}
+                  className="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
+                  id="btn-close-sidebar"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Information Slots */}
@@ -506,7 +611,7 @@ export default function App() {
       </main>
 
       {/* 5. Footer and Metadata bar */}
-      <footer className="border-t border-white/5 bg-transparent p-3 text-center text-[10px] text-slate-500 font-mono flex flex-col sm:flex-row justify-between items-center gap-2" id="app-footer">
+      <footer className="hidden md:flex border-t border-white/5 bg-transparent p-3 text-center text-[10px] text-slate-500 font-mono justify-between items-center gap-2" id="app-footer">
         <div>3D Universe Simulator — Built in high-fidelity logarithmic spatial dimensions.</div>
         <div className="flex gap-4">
           <span>Active Coordinate Scale: log₁₀(Light Years)</span>
