@@ -523,41 +523,98 @@ export default function CosmicCanvas({
       const scaleLabels = ['Debris (<1 LY)', 'Stellar (<1k LY)', 'Galactic (<10M LY)', 'Intergalactic (<1B LY)', 'Observable Horizon (46B LY)'];
 
       scaleRadii.forEach((shellRadius, i) => {
-        // Draw orbital grid shells on the horizontal plane (y = 0)
-        ctx.beginPath();
-        const segments = 64;
-        let visibleCount = 0;
-
-        for (let s = 0; s <= segments; s++) {
-          const angle = (s / segments) * Math.PI * 2;
-          const ox = shellRadius * Math.cos(angle) - cameraRef.current.targetX;
-          const oy = 0 - cameraRef.current.targetY;
-          const oz = shellRadius * Math.sin(angle) - cameraRef.current.targetZ;
-
-          const rx1 = ox * cosY - oz * sinY;
-          const rz1 = ox * sinY + oz * cosY;
-          const ry = oy * cosP - rz1 * sinP;
-          const rz = oy * sinP + rz1 * cosP;
-
-          const sz = rz + distOffset;
-          if (sz > 10) {
-            const depthScale = focalLength / sz;
-            const sx = cx + rx1 * depthScale;
-            const sy = cy + ry * depthScale;
-
-            if (s === 0) {
-              ctx.moveTo(sx, sy);
+        if (i === 4) {
+          // Render the Observable Horizon as a high-fidelity 3D wireframe sphere!
+          ctx.save();
+          
+          // Draw latitude bands (parallel circles)
+          const latitudes = [-Math.PI / 3, -Math.PI / 6, 0, Math.PI / 6, Math.PI / 3];
+          latitudes.forEach((phi) => {
+            ctx.beginPath();
+            // Highlight the equator slightly more
+            if (phi === 0) {
+              ctx.strokeStyle = 'rgba(244, 63, 94, 0.22)'; // glowing rose/pink for CMB equator
+              ctx.lineWidth = 1.5;
             } else {
-              ctx.lineTo(sx, sy);
+              ctx.strokeStyle = 'rgba(99, 102, 241, 0.08)'; // indigo for other latitudes
+              ctx.lineWidth = 1;
             }
-            visibleCount++;
-          }
-        }
-        if (visibleCount > 10) {
-          // Label shells
-          ctx.stroke();
+            
+            const segments = 64;
+            const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
+            let firstPoint = true;
 
-          // Draw ring index indicator
+            for (let s = 0; s <= segments; s++) {
+              const theta = (s / segments) * Math.PI * 2;
+              const ox = shellRadius * cosPhi * Math.cos(theta) - cameraRef.current.targetX;
+              const oy = shellRadius * sinPhi - cameraRef.current.targetY;
+              const oz = shellRadius * cosPhi * Math.sin(theta) - cameraRef.current.targetZ;
+
+              const rx1 = ox * cosY - oz * sinY;
+              const rz1 = ox * sinY + oz * cosY;
+              const ry = oy * cosP - rz1 * sinP;
+              const rz = oy * sinP + rz1 * cosP;
+
+              const sz = rz + distOffset;
+              if (sz > 10) {
+                const depthScale = focalLength / sz;
+                const sx = cx + rx1 * depthScale;
+                const sy = cy + ry * depthScale;
+
+                if (firstPoint) {
+                  ctx.moveTo(sx, sy);
+                  firstPoint = false;
+                } else {
+                  ctx.lineTo(sx, sy);
+                }
+              }
+            }
+            ctx.stroke();
+          });
+
+          // Draw longitude bands (great circles at different yaw offsets)
+          const longitudes = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4];
+          longitudes.forEach((thetaOffset) => {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(99, 102, 241, 0.08)';
+            ctx.lineWidth = 1;
+            
+            const segments = 64;
+            let firstPoint = true;
+
+            for (let s = 0; s <= segments; s++) {
+              const phi = (s / segments) * Math.PI * 2;
+              // Coordinates of a point on a vertical circle tilted by thetaOffset
+              const ox = shellRadius * Math.cos(phi) * Math.cos(thetaOffset) - cameraRef.current.targetX;
+              const oy = shellRadius * Math.sin(phi) - cameraRef.current.targetY;
+              const oz = shellRadius * Math.cos(phi) * Math.sin(thetaOffset) - cameraRef.current.targetZ;
+
+              const rx1 = ox * cosY - oz * sinY;
+              const rz1 = ox * sinY + oz * cosY;
+              const ry = oy * cosP - rz1 * sinP;
+              const rz = oy * sinP + rz1 * cosP;
+
+              const sz = rz + distOffset;
+              if (sz > 10) {
+                const depthScale = focalLength / sz;
+                const sx = cx + rx1 * depthScale;
+                const sy = cy + ry * depthScale;
+
+                if (firstPoint) {
+                  ctx.moveTo(sx, sy);
+                  firstPoint = false;
+                } else {
+                  ctx.lineTo(sx, sy);
+                }
+              }
+            }
+            ctx.stroke();
+          });
+
+          ctx.restore();
+
+          // Label the Observable Universe Edge
           const ox = shellRadius - cameraRef.current.targetX;
           const oy = 0 - cameraRef.current.targetY;
           const oz = 0 - cameraRef.current.targetZ;
@@ -572,9 +629,64 @@ export default function CosmicCanvas({
             const sx = cx + rx1 * depthScale;
             const sy = cy + ry * depthScale;
 
-            ctx.fillStyle = 'rgba(148, 163, 184, 0.3)'; // slate-400
-            ctx.font = '10px font-mono';
+            ctx.fillStyle = 'rgba(244, 63, 94, 0.5)'; // vibrant rose pink label
+            ctx.font = 'bold 10px font-mono';
             ctx.fillText(scaleLabels[i], sx + 5, sy - 5);
+          }
+
+        } else {
+          // Draw orbital grid shells on the horizontal plane (y = 0) for inner bands
+          ctx.beginPath();
+          const segments = 64;
+          let visibleCount = 0;
+
+          for (let s = 0; s <= segments; s++) {
+            const angle = (s / segments) * Math.PI * 2;
+            const ox = shellRadius * Math.cos(angle) - cameraRef.current.targetX;
+            const oy = 0 - cameraRef.current.targetY;
+            const oz = shellRadius * Math.sin(angle) - cameraRef.current.targetZ;
+
+            const rx1 = ox * cosY - oz * sinY;
+            const rz1 = ox * sinY + oz * cosY;
+            const ry = oy * cosP - rz1 * sinP;
+            const rz = oy * sinP + rz1 * cosP;
+
+            const sz = rz + distOffset;
+            if (sz > 10) {
+              const depthScale = focalLength / sz;
+              const sx = cx + rx1 * depthScale;
+              const sy = cy + ry * depthScale;
+
+              if (s === 0) {
+                ctx.moveTo(sx, sy);
+              } else {
+                ctx.lineTo(sx, sy);
+              }
+              visibleCount++;
+            }
+          }
+          if (visibleCount > 10) {
+            ctx.stroke();
+
+            // Label shells
+            const ox = shellRadius - cameraRef.current.targetX;
+            const oy = 0 - cameraRef.current.targetY;
+            const oz = 0 - cameraRef.current.targetZ;
+            const rx1 = ox * cosY - oz * sinY;
+            const rz1 = ox * sinY + oz * cosY;
+            const ry = oy * cosP - rz1 * sinP;
+            const rz = oy * sinP + rz1 * cosP;
+            const sz = rz + distOffset;
+
+            if (sz > 10) {
+              const depthScale = focalLength / sz;
+              const sx = cx + rx1 * depthScale;
+              const sy = cy + ry * depthScale;
+
+              ctx.fillStyle = 'rgba(148, 163, 184, 0.3)'; // slate-400
+              ctx.font = '10px font-mono';
+              ctx.fillText(scaleLabels[i], sx + 5, sy - 5);
+            }
           }
         }
       });
@@ -1790,7 +1902,7 @@ export default function CosmicCanvas({
               ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
               ctx.fill();
 
-            } else if (obj.id === 'dwarf-planet') { // Pluto
+             } else if (obj.id === 'dwarf-planet' || obj.id === 'dwarf-pluto') { // Pluto
               // Pale reddish-brown body with the iconic Tombaugh Regio "heart"
               const plutoGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
               plutoGrad.addColorStop(0, '#fbcfe8'); // pale peach highlight
@@ -1833,13 +1945,13 @@ export default function CosmicCanvas({
               ctx.fill();
               ctx.restore();
 
-            } else if (obj.id === 'moon' || obj.category.toLowerCase().includes('moon')) { // Europa / Moon
-              // Icy cyan-white body with cracked fracture lineae
-              const bodyGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
-              bodyGrad.addColorStop(0, '#ffffff');
-              bodyGrad.addColorStop(0.55, '#e0f2fe'); // icy cyan-blue
-              bodyGrad.addColorStop(1, '#0f172a');    // shadowed dark core
-              ctx.fillStyle = bodyGrad;
+            } else if (obj.id === 'dwarf-ceres') {
+              // Ceres — dark stony grey with bright white salt spots (Occator crater)
+              const ceresGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+              ceresGrad.addColorStop(0, '#94a3b8'); // slate grey highlight
+              ceresGrad.addColorStop(0.55, '#475569'); // dark slate
+              ceresGrad.addColorStop(1, '#0f172a');    // shadow
+              ctx.fillStyle = ceresGrad;
               ctx.beginPath();
               ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
               ctx.fill();
@@ -1849,38 +1961,578 @@ export default function CosmicCanvas({
               ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
               ctx.clip();
 
-              // Fractures and Lineae - Reddish-brown mineral-rich ice cracks
-              ctx.strokeStyle = 'rgba(153, 27, 27, 0.4)'; // copper/salt salts
-              ctx.lineWidth = 0.8;
-              const crackAngles = [0.2, -0.6, 1.1, -1.4, 0.8];
-              crackAngles.forEach((ang) => {
+              // Dark carbonaceous patches
+              ctx.fillStyle = 'rgba(15, 23, 42, 0.45)';
+              ctx.beginPath();
+              ctx.ellipse(sx - renderSize * 0.25, sy - renderSize * 0.15, renderSize * 0.38, renderSize * 0.25, Math.PI / 4, 0, Math.PI * 2);
+              ctx.ellipse(sx + renderSize * 0.3, sy + renderSize * 0.2, renderSize * 0.28, renderSize * 0.18, -Math.PI / 6, 0, Math.PI * 2);
+              ctx.fill();
+
+              // Craters
+              const craters = [
+                { x: -0.15, y: -0.1, r: 0.14, spots: true }, // Occator crater with spots!
+                { x: 0.3, y: -0.3, r: 0.1, spots: false },
+                { x: -0.35, y: 0.35, r: 0.12, spots: false },
+                { x: 0.25, y: 0.28, r: 0.08, spots: false }
+              ];
+              craters.forEach((c) => {
+                const cx = sx + c.x * renderSize;
+                const cy = sy + c.y * renderSize;
+                const cr = c.r * renderSize;
+
+                ctx.strokeStyle = 'rgba(9, 9, 11, 0.55)';
+                ctx.lineWidth = 0.5;
                 ctx.beginPath();
-                ctx.ellipse(sx, sy, renderSize * 0.88, renderSize * 0.52, ang, 0, Math.PI * 2);
+                ctx.arc(cx, cy, cr, Math.PI * 1.2, Math.PI * 2.2);
                 ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.beginPath();
+                ctx.arc(cx, cy, cr, Math.PI * 0.2, Math.PI * 1.2);
+                ctx.stroke();
+
+                // If Occator, render the ultra-famous highly reflective sodium carbonate salt spots!
+                if (c.spots) {
+                  ctx.fillStyle = '#ffffff';
+                  ctx.shadowColor = '#38bdf8';
+                  ctx.shadowBlur = 4;
+                  ctx.beginPath();
+                  ctx.arc(cx, cy, cr * 0.2, 0, Math.PI * 2); // central main spot (facula)
+                  ctx.fill();
+
+                  // Surrounding smaller secondary spots (parasol faculae)
+                  for (let s = 0; s < 4; s++) {
+                    const sa = s * Math.PI / 2;
+                    const sx_spot = cx + Math.cos(sa) * cr * 0.45;
+                    const sy_spot = cy + Math.sin(sa) * cr * 0.45;
+                    ctx.beginPath();
+                    ctx.arc(sx_spot, sy_spot, cr * 0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                  }
+                  ctx.shadowBlur = 0;
+                }
               });
 
-              // South polar geyser water-ice vapor plume
-              ctx.save();
-              const plumeGrad = ctx.createLinearGradient(sx, sy + renderSize * 0.8, sx, sy + renderSize * 1.5);
-              plumeGrad.addColorStop(0, 'rgba(14, 165, 233, 0.4)'); // sky-500
-              plumeGrad.addColorStop(1, 'transparent');
-              ctx.fillStyle = plumeGrad;
-              ctx.beginPath();
-              ctx.moveTo(sx, sy + renderSize * 0.85);
-              ctx.lineTo(sx - renderSize * 0.15, sy + renderSize * 1.35);
-              ctx.lineTo(sx + renderSize * 0.15, sy + renderSize * 1.35);
-              ctx.closePath();
-              ctx.fill();
-              ctx.restore();
-
-              const moonShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
-              moonShade.addColorStop(0, 'transparent');
-              moonShade.addColorStop(1, 'rgba(0,0,0,0.9)');
-              ctx.fillStyle = moonShade;
+              const ceresShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.15, sx, sy, renderSize);
+              ceresShade.addColorStop(0, 'transparent');
+              ceresShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+              ctx.fillStyle = ceresShade;
               ctx.beginPath();
               ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
               ctx.fill();
               ctx.restore();
+
+            } else if (obj.id === 'dwarf-haumea') {
+              // Haumea — football-shaped rapid rotating ellipsoid with a dark thin ring!
+              const time = Date.now() / 2000;
+              ctx.save();
+              
+              // Draw Haumea's dark planetary ring around its equator
+              ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.ellipse(sx, sy, renderSize * 2.1, renderSize * 0.35, -Math.PI / 12, 0, Math.PI * 2);
+              ctx.stroke();
+
+              // Draw football-like elongated ellipsoid shape
+              const rotationAngle = -Math.PI / 12; // tilt
+              const scaleX = 1.35; // elongated along major axis
+              const scaleY = 0.82; // squashed along minor axis
+              
+              ctx.translate(sx, sy);
+              ctx.rotate(rotationAngle);
+              ctx.scale(scaleX, scaleY);
+
+              const haumeaGrad = ctx.createRadialGradient(-renderSize * 0.2, -renderSize * 0.2, 0, 0, 0, renderSize);
+              haumeaGrad.addColorStop(0, '#f1f5f9');
+              haumeaGrad.addColorStop(0.55, '#94a3b8');
+              haumeaGrad.addColorStop(1, '#1e293b');
+              ctx.fillStyle = haumeaGrad;
+              ctx.beginPath();
+              ctx.arc(0, 0, renderSize, 0, Math.PI * 2);
+              ctx.fill();
+
+              // Icy white surface texture lines (crystalline water ice streaks)
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+              ctx.lineWidth = 0.5;
+              ctx.beginPath();
+              ctx.ellipse(0, 0, renderSize * 0.85, renderSize * 0.4, 0, 0, Math.PI * 2);
+              ctx.stroke();
+
+              const haumeaShade = ctx.createRadialGradient(-renderSize * 0.4, -renderSize * 0.4, renderSize * 0.2, 0, 0, renderSize);
+              haumeaShade.addColorStop(0, 'transparent');
+              haumeaShade.addColorStop(1, 'rgba(0,0,0,0.85)');
+              ctx.fillStyle = haumeaShade;
+              ctx.beginPath();
+              ctx.arc(0, 0, renderSize, 0, Math.PI * 2);
+              ctx.fill();
+
+              ctx.restore();
+
+            } else if (obj.id === 'moon' || obj.category.toLowerCase().includes('moon')) { // Moon Renderers
+              const moonId = obj.id.toLowerCase();
+              if (moonId === 'moon-luna') {
+                // 1. Luna (The Moon) — cratered grey basalt
+                const bodyGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                bodyGrad.addColorStop(0, '#f1f5f9'); // light reflective grey highlight
+                bodyGrad.addColorStop(0.55, '#94a3b8'); // mid slate grey
+                bodyGrad.addColorStop(1, '#1e293b');    // shadow
+                ctx.fillStyle = bodyGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Dark basaltic maria plains (Oceanus Procellarum, Mare Imbrium)
+                ctx.fillStyle = 'rgba(71, 85, 105, 0.45)'; // dark basaltic grey
+                ctx.beginPath();
+                ctx.ellipse(sx - renderSize * 0.3, sy - renderSize * 0.2, renderSize * 0.45, renderSize * 0.3, Math.PI / 4, 0, Math.PI * 2);
+                ctx.ellipse(sx + renderSize * 0.25, sy - renderSize * 0.35, renderSize * 0.3, renderSize * 0.2, -Math.PI / 6, 0, Math.PI * 2);
+                ctx.ellipse(sx - renderSize * 0.2, sy + renderSize * 0.4, renderSize * 0.38, renderSize * 0.22, Math.PI / 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw craters
+                const craters = [
+                  { x: -0.4, y: 0.1, r: 0.15, rays: false },
+                  { x: 0.3, y: -0.2, r: 0.12, rays: false },
+                  { x: 0.1, y: 0.5, r: 0.22, rays: true }, // Tycho crater with huge ray system
+                  { x: -0.1, y: -0.5, r: 0.14, rays: false },
+                  { x: 0.4, y: 0.3, r: 0.08, rays: false }
+                ];
+                craters.forEach((c) => {
+                  const cx = sx + c.x * renderSize;
+                  const cy = sy + c.y * renderSize;
+                  const cr = c.r * renderSize;
+
+                  ctx.strokeStyle = 'rgba(15, 23, 42, 0.6)';
+                  ctx.lineWidth = 0.5;
+                  ctx.beginPath();
+                  ctx.arc(cx, cy, cr, Math.PI * 1.2, Math.PI * 2.2);
+                  ctx.stroke();
+
+                  ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+                  ctx.beginPath();
+                  ctx.arc(cx, cy, cr, Math.PI * 0.2, Math.PI * 1.2);
+                  ctx.stroke();
+
+                  if (c.rays) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                    ctx.lineWidth = 0.4;
+                    for (let rAngle = 0; rAngle < Math.PI * 2; rAngle += Math.PI / 6) {
+                      ctx.beginPath();
+                      ctx.moveTo(cx + Math.cos(rAngle) * cr, cy + Math.sin(rAngle) * cr);
+                      ctx.lineTo(cx + Math.cos(rAngle) * cr * 4, cy + Math.sin(rAngle) * cr * 4);
+                      ctx.stroke();
+                    }
+                  }
+                });
+
+                // Moon terminator shade
+                const moonShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.15, sx, sy, renderSize);
+                moonShade.addColorStop(0, 'transparent');
+                moonShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+                ctx.fillStyle = moonShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-titan') {
+                // 2. Titan — dense orange-gold organic atmospheric haze
+                const atmGrad = ctx.createRadialGradient(sx, sy, renderSize * 0.85, sx, sy, renderSize * 1.35);
+                atmGrad.addColorStop(0, 'rgba(245, 158, 11, 0.5)'); // amber-500
+                atmGrad.addColorStop(0.5, 'rgba(217, 119, 6, 0.25)'); // amber-600
+                atmGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = atmGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize * 1.35, 0, Math.PI * 2);
+                ctx.fill();
+
+                const titanGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                titanGrad.addColorStop(0, '#fef3c7'); // cream highlight
+                titanGrad.addColorStop(0.5, '#f59e0b'); // gold clouds
+                titanGrad.addColorStop(0.85, '#d97706'); // amber haze
+                titanGrad.addColorStop(1, '#451a03'); // deep shadowed brown
+                ctx.fillStyle = titanGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Dark hydrocarbon methane/ethane lakes peeking through (Kraken Mare, Ligeia Mare)
+                ctx.fillStyle = 'rgba(30, 58, 138, 0.35)'; // dark liquid blue
+                ctx.beginPath();
+                ctx.ellipse(sx - renderSize * 0.25, sy - renderSize * 0.4, renderSize * 0.35, renderSize * 0.18, Math.PI / 12, 0, Math.PI * 2);
+                ctx.ellipse(sx + renderSize * 0.3, sy - renderSize * 0.5, renderSize * 0.25, renderSize * 0.12, -Math.PI / 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Hazy organic cloud stripes
+                ctx.strokeStyle = 'rgba(217, 119, 6, 0.22)';
+                ctx.lineWidth = Math.max(1, renderSize * 0.15);
+                ctx.beginPath();
+                ctx.ellipse(sx, sy - renderSize * 0.15, renderSize * 0.95, renderSize * 0.08, 0, 0, Math.PI * 2);
+                ctx.ellipse(sx, sy + renderSize * 0.25, renderSize * 0.95, renderSize * 0.06, 0, 0, Math.PI * 2);
+                ctx.stroke();
+
+                const titanShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                titanShade.addColorStop(0, 'transparent');
+                titanShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+                ctx.fillStyle = titanShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-io') {
+                // 3. Io — volcanic sulfur-pizza world
+                const ioGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                ioGrad.addColorStop(0, '#fef08a'); // yellow sulfur highlight
+                ioGrad.addColorStop(0.5, '#facc15'); // yellow
+                ioGrad.addColorStop(0.85, '#ca8a04'); // orange-brown
+                ioGrad.addColorStop(1, '#2d1a00'); // dark shadowed core
+                ctx.fillStyle = ioGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Red and orange sulfur fields/lava flows
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.55)'; // volcanic red
+                ctx.beginPath();
+                ctx.ellipse(sx - renderSize * 0.2, sy - renderSize * 0.15, renderSize * 0.3, renderSize * 0.18, Math.PI / 4, 0, Math.PI * 2);
+                ctx.ellipse(sx + renderSize * 0.45, sy + renderSize * 0.25, renderSize * 0.22, renderSize * 0.15, -Math.PI / 3, 0, Math.PI * 2);
+                ctx.ellipse(sx - renderSize * 0.35, sy + renderSize * 0.38, renderSize * 0.28, renderSize * 0.12, Math.PI / 12, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = 'rgba(249, 115, 22, 0.5)'; // vibrant orange
+                ctx.beginPath();
+                ctx.ellipse(sx + renderSize * 0.1, sy - renderSize * 0.35, renderSize * 0.28, renderSize * 0.14, Math.PI / 6, 0, Math.PI * 2);
+                ctx.ellipse(sx - renderSize * 0.1, sy + renderSize * 0.1, renderSize * 0.35, renderSize * 0.25, -Math.PI / 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Volcanic Calderas / Active vents (Loki Patera, Pele)
+                const vents = [
+                  { x: -0.15, y: -0.22, r: 0.1, pulse: true },
+                  { x: 0.35, y: 0.15, r: 0.08, pulse: false },
+                  { x: -0.3, y: 0.3, r: 0.07, pulse: false },
+                  { x: 0.05, y: 0.42, r: 0.09, pulse: true }
+                ];
+                vents.forEach((v) => {
+                  const vx = sx + v.x * renderSize;
+                  const vy = sy + v.y * renderSize;
+                  const vr = v.r * renderSize;
+
+                  // Black vent opening
+                  ctx.fillStyle = '#09090b';
+                  ctx.beginPath();
+                  ctx.arc(vx, vy, vr, 0, Math.PI * 2);
+                  ctx.fill();
+
+                  // Glowing orange caldera rim
+                  ctx.strokeStyle = v.pulse && Math.sin(Date.now() / 400) > 0 ? '#ef4444' : '#f97316';
+                  ctx.lineWidth = 1;
+                  ctx.beginPath();
+                  ctx.arc(vx, vy, vr, 0, Math.PI * 2);
+                  ctx.stroke();
+                });
+
+                const ioShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                ioShade.addColorStop(0, 'transparent');
+                ioShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+                ctx.fillStyle = ioShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-enceladus') {
+                // 4. Enceladus — pristine ice-white body with south polar geysers
+                const encGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                encGrad.addColorStop(0, '#ffffff'); // pure white reflection
+                encGrad.addColorStop(0.55, '#f1f5f9'); // slate grey shadow transition
+                encGrad.addColorStop(1, '#94a3b8');    // slate shadowed core
+                ctx.fillStyle = encGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Subtle ice cracks in soft greyish blue
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.28)'; // cyan-400
+                ctx.lineWidth = 0.6;
+                const cracks = [0.15, -0.45, 0.9, -1.2];
+                cracks.forEach((ang) => {
+                  ctx.beginPath();
+                  ctx.ellipse(sx, sy, renderSize * 0.9, renderSize * 0.6, ang, 0, Math.PI * 2);
+                  ctx.stroke();
+                });
+
+                // Tiger Stripes (four major fractures at South Pole) in cyan-blue
+                ctx.strokeStyle = 'rgba(14, 165, 233, 0.55)'; // sky-500
+                ctx.lineWidth = 1;
+                for (let t = -2; t <= 2; t++) {
+                  if (t === 0) continue;
+                  ctx.beginPath();
+                  const tx = sx + (t * renderSize * 0.12);
+                  const ty = sy + (renderSize * 0.68);
+                  ctx.moveTo(tx - renderSize * 0.08, ty);
+                  ctx.quadraticCurveTo(tx, ty + renderSize * 0.12, tx + renderSize * 0.08, ty);
+                  ctx.stroke();
+                }
+
+                // Active south polar water-ice geysers
+                ctx.save();
+                const plumeGrad = ctx.createLinearGradient(sx, sy + renderSize * 0.8, sx, sy + renderSize * 1.8);
+                plumeGrad.addColorStop(0, 'rgba(56, 189, 248, 0.55)'); // bright ice cyan
+                plumeGrad.addColorStop(0.35, 'rgba(255, 255, 255, 0.3)'); // white spray
+                plumeGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = plumeGrad;
+                ctx.beginPath();
+                ctx.moveTo(sx - renderSize * 0.15, sy + renderSize * 0.82);
+                ctx.quadraticCurveTo(sx, sy + renderSize * 0.8, sx + renderSize * 0.15, sy + renderSize * 0.82);
+                ctx.lineTo(sx + renderSize * 0.35, sy + renderSize * 1.75);
+                ctx.lineTo(sx - renderSize * 0.35, sy + renderSize * 1.75);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+
+                const encShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                encShade.addColorStop(0, 'transparent');
+                encShade.addColorStop(1, 'rgba(0,0,0,0.85)');
+                ctx.fillStyle = encShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-triton') {
+                // 5. Triton — cantaloupe terrain & retrograde captured moon
+                const tritonGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                tritonGrad.addColorStop(0, '#fed7aa'); // pinkish orange ice highlight
+                tritonGrad.addColorStop(0.55, '#38bdf8'); // cyan ice
+                tritonGrad.addColorStop(1, '#0c4a6e');    // shadow
+                ctx.fillStyle = tritonGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Cantaloupe Terrain texture (wrinkles / overlapping cells)
+                ctx.strokeStyle = 'rgba(2, 132, 199, 0.22)';
+                ctx.lineWidth = 0.8;
+                for (let w = 0; w < 6; w++) {
+                  ctx.beginPath();
+                  ctx.ellipse(sx + (Math.sin(w) * renderSize * 0.25), sy + (Math.cos(w) * renderSize * 0.2), renderSize * 0.45, renderSize * 0.3, w * 1.3, 0, Math.PI * 2);
+                  ctx.stroke();
+                }
+
+                // Large pinkish-white nitrogen ice cap covering the South Pole
+                ctx.fillStyle = 'rgba(255, 228, 230, 0.75)'; // rose-100 ice cap
+                ctx.beginPath();
+                ctx.arc(sx, sy + renderSize * 0.3, renderSize * 0.88, 0, Math.PI, false);
+                ctx.fill();
+
+                // Active cryogenic nitrogen gas plumes erupting from the ice cap
+                ctx.strokeStyle = 'rgba(9, 9, 11, 0.45)'; // dark nitrogen soot trail
+                ctx.lineWidth = 0.5;
+                const geyserSpots = [
+                  { x: -0.22, y: 0.45 },
+                  { x: 0.32, y: 0.55 }
+                ];
+                geyserSpots.forEach((spot) => {
+                  const gx = sx + spot.x * renderSize;
+                  const gy = sy + spot.y * renderSize;
+                  ctx.beginPath();
+                  ctx.moveTo(gx, gy);
+                  ctx.quadraticCurveTo(gx - renderSize * 0.05, gy - renderSize * 0.2, gx - renderSize * 0.28, gy - renderSize * 0.28);
+                  ctx.stroke();
+                });
+
+                const tritonShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                tritonShade.addColorStop(0, 'transparent');
+                tritonShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+                ctx.fillStyle = tritonShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-charon') {
+                // 6. Charon — grey craters with reddish-brown northern Mordor Macula
+                const charonGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                charonGrad.addColorStop(0, '#e2e8f0'); // slate-200
+                charonGrad.addColorStop(0.65, '#94a3b8'); // slate-400
+                charonGrad.addColorStop(1, '#334155');    // slate-700
+                ctx.fillStyle = charonGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Mordor Macula (dark reddish-brown northern pole tholins)
+                const poleX = sx;
+                const poleY = sy - renderSize * 0.72;
+                const poleR = renderSize * 0.65;
+                const poleGrad = ctx.createRadialGradient(poleX, poleY, 0, poleX, poleY, poleR);
+                poleGrad.addColorStop(0, '#7c2d12'); // orange-900
+                poleGrad.addColorStop(0.5, '#451a03'); // brown-900
+                poleGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = poleGrad;
+                ctx.beginPath();
+                ctx.arc(poleX, poleY, poleR, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Giant equatorial chasm (Serenity Chasma) splitting the moon
+                ctx.strokeStyle = 'rgba(30, 41, 59, 0.55)'; // deep slate grey rift
+                ctx.lineWidth = Math.max(1, renderSize * 0.08);
+                ctx.beginPath();
+                ctx.ellipse(sx, sy, renderSize * 0.95, renderSize * 0.08, Math.PI / 16, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Grey crater pockmarks
+                ctx.fillStyle = 'rgba(71, 85, 105, 0.32)';
+                ctx.beginPath();
+                ctx.arc(sx - renderSize * 0.38, sy + renderSize * 0.28, renderSize * 0.15, 0, Math.PI * 2);
+                ctx.arc(sx + renderSize * 0.42, sy + renderSize * 0.35, renderSize * 0.12, 0, Math.PI * 2);
+                ctx.fill();
+
+                const charonShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                charonShade.addColorStop(0, 'transparent');
+                charonShade.addColorStop(1, 'rgba(0,0,0,0.9)');
+                ctx.fillStyle = charonShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else if (moonId === 'moon-ganymede') {
+                // 7. Ganymede — massive cratered icy/rocky moon
+                const ganyGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                ganyGrad.addColorStop(0, '#cbd5e1'); // light reflective gray-blue
+                ganyGrad.addColorStop(0.55, '#64748b'); // mid slate gray
+                ganyGrad.addColorStop(1, '#1e293b');    // shadow
+                ctx.fillStyle = ganyGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Darker older terrains (Galileo Regio)
+                ctx.fillStyle = 'rgba(51, 65, 85, 0.55)'; // dark rocky grey
+                ctx.beginPath();
+                ctx.ellipse(sx - renderSize * 0.25, sy - renderSize * 0.3, renderSize * 0.48, renderSize * 0.35, Math.PI / 8, 0, Math.PI * 2);
+                ctx.ellipse(sx + renderSize * 0.35, sy + renderSize * 0.1, renderSize * 0.4, renderSize * 0.25, -Math.PI / 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Bright ice grooves / tectonic faults (Sulci)
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+                ctx.lineWidth = 0.5;
+                for (let g = -3; g <= 3; g++) {
+                  ctx.beginPath();
+                  ctx.ellipse(sx + g * renderSize * 0.15, sy, renderSize * 0.95, renderSize * 0.55, Math.PI / 10, 0, Math.PI * 2);
+                  ctx.stroke();
+                }
+
+                // Bright impact craters with prominent ice-spikes (Tros)
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(sx - renderSize * 0.1, sy + renderSize * 0.38, renderSize * 0.1, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+                ctx.lineWidth = 0.5;
+                for (let rAngle = 0; rAngle < Math.PI * 2; rAngle += Math.PI / 4) {
+                  ctx.beginPath();
+                  ctx.moveTo(sx - renderSize * 0.1, sy + renderSize * 0.38);
+                  ctx.lineTo(sx - renderSize * 0.1 + Math.cos(rAngle) * renderSize * 0.35, sy + renderSize * 0.38 + Math.sin(rAngle) * renderSize * 0.35);
+                  ctx.stroke();
+                }
+
+                const ganyShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                ganyShade.addColorStop(0, 'transparent');
+                ganyShade.addColorStop(1, 'rgba(0,0,0,0.92)');
+                ctx.fillStyle = ganyShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+              } else {
+                // Europa & generic fallback moon: Icy cyan-white body with cracked fracture lineae
+                const bodyGrad = ctx.createRadialGradient(sx - renderSize * 0.3, sy - renderSize * 0.3, 0, sx, sy, renderSize);
+                bodyGrad.addColorStop(0, '#ffffff');
+                bodyGrad.addColorStop(0.55, '#e0f2fe'); // icy cyan-blue
+                bodyGrad.addColorStop(1, '#0f172a');    // shadowed dark core
+                ctx.fillStyle = bodyGrad;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.clip();
+
+                // Fractures and Lineae - Reddish-brown mineral-rich ice cracks
+                ctx.strokeStyle = 'rgba(153, 27, 27, 0.4)'; // copper/salt salts
+                ctx.lineWidth = 0.8;
+                const crackAngles = [0.2, -0.6, 1.1, -1.4, 0.8];
+                crackAngles.forEach((ang) => {
+                  ctx.beginPath();
+                  ctx.ellipse(sx, sy, renderSize * 0.88, renderSize * 0.52, ang, 0, Math.PI * 2);
+                  ctx.stroke();
+                });
+
+                // South polar geyser water-ice vapor plume
+                ctx.save();
+                const plumeGrad = ctx.createLinearGradient(sx, sy + renderSize * 0.8, sx, sy + renderSize * 1.5);
+                plumeGrad.addColorStop(0, 'rgba(14, 165, 233, 0.4)'); // sky-500
+                plumeGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = plumeGrad;
+                ctx.beginPath();
+                ctx.moveTo(sx, sy + renderSize * 0.85);
+                ctx.lineTo(sx - renderSize * 0.15, sy + renderSize * 1.35);
+                ctx.lineTo(sx + renderSize * 0.15, sy + renderSize * 1.35);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+
+                const moonShade = ctx.createRadialGradient(sx - renderSize * 0.4, sy - renderSize * 0.4, renderSize * 0.2, sx, sy, renderSize);
+                moonShade.addColorStop(0, 'transparent');
+                moonShade.addColorStop(1, 'rgba(0,0,0,0.9)');
+                ctx.fillStyle = moonShade;
+                ctx.beginPath();
+                ctx.arc(sx, sy, renderSize, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+              }
 
             } else if (obj.id === 'rogue-planet') { // PSO J318.5-22
               // Charcoal dark starless body with dynamic hot-glowing convective magma/iron cracks

@@ -1056,6 +1056,1265 @@ export const PRESETS_CELESTIAL_DATA: CelestialObject[] = [
     scaleZone: 5
   },
   {
+    id: 'moon-luna',
+    name: 'The Moon (Luna)',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 4.06e-8,
+    distanceString: '384,400 km (4.06 × 10⁻⁸ LY)',
+    description: 'Earth’s only natural satellite, formed 4.5 billion years ago from a giant collision between infant Earth and a Mars-sized body named Theia. It is tidally locked to Earth, showing us only one face, and stabilizes Earth\'s axial wobble to sustain a steady biosphere.',
+    specs: {
+      mass: '7.342 × 10²² kg',
+      radius: '1,737 km',
+      temperature: '120 K to 390 K',
+      age: '4.51 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Rocky Planetary Natural Satellite',
+      surfaceGravity: '1.62 m/s² (0.166g)',
+      escapeVelocity: '2,380 m/s',
+      luminosity: 'Reflective albedo 0.12',
+      composition: 'Silicate crust, basaltic maria plains, small iron core',
+      discoveryYear: 'Prehistoric (Recorded by ancient cultures)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Moon is drifting away from Earth at a rate of approximately 3.8 centimeters per year due to tidal friction.',
+      'There is locked water-ice in permanently shadowed craters at the lunar poles, which could sustain future human outposts.',
+      'The dark plains on the Moon, called "maria" (Latin for seas), are ancient solidified basaltic lava flows.'
+    ],
+    visuals: {
+      baseColor: '#cbd5e1',
+      secondaryColor: '#94a3b8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-phobos',
+    name: 'Phobos',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 2.41e-5,
+    distanceString: '9,377 km from Mars (2.41 × 10⁻⁵ LY from Earth)',
+    description: 'The larger and closer of the two Martian moons, Phobos is a lumpy, dark asteroid-like body heavily scarred by craters. It orbits Mars extremely close—closer to its primary than any other moon in the solar system—speeding around the planet three times a day.',
+    specs: {
+      mass: '1.066 × 10¹⁶ kg',
+      radius: '11.3 km (mean)',
+      temperature: '112 K to 268 K',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Carbonaceous D-type Captured Asteroid Moon',
+      surfaceGravity: '0.0057 m/s² (Extremely weak)',
+      escapeVelocity: '11.3 m/s',
+      luminosity: 'Albedo 0.071',
+      composition: 'Chondritic material, water-ice, dust regolith',
+      discoveryYear: '1877 (Asaph Hall)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Phobos is spiraling inward toward Mars at a rate of 1.8 meters per century, destined to crash into the planet or tear apart into a ring in 30-50 million years.',
+      'Stickney Crater is the most dominant feature on Phobos, so large that the impact nearly shattered the entire moon.',
+      'An astronaut on Phobos would weigh less than a thousandth of their weight on Earth, making it easy to jump into escape velocity.'
+    ],
+    visuals: {
+      baseColor: '#78716c',
+      secondaryColor: '#44403c',
+      visualShape: 'dust-grain'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-deimos',
+    name: 'Deimos',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 2.42e-5,
+    distanceString: '23,460 km from Mars (2.42 × 10⁻⁵ LY from Earth)',
+    description: 'The smaller and more distant of Mars\' two asteroid-like moons. Its surface features a highly smooth, dusty appearance because its low gravity has allowed a thick, 100-meter blanket of loose impact regolith to accumulate and fill in ancient craters.',
+    specs: {
+      mass: '1.476 × 10¹⁵ kg',
+      radius: '6.2 km (mean)',
+      temperature: '233 K',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Carbonaceous D-type Captured Asteroid Moon',
+      surfaceGravity: '0.003 m/s²',
+      escapeVelocity: '5.6 m/s',
+      luminosity: 'Albedo 0.068',
+      composition: 'Carbonaceous-rich rock, water-ice mix',
+      discoveryYear: '1877 (Asaph Hall)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Unlike Phobos, Deimos is orbiting far enough from Mars that it is slowly escaping the planet\'s gravity, eventually drifting into heliocentric orbit.',
+      'From Deimos, Mars would appear 450 times larger and 1,000 times brighter than the full Moon appears from Earth.',
+      'Because of its small size, Deimos has a highly irregular shape, resembling a space potato.'
+    ],
+    visuals: {
+      baseColor: '#a8a29e',
+      secondaryColor: '#57534e',
+      visualShape: 'dust-grain'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-ganymede',
+    name: 'Ganymede',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 8.21e-5,
+    distanceString: '1,070,000 km from Jupiter (8.21 × 10⁻⁵ LY from Earth)',
+    description: 'Jupiter’s largest moon and the largest moon in our entire Solar System. It is larger in volume than the planet Mercury and the dwarf planet Pluto. It is the only moon in the solar system known to possess its own internally generated magnetic field.',
+    specs: {
+      mass: '1.481 × 10²³ kg (2.02 Earth Moons)',
+      radius: '2,634 km',
+      temperature: '110 K (average)',
+      age: '4.52 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Icy/Rocky Natural Satellite (Galilean Moon)',
+      surfaceGravity: '1.428 m/s² (0.146g)',
+      escapeVelocity: '2,740 m/s',
+      luminosity: 'Albedo 0.43',
+      composition: 'Silicate core, thick liquid water/ice mantle, thin oxygen atmosphere',
+      discoveryYear: '1610 (Galileo Galilei)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Ganymede possesses a subsurface liquid water ocean sandwiched between layers of ice, likely containing more water than all of Earth\'s oceans combined.',
+      'Its magnetic field interacts with Jupiter\'s powerful magnetosphere, generating bright glowing auroral belts at its poles.',
+      'The European Space Agency\'s JUICE spacecraft is currently en route to orbit Ganymede in the 2030s.'
+    ],
+    visuals: {
+      baseColor: '#94a3b8',
+      secondaryColor: '#475569',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-titan',
+    name: 'Titan',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 1.511e-4,
+    distanceString: '1,221,870 km from Saturn (1.51 × 10⁻⁴ LY from Earth)',
+    description: 'Saturn\'s massive moon Titan is a spectacular, planet-like world. It is the only moon in the Solar System with a dense, nitrogen-rich atmosphere, and the only cosmic body other than Earth known to host stable, liquid lakes, rivers, and seas on its freezing surface.',
+    specs: {
+      mass: '1.345 × 10²³ kg',
+      radius: '2,574 km',
+      temperature: '94 K (-179°C)',
+      age: '4.52 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Volatile-Rich Organic-Atmosphere Moon',
+      surfaceGravity: '1.352 m/s² (0.138g)',
+      escapeVelocity: '2,640 m/s',
+      luminosity: 'Albedo 0.22',
+      composition: '95% Nitrogen atmosphere, methane-ethane hydrologic cycle, water-ice shell, silicate core',
+      discoveryYear: '1655 (Christiaan Huygens)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Titan\'s liquid lakes are composed of liquid methane, ethane, and propane, fed by organic rainstorms from methane clouds.',
+      'The atmospheric pressure on Titan is 1.45 times that of Earth, and because of low gravity, a human could strap on cardboard wings and easily fly.',
+      'In 2005, NASA\'s Huygens probe successfully landed on Titan\'s surface, photographing a plain strewn with rounded water-ice pebbles.'
+    ],
+    visuals: {
+      baseColor: '#f59e0b',
+      secondaryColor: '#b45309',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-europa',
+    name: 'Europa',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 8.22e-5,
+    distanceString: '670,900 km from Jupiter (8.22 × 10⁻⁵ LY from Earth)',
+    description: 'A frozen jewel of the Galilean moons, Europa has the smoothest and brightest surface in the Solar System, crisscrossed by dark fractures called lineae. Scientists are almost certain a warm, global saltwater ocean hides beneath its icy crust, kept liquid by tidal heating.',
+    specs: {
+      mass: '4.80 × 10²² kg',
+      radius: '1,560.8 km',
+      temperature: '100 K (-173°C)',
+      age: '4.51 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Icy Astrobiological Natural Satellite',
+      surfaceGravity: '1.315 m/s² (0.134g)',
+      escapeVelocity: '2,025 m/s',
+      luminosity: 'Albedo 0.67 (highly reflective ice)',
+      composition: 'Water-ice surface shell, 100-km deep liquid water ocean, silicate rock mantle, iron-nickel core',
+      discoveryYear: '1610 (Galileo Galilei)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The water ocean on Europa is estimated to be up to 100 kilometers deep, containing twice as much liquid water as all Earth\'s oceans combined.',
+      'The dark reddish stripes on the ice are minerals and sea salts erupted from the subsurface ocean, altered by intense radiation.',
+      'NASA\'s Europa Clipper mission, launched recently, is flying to Europa to investigate its potential habitability.'
+    ],
+    visuals: {
+      baseColor: '#bae6fd',
+      secondaryColor: '#0ea5e9',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-enceladus',
+    name: 'Enceladus',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 1.512e-4,
+    distanceString: '238,000 km from Saturn (1.512 × 10⁻⁴ LY from Earth)',
+    description: 'A small, active icy moon covered in pristine snow, making it the most reflective body in the Solar System. Under its frozen crust lies a global ocean that shoots towering geysers of water ice, organic compounds, and salts hundreds of kilometers into space through fractures at its south pole.',
+    specs: {
+      mass: '1.08 × 10²⁰ kg',
+      radius: '252.1 km',
+      temperature: '75 K (-198°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Active Cryovolcanic Ocean Moon',
+      surfaceGravity: '0.113 m/s² (0.0115g)',
+      escapeVelocity: '240 m/s',
+      luminosity: 'Albedo 0.99 (Pristine ice reflection)',
+      composition: 'Pure water-ice surface, global liquid ocean, porous silicate/metal core',
+      discoveryYear: '1789 (William Herschel)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The geysers of Enceladus actively feed Saturn\'s E-ring, keeping it supplied with fresh, microscopic icy particles.',
+      'The Cassini spacecraft flew directly through these geyser plumes, detecting salt, methane, carbon dioxide, and simple organic molecules.',
+      'Hydrothermal vents on the ocean floor of Enceladus are believed to release molecular hydrogen, indicating active underwater volcanic vents similar to Earth\'s deep ocean.',
+      'This volcanic heat and water make Enceladus one of the best targets to search for microscopic extraterrestrial life.'
+    ],
+    visuals: {
+      baseColor: '#f8fafc',
+      secondaryColor: '#38bdf8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-io',
+    name: 'Io',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 8.23e-5,
+    distanceString: '421,700 km from Jupiter (8.23 × 10⁻⁵ LY from Earth)',
+    description: 'The most volcanically active body in our entire Solar System. Io is caught in a violent gravitational tug-of-war between Jupiter and the moons Europa and Ganymede, squeezing its rock core with intense tidal friction. This generates enough interior heat to support hundreds of active volcanic vents erupting liquid sulfur.',
+    specs: {
+      mass: '8.932 × 10²² kg',
+      radius: '1,821.6 km',
+      temperature: '130 K (surface) / 1,500 K (lava flows)',
+      age: '4.51 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Active Hyper-Volcanic Rocky Moon',
+      surfaceGravity: '1.796 m/s² (0.183g)',
+      escapeVelocity: '2,558 m/s',
+      luminosity: 'Albedo 0.63',
+      composition: 'Ultramafic silicate mantle, molten iron-iron sulfide core, sulfur and sulfur dioxide surface coatings',
+      discoveryYear: '1610 (Galileo Galilei)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Io\'s volcanic plumes can shoot gas, ash, and sulfur compound clouds up to 500 kilometers above its surface into space.',
+      'Its surface is covered in yellow, orange, red, and black sulfur compounds, giving it a mottled, pizza-like appearance.',
+      'Io cuts across Jupiter\'s intense magnetic field lines, generating a 400,000-volt electric current of ion particles flowing between moon and planet.'
+    ],
+    visuals: {
+      baseColor: '#facc15',
+      secondaryColor: '#ca8a04',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-triton',
+    name: 'Triton',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 4.751e-4,
+    distanceString: '354,760 km from Neptune (4.75 × 10⁻⁴ LY from Earth)',
+    description: 'Neptune\'s gargantuan moon Triton is a bizarre, icy, captured Kuiper Belt object. It is the only large moon in our Solar System that orbits in a direction opposite to its planet\'s rotation (retrograde orbit). Its surface resembles a cantaloupe melon, featuring nitrogen ice plains and active cryovolcanoes erupting nitrogen geysers.',
+    specs: {
+      mass: '2.14 × 10²² kg',
+      radius: '1,353.4 km',
+      temperature: '38 K (-235°C, coldest surface in Solar System)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Captured Retrograde Kuiper Belt Moon',
+      surfaceGravity: '0.779 m/s² (0.0794g)',
+      escapeVelocity: '1,455 m/s',
+      luminosity: 'Albedo 0.76',
+      composition: 'Nitrogen, water-ice crust, dense carbonaceous rock mantle, metallic core',
+      discoveryYear: '1846 (William Lassell)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Triton\'s retrograde orbit causes it to lose orbital energy due to tidal interaction, slowly spiraling toward Neptune. It will eventually be ripped apart into a ring in ~3.6 billion years.',
+      'Voyager 2 observed active geysers on Triton erupting plumes of dark nitrogen gas and dust that drifted in its thin, freezing atmosphere.',
+      'Because Triton was captured by Neptune, it generated intense tidal heating that melted the moon\'s interior, differentiating its core, mantle, and crust.'
+    ],
+    visuals: {
+      baseColor: '#bae6fd',
+      secondaryColor: '#0284c7',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'moon-charon',
+    name: 'Charon',
+    category: 'Major Moons (Solar System)',
+    distanceLy: 6.241e-4,
+    distanceString: '19,570 km from Pluto (6.24 × 10⁻⁴ LY from Earth)',
+    description: 'Pluto\'s massive moon Charon is so large relative to Pluto that their mutual center of mass (barycenter) lies in open space between them. Instead of Charon orbiting Pluto, they orbit each other like a cosmic double planet system, forever tidally locked and facing each other.',
+    specs: {
+      mass: '1.586 × 10²¹ kg (12% of Pluto\'s mass)',
+      radius: '606 km',
+      temperature: '53 K (-220°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Icy Plutino/KBO Binary Partner Natural Satellite',
+      surfaceGravity: '0.288 m/s² (0.029g)',
+      escapeVelocity: '590 m/s',
+      luminosity: 'Albedo 0.49',
+      composition: 'Ammonia-hydrated water ice mantle, silicate rock core',
+      discoveryYear: '1978 (James Christy)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Charon\'s north pole features a giant, dark reddish region named Mordor Macula, covered in tholins—heavy organic molecules stolen from Pluto\'s leaking atmosphere.',
+      'Both Pluto and Charon are mutually tidally locked, meaning they keep the same face pointing toward each other eternally; Charon never rises or sets from half of Pluto.',
+      'The New Horizons spacecraft in 2015 revealed massive canyons on Charon\'s equator, indicating the moon\'s internal water ocean froze and ruptured the surface long ago.'
+    ],
+    visuals: {
+      baseColor: '#cbd5e1',
+      secondaryColor: '#64748b',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'dwarf-ceres',
+    name: 'Ceres',
+    category: 'Dwarf Planets',
+    distanceLy: 4.38e-5,
+    distanceString: '2.77 AU (4.38 × 10⁻⁵ LY)',
+    description: 'The largest object in the asteroid belt between Mars and Jupiter, and the only dwarf planet in the inner Solar System. Ceres is a round, water-rich embryo planet containing mysterious, highly reflective sodium carbonate salt spots inside its Occator crater.',
+    specs: {
+      mass: '9.393 × 10²⁰ kg (1/3 of entire Asteroid Belt mass)',
+      radius: '473 km',
+      temperature: '168 K (-105°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Dwarf Planet / G-type Asteroid',
+      surfaceGravity: '0.28 m/s² (0.029g)',
+      escapeVelocity: '510 m/s',
+      luminosity: 'Albedo 0.09',
+      composition: 'Clay mineral crust, brine water-ice mantle, dense rocky core, thin water-vapor exosphere',
+      discoveryYear: '1801 (Giuseppe Piazzi)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Ceres was classified as a planet for 50 years after its discovery, demoted to asteroid, and then promoted to dwarf planet in 2006.',
+      'The bright salt spots inside Occator crater are residue left behind as subsurface saltwater evaporated into space.',
+      'NASA\'s Dawn spacecraft orbited Ceres from 2015 to 2018, discovering that it is an active, salt-saturated water world.'
+    ],
+    visuals: {
+      baseColor: '#94a3b8',
+      secondaryColor: '#475569',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'dwarf-pluto',
+    name: 'Pluto',
+    category: 'Dwarf Planets',
+    distanceLy: 6.24e-4,
+    distanceString: '39.5 AU (6.24 × 10⁻⁴ LY)',
+    description: 'An icy dwarf planet located in the Kuiper Belt, a ring of bodies beyond Neptune. Pluto features a spectacular, heart-shaped nitrogen ice plain called Tombaugh Regio, towering water-ice mountain ranges, glaciers, and a thin, blue-haze atmosphere.',
+    specs: {
+      mass: '1.303 × 10²² kg',
+      radius: '1,188.3 km',
+      temperature: '44 K (-229°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Kuiper Belt Dwarf Planet (Plutino)',
+      surfaceGravity: '0.62 m/s² (0.063g)',
+      escapeVelocity: '1,210 m/s',
+      luminosity: 'Albedo 0.49 to 0.66',
+      composition: 'Nitrogen, methane, carbon monoxide ice surface, water-ice crust, rocky core, thin nitrogen atmosphere',
+      discoveryYear: '1930 (Clyde Tombaugh)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Pluto\'s heart-shaped plains are active, churning nitrogen-ice glaciers that recycle their surfaces, erasing all impact craters.',
+      'Its atmosphere expands when Pluto is closer to the Sun and freezes, collapsing back onto the surface, when it moves further away.',
+      'Pluto was considered the ninth planet until 2006, when the International Astronomical Union established new planet criteria.'
+    ],
+    visuals: {
+      baseColor: '#fed7aa',
+      secondaryColor: '#c2410c',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'dwarf-eris',
+    name: 'Eris',
+    category: 'Dwarf Planets',
+    distanceLy: 0.00108,
+    distanceString: '67.8 AU (1.08 × 10⁻³ LY)',
+    description: 'One of the most massive dwarf planets known, located in the scattered disc of the outer Solar System. Its discovery in 2005 sparked a intense debate in astronomy, directly prompting the creation of the term "dwarf planet" and the reclassification of Pluto.',
+    specs: {
+      mass: '1.66 × 10²² kg (27% heavier than Pluto)',
+      radius: '1,163 km',
+      temperature: '30 K (-243°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Scattered-Disc Dwarf Planet',
+      surfaceGravity: '0.82 m/s² (0.083g)',
+      escapeVelocity: '1,372 m/s',
+      luminosity: 'Albedo 0.96 (highly reflective ice)',
+      composition: 'Methane and nitrogen ice surface, rocky core, icy mantle, thin transient atmosphere',
+      discoveryYear: '2005 (Mike Brown, Chad Trujillo, David Rabinowitz)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Eris is so far from the Sun that its atmosphere freezes solid and falls as nitrogen snow, coating it in a highly reflective glaze.',
+      'It has one small natural moon named Dysnomia, which orbits Eris once every 16 days.',
+      'Eris takes 557 Earth years to complete a single orbit around the Sun.'
+    ],
+    visuals: {
+      baseColor: '#e2e8f0',
+      secondaryColor: '#cbd5e1',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'dwarf-haumea',
+    name: 'Haumea',
+    category: 'Dwarf Planets',
+    distanceLy: 0.00068,
+    distanceString: '43.1 AU (6.80 × 10⁻⁴ LY)',
+    description: 'A bizarre, fast-spinning dwarf planet in the Kuiper Belt. It rotates so rapidly (once every 4 hours) that centrifugal force has deformed it into an elongated, football-like triaxial ellipsoid. It is surrounded by a dark ring and two small moons.',
+    specs: {
+      mass: '4.006 × 10²¹ kg',
+      radius: '816 km (mean, dimensions 1,160 × 850 km)',
+      temperature: '32 K (-241°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Kuiper Belt Dwarf Planet (Resonant KBO)',
+      surfaceGravity: '0.401 m/s² (Variable)',
+      escapeVelocity: '840 m/s',
+      luminosity: 'Albedo 0.66',
+      composition: 'Highly crystalline water-ice mantle, dense rocky core',
+      discoveryYear: '2004 (Discovered by Jose Luis Ortiz / Mike Brown groups)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Haumea is the fastest-spinning large object in the Solar System; a day on Haumea lasts just 3.9 Earth hours.',
+      'It is the only Kuiper Belt object known to have its own planetary ring system, spanning 70 kilometers wide.',
+      'Its two moons, Hi\'iaka and Namaka, are named after daughters of the Hawaiian goddess of childbirth and volcano.'
+    ],
+    visuals: {
+      baseColor: '#e2e8f0',
+      secondaryColor: '#94a3b8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'dwarf-makemake',
+    name: 'Makemake',
+    category: 'Dwarf Planets',
+    distanceLy: 0.00072,
+    distanceString: '45.8 AU (7.20 × 10⁻⁴ LY)',
+    description: 'The second-brightest Kuiper Belt object after Pluto, Makemake has an extremely cold surface covered in frozen methane, ethane, and nitrogen ice, giving it a slightly reddish hue. It is named after the creator of humanity in Rapa Nui mythology.',
+    specs: {
+      mass: '3.1 × 10²¹ kg',
+      radius: '715 km',
+      temperature: '30 K (-243°C)',
+      age: '4.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Kuiper Belt Dwarf Planet (Cubewano)',
+      surfaceGravity: '0.5 m/s²',
+      escapeVelocity: '800 m/s',
+      luminosity: 'Albedo 0.81',
+      composition: 'Methane and ethane ice glaze, rocky silicate core',
+      discoveryYear: '2005 (Mike Brown, Chad Trujillo, David Rabinowitz)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Unlike Pluto, Makemake has no detectable atmosphere, likely due to its lower gravity and extreme cold.',
+      'It has a very small, dark companion moon nicknamed MK2, which orbits Makemake once every 12 days.',
+      'Its discovery, along with Eris, was crucial in defining the class of dwarf planets in 2006.'
+    ],
+    visuals: {
+      baseColor: '#fca5a5',
+      secondaryColor: '#f87171',
+      visualShape: 'sphere'
+    },
+    scaleZone: 1
+  },
+  {
+    id: 'exo-kepler22b',
+    name: 'Kepler-22b',
+    category: 'Exoplanets (Beyond the 8 Planets)',
+    distanceLy: 635,
+    distanceString: '635 light years',
+    description: 'The first transiting exoplanet discovered by NASA\'s Kepler telescope to orbit in the habitable zone of a Sun-like star. Kepler-22b is a "super-Earth" or "mini-Neptune" likely covered in a massive global water ocean, possibly supporting an exotic aquatic biosphere.',
+    specs: {
+      mass: '8.3 Earth masses (estimated)',
+      radius: '15,300 km (2.4 × Earth)',
+      temperature: '295 K (22°C - moderate and temperate)',
+      age: '4.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Super-Earth / Ocean World Exoplanet',
+      surfaceGravity: '13.4 m/s² (~1.37g)',
+      escapeVelocity: '21,000 m/s',
+      luminosity: 'Orbits G5V star (0.79 Solar Luminosity)',
+      composition: 'Supercritical water ocean mantle, volatile hydrogen atmosphere, silicate/iron core',
+      discoveryYear: '2011 (Kepler Science Team)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'If Kepler-22b has a greenhouse effect similar to Earth, its average surface temperature is a highly comfortable 22°C.',
+      'It orbits its star every 290 Earth days, very close to Earth\'s annual calendar.',
+      'Because of its large size, it may be a water world, possessing no solid dry landmasses.'
+    ],
+    visuals: {
+      baseColor: '#38bdf8',
+      secondaryColor: '#0369a1',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'exo-55cancrie',
+    name: '55 Cancri e',
+    category: 'Exoplanets (Beyond the 8 Planets)',
+    distanceLy: 41,
+    distanceString: '41 light years',
+    description: 'A hellish exoplanet twice the size of Earth, orbiting so close to its parent star that its surface is a molten lava ocean. It is exceptionally dense and thought to be rich in carbon, possibly featuring a mantle of diamond.',
+    specs: {
+      mass: '7.99 Earth masses',
+      radius: '11,470 km (1.8 × Earth)',
+      temperature: '2,300 K (molten surface)',
+      age: '8.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Super-Earth / Carbon-Rich Lava World',
+      surfaceGravity: '21.6 m/s² (2.2g)',
+      escapeVelocity: '23,500 m/s',
+      luminosity: 'Orbits K0V star 55 Cancri A',
+      composition: 'Super-dense carbon (graphite & diamond), silicate mantle, iron core, heavy carbon dioxide atmosphere',
+      discoveryYear: '2004 (Barbara McArthur)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The planet orbits its star in just 18 Earth hours, whipped by extreme gravitational tidal forces.',
+      'It is so carbon-rich that up to a third of the planet\'s mass could be compressed into crystalline diamond.',
+      'The James Webb Space Telescope recently detected indications of a thick secondary atmosphere on 55 Cancri e, likely replenished by gases escaping its boiling lava oceans.'
+    ],
+    visuals: {
+      baseColor: '#f43f5e',
+      secondaryColor: '#450a0a',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'exo-hd189733b',
+    name: 'HD 189733b',
+    category: 'Exoplanets (Beyond the 8 Planets)',
+    distanceLy: 64.5,
+    distanceString: '64.5 light years',
+    description: 'A beautiful cobalt-blue exoplanet classified as a "Hot Jupiter." It features a savage, hostile atmosphere where temperatures exceed 1,200 K, and winds howl at 5,400 mph, causing it to literally rain molten glass sideways.',
+    specs: {
+      mass: '1.13 Jupiter masses',
+      radius: '81,500 km',
+      temperature: '1,200 K (extremely hot gas giant)',
+      age: '5.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Hot Jupiter Gas Giant',
+      surfaceGravity: '21.2 m/s² (2.16g)',
+      escapeVelocity: '51,000 m/s',
+      luminosity: 'Orbits K1.5V star HD 189733',
+      composition: 'Hydrogen, helium gas, high-altitude silicate cloud decks',
+      discoveryYear: '2005 (Bouchy et al.)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Its striking blue color is not from oceans, but from the scattering of light by silicate dust particles floating in its gas clouds.',
+      'The winds on HD 189733b are seven times the speed of sound, carrying evaporated silicate particles at high speeds.',
+      'It orbits very close to its star, completing a full orbit in just 2.2 Earth days.'
+    ],
+    visuals: {
+      baseColor: '#2563eb',
+      secondaryColor: '#1d4ed8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-proximacentauri',
+    name: 'Proxima Centauri',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 4.24,
+    distanceString: '4.24 light years (Closest Star to Sol)',
+    description: 'A low-mass red dwarf star in the Alpha Centauri ternary system. It is currently the closest individual star to Earth (after the Sun) and hosts at least two exoplanets, including Proxima b, an Earth-sized planet in its habitable zone.',
+    specs: {
+      mass: '0.122 Solar masses',
+      radius: '107,300 km (0.15 Solar radii)',
+      temperature: '3,040 K (cool red surface)',
+      age: '4.85 billion years'
+    },
+    advancedSpecs: {
+      classification: 'M6Ve Active Flare Red Dwarf Star',
+      surfaceGravity: '385 m/s² (39.2g)',
+      escapeVelocity: '562,000 m/s',
+      luminosity: '0.0017 L☉ (Highly active red star)',
+      composition: '73% Hydrogen, 25% Helium, fully convective core',
+      discoveryYear: '1915 (Robert Innes)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Proxima is a flare star, subject to random, violent magnetic eruptions that double its brightness in minutes, releasing harsh UV radiation.',
+      'Because red dwarfs burn hydrogen extremely slowly, Proxima will continue fusing fuel for another 4 trillion years, 400 times longer than our Sun.',
+      'It takes about 550,000 years to complete its slow, distant orbit around the main Alpha Centauri binary pair.'
+    ],
+    visuals: {
+      baseColor: '#ea580c',
+      secondaryColor: '#b91c1c',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-siriusa',
+    name: 'Sirius A (The Dog Star)',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 8.6,
+    distanceString: '8.6 light years',
+    description: 'The brightest star in Earth\'s night sky, visible from almost everywhere. Sirius A is a hot, luminous, blue-white main-sequence star twice as massive as our Sun, accompanied by a tiny, ultra-dense white dwarf partner, Sirius B.',
+    specs: {
+      mass: '2.063 Solar masses',
+      radius: '1,190,000 km (1.71 Solar radii)',
+      temperature: '9,940 K',
+      age: '242 million years'
+    },
+    advancedSpecs: {
+      classification: 'A1V Blue-White Main-Sequence Star',
+      surfaceGravity: '120.0 m/s²',
+      escapeVelocity: '520,000 m/s',
+      luminosity: '25.4 L☉ (Extremely bright stellar system)',
+      composition: 'Hydrogen core fusion, high metal enrichment',
+      discoveryYear: 'Ancient (Central to Egyptian calendar)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Ancient Egyptians based their calendar on the "heliacal rising" of Sirius, which marked the annual flooding of the Nile River.',
+      'Sirius is gradually moving closer to our Solar System, meaning its brightness in our sky will continue to increase over the next 60,000 years.',
+      'Its intense brightness is a combination of its high intrinsic luminosity and its close distance to Earth.'
+    ],
+    visuals: {
+      baseColor: '#ffffff',
+      secondaryColor: '#38bdf8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-rigel',
+    name: 'Rigel (Beta Orionis)',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 860,
+    distanceString: '860 light years',
+    description: 'A brilliant blue supergiant star and the brightest star in the Orion constellation. It is a highly energetic, hot star that radiates tens of thousands of times more light than our Sun, dominating nearby space.',
+    specs: {
+      mass: '21 Solar masses',
+      radius: '54.9 million km (78.9 Solar radii)',
+      temperature: '12,100 K (intense hot blue-white)',
+      age: '8.0 million years'
+    },
+    advancedSpecs: {
+      classification: 'B8Ia Blue-White Supergiant Star',
+      surfaceGravity: '0.25 m/s² (extremely low due to inflation)',
+      escapeVelocity: '120,000 m/s',
+      luminosity: '120,000 L☉ (Highly energetic blue star)',
+      composition: 'Hydrogen fusion shell, massive helium core',
+      discoveryYear: 'Ancient (Known as Rigel since Islamic golden age)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Rigel is actually a multiple star system, containing at least three smaller companion stars that are drowned out by its main blue glow.',
+      'It is so luminous that its stellar wind blasts out tons of mass every second, creating a massive cavity in surrounding nebulae.',
+      'Because of its massive weight, Rigel will burn its fuel in a short time, destined to explode as a supernova within a few million years.'
+    ],
+    visuals: {
+      baseColor: '#e0f2fe',
+      secondaryColor: '#0ea5e9',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-vega',
+    name: 'Vega (Alpha Lyrae)',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 25,
+    distanceString: '25 light years',
+    description: 'A bright blue-white main-sequence star in the Lyra constellation. It is spinning so rapidly (once every 12.5 hours) that centrifugal force has bulged its equator outward, creating a flattened oblate spheroid shape.',
+    specs: {
+      mass: '2.135 Solar masses',
+      radius: '1.9 million km (2.73 Solar radii)',
+      temperature: '9,602 K',
+      age: '450 million years'
+    },
+    advancedSpecs: {
+      classification: 'A0V Rapidly-Rotating Oblate Star',
+      surfaceGravity: '80.0 m/s²',
+      escapeVelocity: '480,000 m/s',
+      luminosity: '40.1 L☉',
+      composition: 'Hydrogen core, low heavy metal abundance',
+      discoveryYear: 'Ancient (First star photographed besides the Sun)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Vega was the first star ever to be photographed (in 1850) and the first to have its light spectrum recorded (in 1872).',
+      'It served as the North Star in 12,000 BC due to Earth\'s axial precession, and will reclaim that title around 13,700 AD.',
+      'It has a massive circumstellar disk of dust and debris, indicating a young planetary system may be forming.'
+    ],
+    visuals: {
+      baseColor: '#60a5fa',
+      secondaryColor: '#1d4ed8',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-polaris',
+    name: 'Polaris (The North Star)',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 433,
+    distanceString: '433 light years',
+    description: 'The North Star, a yellow supergiant star aligned almost perfectly with Earth\'s northern rotational axis. It is a classic Cepheid variable star used for navigation and cosmic distance calculations.',
+    specs: {
+      mass: '5.4 Solar masses',
+      radius: '26 million km (37.5 Solar radii)',
+      temperature: '6,015 K',
+      age: '70 million years'
+    },
+    advancedSpecs: {
+      classification: 'F7Ib Yellow Supergiant Cepheid Variable',
+      surfaceGravity: '1.2 m/s²',
+      escapeVelocity: '180,000 m/s',
+      luminosity: '2,500 L☉',
+      composition: 'Helium core, convective outer envelope, iron enrichment',
+      discoveryYear: 'Ancient (Recognized as celestial pivot for millennia)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Polaris is not a single star, but a triple star system consisting of the supergiant Polaris Aa and two small stellar companions.',
+      'Its alignment with the north pole makes it appear stationary in time-lapse sky photography, with all other stars rotating around it.',
+      'As a Cepheid variable, Polaris slowly pulses in brightness and size every 3.97 days.'
+    ],
+    visuals: {
+      baseColor: '#fef08a',
+      secondaryColor: '#ca8a04',
+      visualShape: 'sphere'
+    },
+    scaleZone: 2
+  },
+  {
+    id: 'star-stephenson218',
+    name: 'Stephenson 2-18',
+    category: 'Stars (Stellar Scale)',
+    distanceLy: 19000,
+    distanceString: '19,000 light years',
+    description: 'An ultramassive red hypergiant star in the Stephenson 2 open cluster. It is currently one of the largest known stars, with a volume roughly 10 billion times that of the Sun. If placed in our Solar System, its surface would extend past Saturn\'s orbit.',
+    specs: {
+      mass: '30 to 50 Solar masses',
+      radius: '1.5 billion km (2,150 Solar radii)',
+      temperature: '3,200 K (cool red hypergiant)',
+      age: '20 million years'
+    },
+    advancedSpecs: {
+      classification: 'M6 Red Hypergiant Star',
+      surfaceGravity: '0.0001 m/s² (Extremely bloated outer layers)',
+      escapeVelocity: '60,000 m/s',
+      luminosity: '440,000 L☉ (Extremely high red emission)',
+      composition: 'Helium, carbon, oxygen core, hyper-extended hydrogen atmosphere',
+      discoveryYear: '1990 (Charles Bruce Stephenson)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'If Stephenson 2-18 were scaled down to the size of a soccer ball, our Sun would be a microscopic dot invisible to the naked eye.',
+      'Its outer layers are so loosely held by its weak gravity that it is actively shedding a massive amount of its weight into space.',
+      'It represents the absolute physical limit of star size (the Hayashi limit) for stable stars.'
+    ],
+    visuals: {
+      baseColor: '#dc2626',
+      secondaryColor: '#450a0a',
+      visualShape: 'sphere'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'quasar-ton618',
+    name: 'Ton 618',
+    category: 'Supermassive Black Holes & Quasars',
+    distanceLy: 18200000000,
+    distanceString: '18.2 billion light years (Deep Space)',
+    description: 'A hyper-luminous, radio-loud quasar powered by an ultramassive black hole that is currently one of the largest black holes ever discovered, with a mass of 66 billion solar masses. It radiates with the blinding light of 140 trillion suns.',
+    specs: {
+      mass: '66,000,000,000 Solar masses',
+      radius: '390 billion km (Event Horizon)',
+      temperature: 'Trillions of K (Accretion disk)',
+      age: '13.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'Ultramassive Black Hole & Radio-Loud Quasar',
+      surfaceGravity: 'Extremely high at event horizon boundary',
+      escapeVelocity: '299,792,458 m/s (Speed of Light)',
+      luminosity: '1.4 × 10¹⁴ L☉ (One of the brightest objects in cosmos)',
+      composition: 'Singularity, gargantuan plasma accretion disk, relativistic magnetic jets',
+      discoveryYear: '1957 (Discovered as blue radio-emitting object)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The event horizon of Ton 618 is 390 billion kilometers across—about 40 times the orbit of Neptune, meaning it could easily swallow our entire solar system.',
+      'Its central black hole is so massive that it challenges current models of how black holes form, suggesting it was born in the very early universe.',
+      'The light we see from Ton 618 has been traveling for over 10 billion years, allowing astronomers to peek into the deep cosmic past.'
+    ],
+    visuals: {
+      baseColor: '#a855f7',
+      secondaryColor: '#c084fc',
+      visualShape: 'black-hole'
+    },
+    scaleZone: 5
+  },
+  {
+    id: 'nebula-eagle',
+    name: 'Eagle Nebula (Messier 16)',
+    category: 'Nebulae',
+    distanceLy: 5700,
+    distanceString: '5,700 light years',
+    description: 'An active star-forming region in the Serpens constellation, famous for containing the "Pillars of Creation"—colossal columns of cold gas and cosmic dust where stars are hatching, made iconic by the Hubble Space Telescope.',
+    specs: {
+      mass: 'Over 8,000 Solar masses',
+      radius: '70 × 55 light years',
+      temperature: '10 K (pillars) to 10,000 K (ionized gas)',
+      age: '5.5 million years'
+    },
+    advancedSpecs: {
+      classification: 'H II Diffuse Star-Forming Nebula with Open Cluster',
+      surfaceGravity: 'Extremely weak, turbulent dust compression forces',
+      escapeVelocity: 'N/A',
+      luminosity: 'Scattering ultraviolet radiation of young hot stars',
+      composition: 'Molecular Hydrogen, cosmic dust, polycyclic aromatic hydrocarbons',
+      discoveryYear: '1745 (Jean-Philippe de Cheseaux)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Pillars of Creation are giant columns of hydrogen gas and dust spanning about 4 to 5 light years in length.',
+      'Inside these pillars, high gas density triggers gravitational collapse, hatching brand-new protostars and solar systems.',
+      'Intense ultraviolet radiation from nearby giant stars is slowly vaporizing the pillars, a process called photoevaporation.'
+    ],
+    visuals: {
+      baseColor: '#10b981',
+      secondaryColor: '#d946ef',
+      visualShape: 'nebula-cloud'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'nebula-carina',
+    name: 'Carina Nebula (NGC 3372)',
+    category: 'Nebulae',
+    distanceLy: 8500,
+    distanceString: '8,500 light years',
+    description: 'A massive, complex diffuse nebula containing several open clusters of stars in the southern sky. It houses Eta Carinae, a hyper-unstable, extremely luminous binary star system that erupted in 1843, briefly becoming the second brightest star.',
+    specs: {
+      mass: '900,000 Solar masses',
+      radius: '230 light years',
+      temperature: 'Varies',
+      age: '3.0 million years'
+    },
+    advancedSpecs: {
+      classification: 'Supergiant H II Emission / Star-Forming Nebula',
+      surfaceGravity: 'Highly complex gas-dynamics and stellar feedback',
+      escapeVelocity: 'N/A',
+      luminosity: 'Vast emission, illuminated by dozens of massive O-type stars',
+      composition: 'Ionized Hydrogen, interstellar dust, molecular carbon clouds',
+      discoveryYear: '1751 (Nicolas-Louis de Lacaille)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Carina Nebula is four times larger and much brighter than the famous Orion Nebula, but less known because it is only visible from the southern hemisphere.',
+      'It contains the spectacular "Mystic Mountain," a giant, three-light-year-tall pillar of gas and dust harboring infant stars shooting out jets of gas.',
+      'It houses several of the most massive and luminous stars known in our galaxy, each over 100 times the weight of our Sun.'
+    ],
+    visuals: {
+      baseColor: '#f43f5e',
+      secondaryColor: '#f97316',
+      visualShape: 'nebula-cloud'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'nebula-crab',
+    name: 'Crab Nebula (Messier 1)',
+    category: 'Nebulae',
+    distanceLy: 6500,
+    distanceString: '6,500 light years',
+    description: 'A supernova remnant in the Taurus constellation. It is the violently expanding leftover debris of a core-collapse supernova recorded by Chinese, Japanese, and Native American astronomers in 1054 AD, leaving a spinning pulsar at its core.',
+    specs: {
+      mass: '4.6 Solar masses (expanding envelope)',
+      radius: '5.5 light years',
+      temperature: '10,000 K (envelope)',
+      age: '972 years (Exploded 1054 AD)'
+    },
+    advancedSpecs: {
+      classification: 'Supernova Remnant / Pulsar Wind Nebula',
+      surfaceGravity: 'N/A (Violently expanding gas envelope)',
+      escapeVelocity: 'Envelope expanding at 1,500 km/s',
+      luminosity: 'Relativistic synchrotron emission powered by central pulsar',
+      composition: 'Ionized helium, hydrogen, iron filaments, relativistic electron cloud',
+      discoveryYear: '1731 (John Bevis, identified supernova link 1921)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The supernova explosion that created this nebula was so bright that it was visible to the naked eye during daytime for 23 days.',
+      'The heart of the nebula contains the Crab Pulsar, a spinning neutron star rotating 30 times per second, blasting out a wind of relativistic electrons.',
+      'It is one of the most studied objects in astronomy, serving as a cosmic laboratory for high-energy physics.'
+    ],
+    visuals: {
+      baseColor: '#ef4444',
+      secondaryColor: '#06b6d4',
+      visualShape: 'pulsar'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'nebula-helix',
+    name: 'Helix Nebula (NGC 7293)',
+    category: 'Nebulae',
+    distanceLy: 650,
+    distanceString: '650 light years (Closest Planetary Nebula)',
+    description: 'A large planetary nebula formed by a dying, low-mass star casting off its outer layers of gas as it runs out of fuel. Often referred to as the "Eye of God" due to its striking circular shape, it is a preview of the future of our own Sun.',
+    specs: {
+      mass: '0.3 Solar masses (gas envelope)',
+      radius: '2.8 light years',
+      temperature: '120,000 K (central hot white dwarf)',
+      age: '10,600 years'
+    },
+    advancedSpecs: {
+      classification: 'Planetary Nebula / Degenerate Core Shell',
+      surfaceGravity: 'N/A',
+      escapeVelocity: 'Expanding at 31 km/s',
+      luminosity: 'Excited ultraviolet emission of gas shell',
+      composition: 'Hydrogen, Helium, Nitrogen, Oxygen layers',
+      discoveryYear: '1824 (Karl Ludwig Harding)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The central star of the Helix Nebula is a hot white dwarf, which excites the surrounding expanding gas with its intense ultraviolet light.',
+      'It contains thousands of "cometary knots"—dense, finger-like gaseous structures with dusty heads and long tails pointing away from the central star.',
+      'Despite its bright, detailed appearance in photographs, the Helix is very faint and requires dark skies to observe.'
+    ],
+    visuals: {
+      baseColor: '#06b6d4',
+      secondaryColor: '#ec4899',
+      visualShape: 'nebula-cloud'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'nebula-ring',
+    name: 'Ring Nebula (Messier 57)',
+    category: 'Nebulae',
+    distanceLy: 2300,
+    distanceString: '2,300 light years',
+    description: 'The archetypal planetary nebula in the northern Lyra constellation. It appears as a neat, glowing, barrel-shaped ring of colorful gas cast off by a dying star, excited by the radiation of the hot central white dwarf.',
+    specs: {
+      mass: '0.2 Solar masses',
+      radius: '0.9 light years',
+      temperature: '10,000 K (gas shell)',
+      age: '7,000 years'
+    },
+    advancedSpecs: {
+      classification: 'Planetary Nebula / Bipolar Gas Shell',
+      surfaceGravity: 'N/A',
+      escapeVelocity: 'Expanding at 20-30 km/s',
+      luminosity: 'UV excited gas glow',
+      composition: 'Ionized Hydrogen, Helium, double-ionized Oxygen (green center)',
+      discoveryYear: '1779 (Antoine Darquier de Pellepoix)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The colors of the Ring represent different gases at varying distances from the hot star: blue is helium, green is oxygen, and red is hydrogen.',
+      'What looks like a flat ring is actually an elongated tube of gas seen from one of its open ends, pointing directly at Earth.',
+      'Its central white dwarf is incredibly hot, with a surface temperature of approximately 125,000 Kelvin.'
+    ],
+    visuals: {
+      baseColor: '#10b981',
+      secondaryColor: '#ef4444',
+      visualShape: 'nebula-cloud'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'nebula-horsehead',
+    name: 'Horsehead Nebula (Barnard 33)',
+    category: 'Nebulae',
+    distanceLy: 1375,
+    distanceString: '1,375 light years',
+    description: 'A distinct dark nebula in the Orion constellation, silhouetted against a glowing background of red, ionized hydrogen gas. Its dark, dense dust clouds resemble a horse\'s head, blocking the light of stars behind it.',
+    specs: {
+      mass: 'Estimated ~27 Solar masses',
+      radius: '3.5 light years',
+      temperature: '10 K to 20 K (extremely cold molecular dust)',
+      age: '500,000 years'
+    },
+    advancedSpecs: {
+      classification: 'Dark Absorption Nebula',
+      surfaceGravity: 'Extremely weak molecular-cloud potential',
+      escapeVelocity: 'N/A',
+      luminosity: 'Blocks light, silhouetted against emission nebula IC 434',
+      composition: 'Cold carbonaceous dust, molecular hydrogen gas',
+      discoveryYear: '1888 (Williamina Fleming)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Horsehead was discovered in 1888 by Williamina Fleming, a prominent female astronomer working at Harvard Observatory.',
+      'It is a highly dense pocket of dust and gas that is actively forming stars, but the dust hides them from optical telescopes.',
+      'The red glow behind the Horsehead is hydrogen gas being ionized by the intense ultraviolet light of the nearby star Sigma Orionis.'
+    ],
+    visuals: {
+      baseColor: '#18181b',
+      secondaryColor: '#e11d48',
+      visualShape: 'nebula-cloud'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'galaxy-milkyway',
+    name: 'The Milky Way Galaxy',
+    category: 'Galaxies',
+    distanceLy: 0,
+    distanceString: '0 LY (Our Home Galaxy)',
+    description: 'The barred spiral galaxy that contains our Solar System and hundreds of billions of other stars. Spanning over 100,000 light years, it features several spiral arms, a dense central bar of stars, and houses a supermassive black hole at its core, Sagittarius A*.',
+    specs: {
+      mass: '1.5 × 10¹² Solar masses',
+      radius: '50,000 light years (radius)',
+      temperature: 'Varies',
+      age: '13.6 billion years'
+    },
+    advancedSpecs: {
+      classification: 'SBc Barred Spiral Galaxy',
+      surfaceGravity: 'Galactic potential well, solar rotation speed ~220 km/s',
+      escapeVelocity: 'Estimated 550 km/s to escape solar neighborhood halo',
+      luminosity: '2.0 × 10¹⁰ L☉',
+      composition: '200-400 Billion stars, gas clouds, stellar remnants, Sagittarius A* core, Dark Matter (85%)',
+      discoveryYear: 'Ancient (Observed since the dawn of humanity)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Our Solar System is located in the Orion Cygnus Arm, about 26,000 light years away from the energetic Galactic Center.',
+      'Our Sun takes approximately 230 million years to complete a single orbit around the center of the galaxy, a period known as a galactic year.',
+      'The Milky Way is currently devouring several dwarf satellite galaxies, including the Sagittarius Dwarf Galaxy, in a process of galactic cannibalism.'
+    ],
+    visuals: {
+      baseColor: '#cbd5e1',
+      secondaryColor: '#6366f1',
+      visualShape: 'galaxy-spiral'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'galaxy-triangulum',
+    name: 'Triangulum Galaxy (Messier 33)',
+    category: 'Galaxies',
+    distanceLy: 2730000,
+    distanceString: '2.73 million light years',
+    description: 'The third-largest galaxy in our Local Group after Andromeda and the Milky Way. It is a spiral galaxy with an exceptionally clean, well-defined pinwheel structure, hosting a high density of star-forming regions.',
+    specs: {
+      mass: '5.0 × 10¹⁰ Solar masses',
+      radius: '30,000 light years',
+      temperature: 'Varies',
+      age: '12.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'SA(s)cd Unbarred Spiral Galaxy',
+      surfaceGravity: 'Galactic potential well',
+      escapeVelocity: 'Estimated 200 km/s to escape galactic halo',
+      luminosity: '3.0 × 10⁹ L☉',
+      composition: '40 Billion stars, massive hydrogen clouds, central stellar-mass black hole candidates',
+      discoveryYear: '1654 (Giovanni Battista Hodierna)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'Triangulum is sometimes called the "Pinwheel Galaxy" due to its spectacular, face-on spiral structure.',
+      'It contains NGC 604, one of the largest and most active H II starburst regions in the Local Group, spanning 1,500 light-years across.',
+      'It is gravitationally bound to the larger Andromeda galaxy, and may eventually merge with it before colliding with the Milky Way.'
+    ],
+    visuals: {
+      baseColor: '#60a5fa',
+      secondaryColor: '#818cf8',
+      visualShape: 'galaxy-spiral'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'galaxy-smc',
+    name: 'Small Magellanic Cloud (SMC)',
+    category: 'Galaxies',
+    distanceLy: 200000,
+    distanceString: '200,000 light years',
+    description: 'An irregular dwarf galaxy that is one of the closest satellites orbiting the Milky Way. It is visible to the naked eye from the southern hemisphere as a faint glowing cloud, heavily disrupted by gravitational tides.',
+    specs: {
+      mass: '7.0 × 10⁹ Solar masses',
+      radius: '3,500 light years',
+      temperature: 'Varies',
+      age: '13.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'SB(s)m Irregular Magellanic Dwarf Galaxy',
+      surfaceGravity: 'Weak galactic potential',
+      escapeVelocity: 'Estimated 100 km/s to escape SMC potential',
+      luminosity: '5.0 × 10⁸ L☉',
+      composition: 'Irregular gas clouds, older stars, young clusters',
+      discoveryYear: 'Ancient (Known to southern cultures, documented by Ferdinand Magellan 1519)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The SMC is connected to the LMC by the "Magellanic Bridge," a massive stream of neutral hydrogen gas pulled from both galaxies.',
+      'It contains a much lower abundance of metals (elements heavier than helium) than the Milky Way, representing early-universe conditions.',
+      'Gravitational interactions with the Milky Way will eventually pull the SMC apart, absorbing its gas and stars.'
+    ],
+    visuals: {
+      baseColor: '#f1f5f9',
+      secondaryColor: '#c084fc',
+      visualShape: 'galaxy-elliptical'
+    },
+    scaleZone: 3
+  },
+  {
+    id: 'galaxy-whirlpool',
+    name: 'Whirlpool Galaxy (Messier 51)',
+    category: 'Galaxies',
+    distanceLy: 23000000,
+    distanceString: '23.0 million light years',
+    description: 'A classic "grand design" spiral galaxy in the constellation Canes Venatici. It is actively colliding with its smaller dwarf companion galaxy, NGC 5195, causing intense gravity waves that trigger a burst of new star formation in its spiral arms.',
+    specs: {
+      mass: '1.6 × 10¹¹ Solar masses',
+      radius: '38,000 light years',
+      temperature: 'Varies',
+      age: '10.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'SA(s)bc Grand Design Spiral Galaxy',
+      surfaceGravity: 'Strong galactic gravity waves',
+      escapeVelocity: 'Estimated 450 km/s',
+      luminosity: '1.0 × 10¹⁰ L☉',
+      composition: '100 Billion stars, highly structured hydrogen spiral arms, colliding partner NGC 5195',
+      discoveryYear: '1773 (Charles Messier)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Whirlpool was the first galaxy discovered to have a spiral structure, observed in 1845 by Lord Rosse using a massive 72-inch telescope.',
+      'The gravitational interaction with its companion galaxy NGC 5195 acts like a giant rake, squeezing hydrogen clouds to hatch new massive stars.',
+      'It contains numerous luminous X-ray binary systems, which are stellar-mass black holes devouring companion stars.'
+    ],
+    visuals: {
+      baseColor: '#38bdf8',
+      secondaryColor: '#a855f7',
+      visualShape: 'galaxy-spiral'
+    },
+    scaleZone: 4
+  },
+  {
+    id: 'galaxy-sombrero',
+    name: 'Sombrero Galaxy (Messier 104)',
+    category: 'Galaxies',
+    distanceLy: 28000000,
+    distanceString: '28.0 million light years',
+    description: 'An unbarred spiral galaxy with a massive, bright central stellar bulge and a striking, prominent dark ring of dust lanes seen almost edge-on, giving it the appearance of a Mexican sombrero hats.',
+    specs: {
+      mass: '8.0 × 10¹¹ Solar masses',
+      radius: '25,000 light years',
+      temperature: 'Varies',
+      age: '12.0 billion years'
+    },
+    advancedSpecs: {
+      classification: 'SA(s)a Early-Type Edge-On Spiral Galaxy',
+      surfaceGravity: 'Extremely strong central bulge potential',
+      escapeVelocity: 'Estimated 550 km/s',
+      luminosity: '2.4 × 10¹⁰ L☉',
+      composition: 'Massive stellar bulge, dense dust ring, over 2,000 globular clusters, central supermassive black hole (1 billion Solar masses)',
+      discoveryYear: '1781 (Pierre Méchain)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'The Sombrero houses an unusually large population of globular clusters—about 2,000, ten times more than our Milky Way.',
+      'Its central supermassive black hole is one of the most massive found in nearby galaxies, weighing one billion solar masses.',
+      'Its prominent dust lane is a dense ring of gas and dust where stars are actively forming.'
+    ],
+    visuals: {
+      baseColor: '#e2e8f0',
+      secondaryColor: '#1e293b',
+      visualShape: 'galaxy-spiral'
+    },
+    scaleZone: 4
+  },
+  {
+    id: 'galaxy-ic1101',
+    name: 'IC 1101',
+    category: 'Galaxies',
+    distanceLy: 1040000000,
+    distanceString: '1.04 billion light years (Deep Space)',
+    description: 'A colossal supergiant elliptical galaxy at the center of the Abell 2029 galaxy cluster. It is currently one of the largest known galaxies, spanning up to 6 million light years across and holding over 100 trillion stars.',
+    specs: {
+      mass: '1.0 × 10¹⁴ Solar masses',
+      radius: '2.0 million light years',
+      temperature: 'Varies',
+      age: '12.5 billion years'
+    },
+    advancedSpecs: {
+      classification: 'cD4 Supergiant Elliptical Galaxy',
+      surfaceGravity: 'Massive, cluster-wide gravitational potential well',
+      escapeVelocity: 'Estimated >1,500 km/s',
+      luminosity: '1.0 × 10¹² L☉',
+      composition: '100 Trillion metal-rich older population stars, massive hot X-ray emitting gas halo',
+      discoveryYear: '1790 (William Herschel)'
+    },
+    imageUrl: 'https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&auto=format&fit=crop&q=80',
+    trivia: [
+      'IC 1101 is so large that if it replaced our Milky Way, it would swallow the Andromeda, Triangulum, and Magellanic galaxies, filling the entire Local Group.',
+      'It contains almost no active star-forming gas, and most of its stars are old, yellow-red dwarf stars that have lived for 10+ billion years.',
+      'It was formed by the merging and swallowing of thousands of smaller spiral and elliptical galaxies over cosmic history.'
+    ],
+    visuals: {
+      baseColor: '#fca5a5',
+      secondaryColor: '#f43f5e',
+      visualShape: 'galaxy-elliptical'
+    },
+    scaleZone: 5
+  },
+  {
     id: 'observable-universe',
     name: 'The Observable Universe Edge',
     category: 'The Observable Universe',

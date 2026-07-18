@@ -107,14 +107,27 @@ export default function App() {
       ).slice(0, 8)
     : [];
 
+  const scrollToSidebar = () => {
+    setTimeout(() => {
+      const element = document.getElementById('detail-sidebar');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Explicitly scroll main container for absolute reliability on mobile/smartphone devices
+        const container = document.getElementById('app-main-layout');
+        if (container) {
+          const topPos = element.offsetTop;
+          container.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+      }
+    }, 100);
+  };
+
   const handleSelectSuggestion = (obj: CelestialObject) => {
     setSelectedId(obj.id);
     setActiveScaleZone(null); // Clear filter to ensure matched node is visible
     setSearchQuery('');
     setIsDropdownOpen(false);
-    setTimeout(() => {
-      document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    scrollToSidebar();
   };
 
   // Currently selected object profile helper
@@ -139,9 +152,7 @@ export default function App() {
       setSelectedId(match.id);
       setActiveScaleZone(null); // Clear filter to ensure the matched node is visible
       setSearchQuery('');
-      setTimeout(() => {
-        document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      scrollToSidebar();
     } else {
       setErrorMsg(`No celestial object matching "${searchQuery}" was found in our pre-calibrated database.`);
     }
@@ -149,9 +160,7 @@ export default function App() {
 
   const handleSelectPreset = (id: string) => {
     setSelectedId(id);
-    setTimeout(() => {
-      document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    scrollToSidebar();
   };
 
   return (
@@ -314,9 +323,7 @@ export default function App() {
               selectedId={selectedId}
               onSelectObject={(obj) => {
                 setSelectedId(obj.id);
-                setTimeout(() => {
-                  document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+                scrollToSidebar();
               }}
               activeScaleZone={activeScaleZone}
             />
