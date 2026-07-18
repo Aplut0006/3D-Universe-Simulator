@@ -177,6 +177,8 @@ export default function CosmicCanvas({
   const isDragging = useRef(false);
   const isPanning = useRef(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
+  const mouseDownPos = useRef({ x: 0, y: 0 });
+  const mouseDownTime = useRef<number>(0);
 
   // Touch references for mobile device touch support and pinch zoom
   const lastTouchPos = useRef({ x: 0, y: 0 });
@@ -191,6 +193,8 @@ export default function CosmicCanvas({
     isDragging.current = true;
     isPanning.current = e.button === 2 || e.shiftKey; // right click or shift key for pan
     lastMousePos.current = { x: e.clientX, y: e.clientY };
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+    mouseDownTime.current = Date.now();
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -290,9 +294,72 @@ export default function CosmicCanvas({
     isDragging.current = false;
     isPanning.current = false;
 
-    // Click handler (only trigger if it was a tiny tap, not a long drag)
-    if (hoveredObject) {
-      onSelectObject(hoveredObject);
+    const duration = Date.now() - mouseDownTime.current;
+    const endX = e.clientX;
+    const endY = e.clientY;
+    const startX = mouseDownPos.current.x;
+    const startY = mouseDownPos.current.y;
+    const dragDistance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+
+    // If it was a quick click with minimal drag, calculate selection coordinate precisely
+    if (duration < 350 && dragDistance < 15) {
+      if (!canvasRef.current) return;
+      const rect = canvasRef.current.getBoundingClientRect();
+      const clickX = startX - rect.left;
+      const clickY = startY - rect.top;
+
+      const width = dimensions.width;
+      const height = dimensions.height;
+      const cx = width / 2;
+      const cy = height / 2;
+      const focalLength = 400;
+      const distOffset = 600 / cameraRef.current.zoom;
+
+      const cosP = Math.cos(cameraRef.current.pitch);
+      const sinP = Math.sin(cameraRef.current.pitch);
+      const cosY = Math.cos(cameraRef.current.yaw);
+      const sinY = Math.sin(cameraRef.current.yaw);
+
+      let closestObj: CelestialObject | null = null;
+      let minDistance = 25; // selection click boundary
+
+      mappedObjects.forEach((obj) => {
+        if (activeScaleZone && obj.scaleZone !== activeScaleZone) return;
+
+        const ox = (obj.x || 0) - cameraRef.current.targetX;
+        const oy = (obj.y || 0) - cameraRef.current.targetY;
+        const oz = (obj.z || 0) - cameraRef.current.targetZ;
+
+        const rx1 = ox * cosY - oz * sinY;
+        const rz1 = ox * sinY + oz * cosY;
+        const ry = oy * cosP - rz1 * sinP;
+        const rz = oy * sinP + rz1 * cosP;
+
+        const sz = rz + distOffset;
+        if (sz > 10) {
+          const depthScale = focalLength / sz;
+          const sx = cx + rx1 * depthScale;
+          const sy = cy + ry * depthScale;
+
+          const dx = clickX - sx;
+          const dy = clickY - sy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < minDistance) {
+            minDistance = dist;
+            closestObj = obj;
+          }
+        }
+      });
+
+      if (closestObj) {
+        onSelectObject(closestObj);
+      }
+    } else {
+      // Fallback fallback click logic
+      if (hoveredObject && dragDistance < 8) {
+        onSelectObject(hoveredObject);
+      }
     }
   };
 
