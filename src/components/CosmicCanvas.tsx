@@ -1512,7 +1512,7 @@ export default function CosmicCanvas({
       />
 
       {/* Embedded Navigation Telemetry HUD */}
-      <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none max-w-[200px] xs:max-w-xs" id="canvas-overlay-controls">
+      <div className="hidden sm:flex absolute top-4 left-4 flex-col gap-2 pointer-events-none max-w-[200px] xs:max-w-xs" id="canvas-overlay-controls">
         <div className="bg-slate-900/85 border border-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-xl pointer-events-auto shadow-2xl shadow-black/50">
           <p className="text-xs text-slate-200 font-semibold mb-1.5 flex items-center gap-1.5">
             <Orbit className="w-3.5 h-3.5 text-indigo-400" />
@@ -1608,6 +1608,18 @@ export default function CosmicCanvas({
             id="btn-auto-orbit"
           >
             {isAutoOrbit ? <Pause className="w-3.5 h-3.5 animate-pulse" /> : <Play className="w-3.5 h-3.5" />}
+          </button>
+
+          <div className="w-[1px] h-6 bg-white/10" />
+
+          {/* Compact Recenter Coordinates Action for mobile and quick use */}
+          <button
+            onClick={handleReset}
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white transition-all cursor-pointer border border-white/5"
+            title="Recenter Coordinates"
+            id="btn-recenter-compact"
+          >
+            <RefreshCw className="w-3.5 h-3.5 text-sky-400" />
           </button>
         </div>
 

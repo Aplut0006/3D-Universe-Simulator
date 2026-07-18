@@ -155,20 +155,20 @@ export default function App() {
 
       {/* 1. Header Navigation Bar */}
       <header className="frosted-glass-header px-3 py-1.5 md:px-6 md:py-3 flex flex-row justify-between items-center gap-2 z-20" id="app-header">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-7 h-7 md:w-10 md:h-10 bg-gradient-to-tr from-sky-400 via-indigo-500 to-rose-400 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 animate-pulse" id="header-logo">
             <Orbit className="w-4 h-4 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h1 className="text-xs xs:text-sm md:text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400" id="header-title">
-              3D UNIVERSE<span className="hidden sm:inline"> SIMULATOR</span>
+          <div className="min-w-0">
+            <h1 className="text-xs xs:text-sm md:text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400 truncate" id="header-title">
+              APLUT UNIVERSE<span className="hidden sm:inline"> SIMULATOR</span>
             </h1>
             <p className="hidden xs:block text-[8px] md:text-[10px] font-mono text-slate-400 tracking-wider">LOGARITHMIC SCALE EXPLORER</p>
           </div>
         </div>
 
         {/* Search Engine & Form */}
-        <form onSubmit={handleSearch} className="relative w-36 xs:w-48 sm:w-64 md:w-full md:max-w-md flex gap-1.5 animate-fade-in" id="search-form">
+        <form onSubmit={handleSearch} className="relative flex-1 max-w-[180px] xs:max-w-[240px] sm:max-w-xs md:max-w-md flex gap-1.5 animate-fade-in" id="search-form">
           <div className="relative flex-1">
             <input
               type="text"
@@ -236,7 +236,7 @@ export default function App() {
           <button
             type="submit"
             disabled={!searchQuery.trim()}
-            className="bg-indigo-600/65 hover:bg-indigo-500/80 border border-indigo-400/20 disabled:bg-white/5 disabled:text-slate-500 disabled:border-transparent text-white text-xs px-4 rounded-xl font-medium tracking-wide transition-all flex items-center gap-1.5 shadow-lg shadow-indigo-600/10 cursor-pointer disabled:cursor-not-allowed"
+            className="hidden sm:flex bg-indigo-600/65 hover:bg-indigo-500/80 border border-indigo-400/20 disabled:bg-white/5 disabled:text-slate-500 disabled:border-transparent text-white text-xs px-4 rounded-xl font-medium tracking-wide transition-all flex items-center gap-1.5 shadow-lg shadow-indigo-600/10 cursor-pointer disabled:cursor-not-allowed shrink-0"
             id="btn-search-trigger"
           >
             Search
@@ -349,7 +349,7 @@ export default function App() {
             {/* Selected Object Target HUD for mobile & desktop overview */}
             {selectedObject && (
               <div 
-                className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-950/90 border border-indigo-500/30 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl shadow-indigo-500/20 max-w-sm flex flex-col gap-2.5 animate-fade-in z-20 pointer-events-auto"
+                className="hidden sm:flex absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-950/90 border border-indigo-500/30 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl shadow-indigo-500/20 max-w-sm flex-col gap-2.5 animate-fade-in z-20 pointer-events-auto"
                 id="selected-target-hud"
               >
                 <div className="flex justify-between items-start">
