@@ -112,7 +112,7 @@ export default function App() {
     setActiveScaleZone(null); // Clear filter to ensure matched node is visible
     setSearchQuery('');
     setIsDropdownOpen(false);
-    setActiveMobileView('simulation');
+    setActiveMobileView('details');
   };
 
   // Currently selected object profile helper
@@ -137,7 +137,7 @@ export default function App() {
       setSelectedId(match.id);
       setActiveScaleZone(null); // Clear filter to ensure the matched node is visible
       setSearchQuery('');
-      setActiveMobileView('simulation');
+      setActiveMobileView('details');
     } else {
       setErrorMsg(`No celestial object matching "${searchQuery}" was found in our pre-calibrated database.`);
     }
@@ -145,6 +145,7 @@ export default function App() {
 
   const handleSelectPreset = (id: string) => {
     setSelectedId(id);
+    setActiveMobileView('details');
   };
 
   return (
@@ -153,25 +154,25 @@ export default function App() {
       <div className="star-field-overlay" />
 
       {/* 1. Header Navigation Bar */}
-      <header className="frosted-glass-header px-4 py-3 md:px-6 md:py-3.5 flex flex-col md:flex-row justify-between items-center gap-3 z-20" id="app-header">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-tr from-sky-400 via-indigo-500 to-rose-400 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 animate-pulse" id="header-logo">
-            <Orbit className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      <header className="frosted-glass-header px-3 py-1.5 md:px-6 md:py-3 flex flex-row justify-between items-center gap-2 z-20" id="app-header">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 md:w-10 md:h-10 bg-gradient-to-tr from-sky-400 via-indigo-500 to-rose-400 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 animate-pulse" id="header-logo">
+            <Orbit className="w-4 h-4 md:w-6 md:h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-sm md:text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400" id="header-title">
-              3D UNIVERSE SIMULATOR
+            <h1 className="text-xs xs:text-sm md:text-lg font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400" id="header-title">
+              3D UNIVERSE<span className="hidden sm:inline"> SIMULATOR</span>
             </h1>
-            <p className="text-[9px] md:text-[10px] font-mono text-slate-400 tracking-wider">LOGARITHMIC SCALE COSMOS EXPLORER</p>
+            <p className="hidden xs:block text-[8px] md:text-[10px] font-mono text-slate-400 tracking-wider">LOGARITHMIC SCALE EXPLORER</p>
           </div>
         </div>
 
         {/* Search Engine & Form */}
-        <form onSubmit={handleSearch} className="relative w-full max-w-md flex gap-2 animate-fade-in" id="search-form">
+        <form onSubmit={handleSearch} className="relative w-36 xs:w-48 sm:w-64 md:w-full md:max-w-md flex gap-1.5 animate-fade-in" id="search-form">
           <div className="relative flex-1">
             <input
               type="text"
-              placeholder="Search e.g. Saturn, Orion Nebula..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -189,11 +190,11 @@ export default function App() {
                   setIsDropdownOpen(false);
                 }
               }}
-              className="w-full bg-white/5 border border-white/10 focus:border-white/20 focus:ring-1 focus:ring-indigo-500/30 text-slate-100 placeholder-slate-400 text-xs rounded-xl pl-10 pr-4 py-2.5 outline-none transition-all"
+              className="w-full bg-white/5 border border-white/10 focus:border-white/20 focus:ring-1 focus:ring-indigo-500/30 text-slate-100 placeholder-slate-400 text-[11px] md:text-xs rounded-lg md:rounded-xl pl-8 md:pl-10 pr-3 py-1.5 md:py-2 outline-none transition-all"
               id="input-cosmic-search"
               autoComplete="off"
             />
-            <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-2.5 top-2 md:left-3.5 md:top-2.5 w-3.5 h-3.5 md:w-4 md:h-4 text-slate-400" />
 
             {/* Suggestions Dropdown */}
             {isDropdownOpen && suggestions.length > 0 && (
@@ -281,11 +282,11 @@ export default function App() {
         {/* Central Exploration Stage */}
         <div className={`flex-1 min-w-0 flex flex-col relative bg-transparent ${activeMobileView === 'simulation' ? 'flex' : 'hidden lg:flex'}`} id="center-stage-container">
           {/* Scale Magnitude Filter tabs */}
-          <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-4 py-2 flex flex-wrap gap-1.5 items-center shrink-0" id="scale-magnitude-tabs">
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mr-1.5">Filters:</span>
+          <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-3 py-1.5 flex flex-nowrap overflow-x-auto gap-1 items-center shrink-0 scrollbar-none" id="scale-magnitude-tabs">
+            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mr-1.5 shrink-0">Filters:</span>
             <button
               onClick={() => setActiveScaleZone(null)}
-              className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer shrink-0 ${
                 activeScaleZone === null
                   ? 'bg-white/15 text-white border-white/30 font-medium shadow-sm'
                   : 'bg-transparent text-slate-400 border-transparent hover:text-slate-100 hover:bg-white/5'
@@ -298,14 +299,14 @@ export default function App() {
               <button
                 key={scale.id}
                 onClick={() => setActiveScaleZone(scale.id)}
-                className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer shrink-0 ${
                   activeScaleZone === scale.id
                     ? 'bg-indigo-500/25 text-sky-300 border-indigo-400/40 font-medium shadow-sm shadow-indigo-500/10'
                     : 'bg-transparent text-slate-400 border-transparent hover:text-slate-100 hover:bg-white/5'
                 }`}
                 id={`tab-filter-${scale.id}`}
               >
-                Zone {scale.id}: {scale.name}
+                {scale.name}
               </button>
             ))}
           </div>
@@ -338,7 +339,10 @@ export default function App() {
             <CosmicCanvas
               objects={objects}
               selectedId={selectedId}
-              onSelectObject={(obj) => setSelectedId(obj.id)}
+              onSelectObject={(obj) => {
+                setSelectedId(obj.id);
+                setActiveMobileView('details');
+              }}
               activeScaleZone={activeScaleZone}
             />
 
@@ -375,22 +379,6 @@ export default function App() {
                   <span className="text-slate-400">Log-Scale Distance:</span>
                   <span className="text-sky-300 font-semibold">{selectedObject.distanceString}</span>
                 </div>
-
-                <div className="flex gap-2 mt-0.5">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveMobileView('details');
-                      const sidebar = document.getElementById('detail-sidebar');
-                      if (sidebar) sidebar.scrollTop = 0;
-                    }}
-                    className="flex-1 bg-indigo-600/80 hover:bg-indigo-500 text-white font-medium text-[10px] py-2 px-3 rounded-xl shadow-lg shadow-indigo-600/10 transition-all cursor-pointer text-center active:scale-95 flex items-center justify-center gap-1.5 border border-indigo-400/20"
-                    id="hud-view-specs-btn"
-                  >
-                    <Info className="w-3.5 h-3.5" />
-                    Open Scientific Profile
-                  </button>
-                </div>
               </div>
             )}
 
@@ -414,7 +402,7 @@ export default function App() {
           </div>
 
           {/* Quick preset navigator tray (Bottom shelf) */}
-          <div className="border-t border-white/5 bg-white/[0.01] backdrop-blur-md p-4 flex flex-col gap-2 w-full overflow-hidden shrink-0" id="bottom-presets-shelf">
+          <div className="hidden md:flex border-t border-white/5 bg-white/[0.01] backdrop-blur-md p-4 flex-col gap-2 w-full overflow-hidden shrink-0" id="bottom-presets-shelf">
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                 <Database className="w-3.5 h-3.5 text-slate-400" />
