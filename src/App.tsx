@@ -148,7 +148,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-[100dvh] w-screen cosmic-radial-bg text-slate-100 flex flex-col font-sans relative overflow-hidden" id="app-root-container">
+    <div className="h-full w-full cosmic-radial-bg text-slate-100 flex flex-col font-sans relative overflow-hidden" id="app-root-container">
       {/* Background Star Field Overlay */}
       <div className="star-field-overlay" />
 

@@ -8,6 +8,14 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   background: radial-gradient(circle at 50% 50%, #1a153b 0%, #020617 80%) !important;
   font-family: var(--font-sans);
