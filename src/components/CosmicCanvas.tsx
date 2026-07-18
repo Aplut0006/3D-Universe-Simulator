@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { CelestialObject, COSMIC_SCALES } from '../types';
+import { formatKm } from '../utils/distance';
 import { 
   Orbit, 
   Move, 
@@ -650,6 +651,81 @@ export default function CosmicCanvas({
 
       // Sort descending (large rz means further back, so render furthest first)
       projectedObjects.sort((a, b) => b.rz - a.rz);
+
+      // 5.5. Draw connection path from Earth to Selected Object and show distance in Kilometers
+      if (selectedId && selectedId !== 'earth') {
+        const earthProj = projectedObjects.find((p) => p.obj.id === 'earth');
+        const selectedProj = projectedObjects.find((p) => p.obj.id === selectedId);
+
+        if (earthProj && selectedProj) {
+          const ex = cx + earthProj.rx * (focalLength / earthProj.sz);
+          const ey = cy + earthProj.ry * (focalLength / earthProj.sz);
+          const sx = cx + selectedProj.rx * (focalLength / selectedProj.sz);
+          const sy = cy + selectedProj.ry * (focalLength / selectedProj.sz);
+
+          ctx.save();
+          // Draw a glowing shadow line
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)'; // sky-400 at low opacity
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(sx, sy);
+          ctx.stroke();
+
+          // Draw the animated dashed line
+          ctx.strokeStyle = '#38bdf8'; // sky-400 neon blue
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5, 4]);
+          ctx.lineDashOffset = -Math.floor(Date.now() / 40) % 9;
+          ctx.beginPath();
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(sx, sy);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.restore();
+
+          // Calculate midpoint for floating distance label
+          const mx = (ex + sx) / 2;
+          const my = (ey + sy) / 2;
+          const lineLength = Math.sqrt((ex - sx) ** 2 + (ey - sy) ** 2);
+
+          // Render label only if line has sufficient length to avoid crowding
+          if (lineLength > 40) {
+            const distanceLabel = formatKm(selectedProj.obj.distanceLy);
+
+            ctx.save();
+            ctx.font = 'bold 9px "JetBrains Mono", font-mono, monospace';
+            const textWidth = ctx.measureText(distanceLabel).width;
+            const padX = 8;
+            const padY = 4;
+
+            // Draw shadow/glow behind badge
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 6;
+
+            // Rounded rectangle/pill background
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.9)'; // slate-900
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)'; // sky-400 border
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            if (ctx.roundRect) {
+              ctx.roundRect(mx - textWidth / 2 - padX, my - 8 - padY, textWidth + padX * 2, 16 + padY * 2, 6);
+            } else {
+              ctx.rect(mx - textWidth / 2 - padX, my - 8 - padY, textWidth + padX * 2, 16 + padY * 2);
+            }
+            ctx.fill();
+            ctx.stroke();
+
+            // Render text
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#e0f2fe'; // sky-100
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(distanceLabel, mx, my);
+            ctx.restore();
+          }
+        }
+      }
 
       // 6. Draw each Celestial Body
       projectedObjects.forEach(({ obj, rx, ry, sz }) => {

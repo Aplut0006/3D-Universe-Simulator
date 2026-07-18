@@ -12,6 +12,7 @@ import {
 import { PRESETS_CELESTIAL_DATA } from './data/celestialData';
 import { CelestialObject, COSMIC_SCALES } from './types';
 import CosmicCanvas from './components/CosmicCanvas';
+import { formatKm } from './utils/distance';
 
 export function getCelestialImageUrl(category: string, name?: string): string {
   const normalizedCat = category.toLowerCase();
@@ -92,7 +93,6 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>('cosmic-dust'); // default selected first item
   const [activeScaleZone, setActiveScaleZone] = useState<number | null>(null); // null means "All Scales"
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeMobileView, setActiveMobileView] = useState<'simulation' | 'details'>('simulation');
   
   // Loading & Error States
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -112,7 +112,9 @@ export default function App() {
     setActiveScaleZone(null); // Clear filter to ensure matched node is visible
     setSearchQuery('');
     setIsDropdownOpen(false);
-    setActiveMobileView('details');
+    setTimeout(() => {
+      document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   // Currently selected object profile helper
@@ -137,7 +139,9 @@ export default function App() {
       setSelectedId(match.id);
       setActiveScaleZone(null); // Clear filter to ensure the matched node is visible
       setSearchQuery('');
-      setActiveMobileView('details');
+      setTimeout(() => {
+        document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } else {
       setErrorMsg(`No celestial object matching "${searchQuery}" was found in our pre-calibrated database.`);
     }
@@ -145,7 +149,9 @@ export default function App() {
 
   const handleSelectPreset = (id: string) => {
     setSelectedId(id);
-    setActiveMobileView('details');
+    setTimeout(() => {
+      document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
@@ -245,42 +251,9 @@ export default function App() {
       </header>
 
       {/* 2. Main Space Layout */}
-      <main className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10" id="app-main-layout">
-        {/* Mobile View Segmented Tabs Control */}
-        <div className="lg:hidden flex border-b border-white/10 bg-slate-950/40 p-2 gap-1.5 shrink-0 z-20" id="mobile-view-tabs">
-          <button
-            type="button"
-            onClick={() => setActiveMobileView('simulation')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all ${
-              activeMobileView === 'simulation'
-                ? 'bg-indigo-600/60 text-white border border-indigo-400/30 font-bold shadow-md shadow-indigo-600/10'
-                : 'text-slate-400 border border-transparent hover:text-slate-200 hover:bg-white/5'
-            }`}
-            id="tab-mobile-simulation"
-          >
-            <Orbit className="w-4 h-4 text-sky-400" />
-            3D Simulation Space
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveMobileView('details')}
-            disabled={!selectedObject}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all ${
-              !selectedObject ? 'opacity-30 cursor-not-allowed' : ''
-            } ${
-              activeMobileView === 'details'
-                ? 'bg-indigo-600/60 text-white border border-indigo-400/30 font-bold shadow-md shadow-indigo-600/10'
-                : 'text-slate-400 border border-transparent hover:text-slate-200 hover:bg-white/5'
-            }`}
-            id="tab-mobile-details"
-          >
-            <Info className="w-4 h-4 text-amber-400" />
-            Scientific Profile {selectedObject ? `(${selectedObject.name})` : ''}
-          </button>
-        </div>
-
+      <main className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden relative z-10" id="app-main-layout">
         {/* Central Exploration Stage */}
-        <div className={`flex-1 min-w-0 flex flex-col relative bg-transparent ${activeMobileView === 'simulation' ? 'flex' : 'hidden lg:flex'}`} id="center-stage-container">
+        <div className="w-full lg:flex-1 h-[480px] xs:h-[520px] sm:h-[600px] lg:h-full flex flex-col relative bg-transparent shrink-0" id="center-stage-container">
           {/* Scale Magnitude Filter tabs */}
           <div className="bg-white/[0.01] backdrop-blur-md border-b border-white/5 px-3 py-1.5 flex flex-nowrap overflow-x-auto gap-1 items-center shrink-0 scrollbar-none" id="scale-magnitude-tabs">
             <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mr-1.5 shrink-0">Filters:</span>
@@ -341,7 +314,9 @@ export default function App() {
               selectedId={selectedId}
               onSelectObject={(obj) => {
                 setSelectedId(obj.id);
-                setActiveMobileView('details');
+                setTimeout(() => {
+                  document.getElementById('detail-sidebar')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
               }}
               activeScaleZone={activeScaleZone}
             />
@@ -366,7 +341,7 @@ export default function App() {
                     type="button"
                     onClick={() => {
                       setSelectedId(null);
-                      setActiveMobileView('simulation');
+                      document.getElementById('app-main-layout')?.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
                     title="Deselect Target"
@@ -435,16 +410,16 @@ export default function App() {
         {/* 4. Detailed Specimen Sidebar */}
         {selectedObject && (
           <aside
-            className={`w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-950/85 lg:bg-white/[0.02] backdrop-blur-2xl overflow-y-auto flex flex-col z-10 shadow-2xl ${
-              activeMobileView === 'details' ? 'flex' : 'hidden lg:flex'
-            }`}
+            className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 bg-slate-950/85 lg:bg-white/[0.02] backdrop-blur-2xl overflow-visible lg:overflow-y-auto flex flex-col z-10 shadow-2xl shrink-0"
             id="detail-sidebar"
           >
             {/* Sidebar header */}
             <div className="p-6 border-b border-white/10 flex flex-col gap-2" id="sidebar-header">
               <button
                 type="button"
-                onClick={() => setActiveMobileView('simulation')}
+                onClick={() => {
+                  document.getElementById('app-main-layout')?.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="lg:hidden flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold mb-1 cursor-pointer w-fit"
                 id="btn-sidebar-back-to-map"
               >
@@ -464,7 +439,7 @@ export default function App() {
                 <button
                   onClick={() => {
                     setSelectedId(null);
-                    setActiveMobileView('simulation');
+                    document.getElementById('app-main-layout')?.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
                   id="btn-close-sidebar"
@@ -483,7 +458,11 @@ export default function App() {
                 </h4>
                 <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-2.5" id="distance-slot">
                   <div className="text-sm font-semibold text-sky-300 font-mono">{selectedObject.distanceString}</div>
-                  <div className="text-[9px] text-slate-500 font-mono mt-0.5">
+                  <div className="text-xs font-bold text-emerald-400 font-mono mt-1.5 flex items-center gap-1.5" id="distance-km-sub">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    {formatKm(selectedObject.distanceLy)}
+                  </div>
+                  <div className="text-[9px] text-slate-500 font-mono mt-1">
                     ({selectedObject.distanceLy.toExponential(3)} Light Years)
                   </div>
                 </div>
